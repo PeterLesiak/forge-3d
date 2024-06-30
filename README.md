@@ -1,3 +1,5 @@
+<h1 align="center">forge-3d</h1>
+
 ```javascript
 import * as FORGE from '@forge-3d/core';
 
@@ -14,6 +16,7 @@ engine.render(cube);
 import * as FORGE from '@forge-3d/core';
 
 const engine = new FORGE.Engine();
+document.body.appendChild(engine.domElement);
 
 const scene = new FORGE.Scene();
 
@@ -33,6 +36,7 @@ scene.onTick(deltaTime => {
 import * as FORGE from '@forge-3d/core';
 
 const engine = new FORGE.Engine();
+document.body.appendChild(engine.domElement);
 
 const scene = new FORGE.Scene();
 
@@ -63,6 +67,7 @@ scene.onTick((deltaTime, elapsedTime) => {
 import * as FORGE from '@forge-3d/core';
 
 const engine = new FORGE.Engine();
+document.body.appendChild(engine.domElement);
 
 const scene = new FORGE.Scene();
 
