@@ -1,0 +1,12 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+
+    "compilerOptions": {
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "skipLibCheck": true,
+        "strict": true,
+
+        "plugins": [{ "transform": "typescript-transform-paths", "afterDeclarations": true }]
+    }
+}

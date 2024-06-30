@@ -1,0 +1,14 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "extends": "@forge-3d/internal/tsconfig.base.json",
+
+    "compilerOptions": {
+        "outDir": "build",
+
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+
+    "include": ["src"]
+}
