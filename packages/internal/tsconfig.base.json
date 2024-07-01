@@ -8,8 +8,6 @@
         "strict": true,
         "module": "ESNext",
         "moduleResolution": "Bundler",
-        "checkJs": true,
-
-        "plugins": [{ "transform": "typescript-transform-paths", "afterDeclarations": true }]
+        "checkJs": true
     }
 }

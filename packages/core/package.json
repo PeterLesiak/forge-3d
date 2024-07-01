@@ -2,8 +2,10 @@
     "name": "@forge-3d/core",
     "type": "module",
     "scripts": {
-        "build": "node esbuild.config.js && tspc -p tsconfig.build.json",
-        "lint": "tspc"
+        "build": "pnpm run build:js && pnpm run build:dts",
+        "build:js": "node esbuild.config.js",
+        "build:dts": "tsc -p tsconfig.build.json && resolve-tspaths -p tsconfig.build.json",
+        "lint": "tsc -p tsconfig.json"
     },
     "exports": {
         ".": "./build/index.js",

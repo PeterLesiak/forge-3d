@@ -4,20 +4,11 @@ import { esbuildPluginFilePathExtensions } from 'esbuild-plugin-file-path-extens
 
 import { rimraf } from 'rimraf';
 
-/**
- * @typedef configuration
- * @prop {string} entryDir
- * @prop {string} outdir
- */
-
-/**
- * @param {configuration} params
- */
-export const build = async ({ entryDir = 'src', outdir = 'build' } = {}) => {
+export const build = async () => {
     /** @type {import('esbuild').BuildOptions} */
     const config = {
-        entryPoints: [`./${entryDir}/**/*.ts`],
-        outdir,
+        entryPoints: ['./src/**/*.ts'],
+        outdir: 'build',
 
         minify: true,
         bundle: true,
@@ -29,7 +20,7 @@ export const build = async ({ entryDir = 'src', outdir = 'build' } = {}) => {
         ],
     };
 
-    await rimraf(outdir);
+    await rimraf('build');
 
     const result = await esbuild(config);
 
