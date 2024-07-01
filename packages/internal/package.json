@@ -1,10 +1,8 @@
 {
     "name": "@forge-3d/internal",
     "type": "module",
-    "devDependencies": {
-        "esbuild": "^0.21.5",
-        "esbuild-plugin-file-path-extensions": "^2.1.2",
-        "esbuild-plugin-tsconfig-paths": "^1.0.1",
-        "rimraf": "^5.0.7"
+    "exports": {
+        "./tsup": "./tsup.base.js",
+        "./tsconfig": "./tsconfig.base.json"
     }
 }

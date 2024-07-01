@@ -1,9 +1,12 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
-    "extends": "./tsconfig.build.json",
+    "extends": "@forge-3d/internal/tsconfig",
 
     "compilerOptions": {
-        "noEmit": true,
-        "emitDeclarationOnly": false
-    }
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+
+    "include": ["src", "./tsup.config.ts"]
 }

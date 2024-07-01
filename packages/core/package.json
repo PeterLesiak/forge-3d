@@ -2,15 +2,22 @@
     "name": "@forge-3d/core",
     "type": "module",
     "scripts": {
-        "build": "pnpm run build:js && pnpm run build:dts",
-        "build:js": "node esbuild.config.js",
-        "build:dts": "tsc -p tsconfig.build.json && resolve-tspaths -p tsconfig.build.json",
+        "build": "tsup --config ./tsup.config.ts",
         "lint": "tsc -p tsconfig.json"
     },
     "exports": {
-        ".": "./build/index.js",
-        "./*": "./build/*.js",
-        "./*.js": "./build/*.js"
+        ".": {
+            "import": "./build/index.js",
+            "require": "./build/index.cjs"
+        },
+        "./*": {
+            "import": "./build/*.js",
+            "require": "./build/*.cjs"
+        },
+        "./*.js": {
+            "import": "./build/*.js",
+            "require": "./build/*.cjs"
+        }
     },
     "devDependencies": {
         "@forge-3d/internal": "workspace:^"

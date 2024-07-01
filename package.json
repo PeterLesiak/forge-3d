@@ -3,11 +3,13 @@
     "type": "module",
     "scripts": {
         "core:build": "pnpm --filter @forge-3d/core run build",
-        "core:lint": "pnpm --filter @forge-3d/core run lint"
+        "core:lint": "pnpm --filter @forge-3d/core run lint",
+        "format": "prettier . --write"
     },
     "devDependencies": {
         "prettier": "^3.3.2",
         "resolve-tspaths": "^0.8.19",
+        "tsup": "^8.1.0",
         "typescript": "^5.5.2"
     }
 }

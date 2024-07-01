@@ -1,1 +1,1 @@
-export * from '@/Maths';
+console.log('Hello, World!');
