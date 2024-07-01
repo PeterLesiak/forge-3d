@@ -27,11 +27,20 @@ importers:
         specifier: workspace:^
         version: link:../internal
 
+  packages/demo:
+    dependencies:
+      '@forge-3d/core':
+        specifier: workspace:^
+        version: link:../core
+
   packages/internal:
     devDependencies:
       esbuild:
         specifier: ^0.21.5
         version: 0.21.5
+      esbuild-plugin-file-path-extensions:
+        specifier: ^2.1.2
+        version: 2.1.2
       esbuild-plugin-tsconfig-paths:
         specifier: ^1.0.1
         version: 1.0.1
@@ -238,6 +247,10 @@ packages:
 
   emoji-regex@9.2.2:
     resolution: {integrity: sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==}
+
+  esbuild-plugin-file-path-extensions@2.1.2:
+    resolution: {integrity: sha512-c9ncPyXg2ykUFBZ3HwErs39EN0jdJHHMb2un/fAYHR41ZgnsHMXM1FlG8W3MV+NXRi64dFSybS9FZcaHO0Ge5Q==}
+    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
 
   esbuild-plugin-tsconfig-paths@1.0.1:
     resolution: {integrity: sha512-P1iCk+gB9NOAcadLFX+0jH79yagLSGjPHRNpIe8Jl9+7T1lmrEMWxluS1BwzRI2LUnFueIu02H/I0oHaHrzYFg==}
@@ -552,6 +565,8 @@ snapshots:
   emoji-regex@8.0.0: {}
 
   emoji-regex@9.2.2: {}
+
+  esbuild-plugin-file-path-extensions@2.1.2: {}
 
   esbuild-plugin-tsconfig-paths@1.0.1:
     dependencies:

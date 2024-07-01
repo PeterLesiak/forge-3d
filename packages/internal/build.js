@@ -1,5 +1,6 @@
 import { build as esbuild } from 'esbuild';
 import { tsconfigPathsPlugin } from 'esbuild-plugin-tsconfig-paths';
+import { esbuildPluginFilePathExtensions } from 'esbuild-plugin-file-path-extensions';
 
 import { rimraf } from 'rimraf';
 
@@ -13,14 +14,19 @@ import { rimraf } from 'rimraf';
  * @param {configuration} params
  */
 export const build = async ({ entryDir = 'src', outdir = 'build' } = {}) => {
+    /** @type {import('esbuild').BuildOptions} */
     const config = {
         entryPoints: [`./${entryDir}/**/*.ts`],
         outdir,
 
         minify: true,
+        bundle: true,
         format: 'esm',
 
-        plugins: [tsconfigPathsPlugin({ tsconfig: 'tsconfig.build.json' })],
+        plugins: [
+            esbuildPluginFilePathExtensions({ esmExtension: 'js' }),
+            tsconfigPathsPlugin({ tsconfig: 'tsconfig.build.json' }),
+        ],
     };
 
     await rimraf(outdir);

@@ -2,8 +2,13 @@
     "name": "@forge-3d/core",
     "type": "module",
     "scripts": {
-        "build": "tspc && node esbuild.config.js && tspc -p tsconfig.build.json",
+        "build": "node esbuild.config.js && tspc -p tsconfig.build.json",
         "lint": "tspc"
+    },
+    "exports": {
+        ".": "./build/index.js",
+        "./*": "./build/*.js",
+        "./*.js": "./build/*.js"
     },
     "devDependencies": {
         "@forge-3d/internal": "workspace:^"
