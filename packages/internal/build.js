@@ -1,23 +1,21 @@
 import { build as tsup } from 'tsup';
 
 /** @param {number} bytes */
-const formatMegaBytes = (bytes, decimals = 2) => {
+const formatMegaBytes = (bytes, decimals = 3) => {
     const MEGA_BYTES = 1024 * 1024;
 
-    const mb = (1 / MEGA_BYTES) * bytes;
+    const mb = bytes / MEGA_BYTES;
 
     return `${mb.toFixed(decimals)} MB`;
 };
 
-/** @param {{name?: string, entry?: string}} params */
-export const build = async ({ name = '@forge-3d/unknown', entry = 'src' } = {}) => {
-    /** @type {{totalSize: number, files: number}[]} */
-    const tracker = [];
+export const build = async () => {
+    let totalSize = 0;
+    let totalFiles = 0;
 
     /** @type {import('tsup').Options} */
     const config = {
-        name,
-        entry: [`./${entry}/**/*.ts`],
+        entry: ['./src/**/*.ts'],
 
         dts: true,
         format: ['esm', 'cjs'],
@@ -29,15 +27,11 @@ export const build = async ({ name = '@forge-3d/unknown', entry = 'src' } = {}) 
 
         plugins: [
             {
-                name: 'filesize-tracker',
+                name: 'filesize-metadata',
                 buildEnd({ writtenFiles }) {
-                    const totalSize = writtenFiles
-                        .map(val => val.size)
-                        .reduce((acc, val) => acc + val);
+                    for (const { size } of writtenFiles) totalSize += size;
 
-                    const files = writtenFiles.length;
-
-                    tracker.push({ totalSize, files });
+                    totalFiles += writtenFiles.length;
                 },
             },
         ],
@@ -45,16 +39,6 @@ export const build = async ({ name = '@forge-3d/unknown', entry = 'src' } = {}) 
 
     await tsup(config);
 
-    /**
-     * @param {string} name
-     * @param {number} totalSize
-     * @param {number} files
-     * */
-    const log = (name, totalSize, files) => {
-        console.log(`[${name}] ${formatMegaBytes(totalSize)} | ${files} Files`);
-    };
-
-    console.log('\n[--NAME--] [-SIZE-] [-FILES-]\n');
-    log('ESModule', tracker[0].totalSize, tracker[0].files);
-    log('CommonJS', tracker[1].totalSize, tracker[1].files);
+    console.log(`\n[⚡️SIZE ]: ${formatMegaBytes(totalSize)}`);
+    console.log(`[⚡️FILES]: ${totalFiles}`);
 };

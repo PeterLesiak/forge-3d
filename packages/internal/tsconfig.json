@@ -13,6 +13,7 @@
         "skipLibCheck": true,
         "checkJs": true,
         "noUnusedParameters": false,
-        "allowImportingTsExtensions": true
+        "allowImportingTsExtensions": true,
+        "noImplicitOverride": true
     }
 }
