@@ -1,8 +1,4 @@
 {
     "name": "@forge-3d/internal",
-    "type": "module",
-    "exports": {
-        "./tsup": "./tsup.base.js",
-        "./tsconfig": "./tsconfig.base.json"
-    }
+    "type": "module"
 }

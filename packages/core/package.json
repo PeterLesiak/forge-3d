@@ -2,7 +2,7 @@
     "name": "@forge-3d/core",
     "type": "module",
     "scripts": {
-        "build": "tsup --config ./tsup.config.ts",
+        "build": "node ./build.js",
         "lint": "tsc -p tsconfig.json"
     },
     "exports": {
