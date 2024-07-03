@@ -1,7 +1,7 @@
 <h1 align="center">forge-3d</h1>
 
 <div align="center">
-  <strong>Typescript library for 3d & 2d scenes powered by WebGL/WebGPU</strong>
+    <strong>Typescript library for 3d & 2d scenes powered by WebGL/WebGPU</strong>
 </div>
 
 <br />
@@ -17,10 +17,21 @@
 </div>
 
 <p align="center">
-  <a href="#getting-started"><strong>Getting Started</strong></a>
+    <a href="#getting-started"><strong>Getting Started</strong></a> ·
+    <a href="#documentation"><strong>Documentation</strong></a> ·
+    <a href="#development"><strong>Development</strong></a> ·
+    <a href="#contributing"><strong>Contributing</strong></a>
 </p>
 
 <h2 id="getting-started">Getting Started</h2>
+
+#### Instalation
+
+> ```bash
+> npm install @forge-3d/core
+> ```
+
+#### Example
 
 ```javascript
 import * as FORGE from '@forge-3d/core';
@@ -34,84 +45,16 @@ cube.position.z = 10.0;
 engine.render(cube);
 ```
 
-```javascript
-import * as FORGE from '@forge-3d/core';
+<h2 id="documentation">Documentation</h2>
 
-const engine = new FORGE.Engine();
-document.body.appendChild(engine.domElement);
+<h2 id="development">Development</h2>
 
-const scene = new FORGE.Scene();
+```bash
+# clone the repository (git required)
+git clone https://github.com/PeterLesiak/forge-3d.git
 
-const camera = new FORGE.Camera(scene);
-camera.position.z = -10.0;
-
-const cube = new FORGE.MeshBuilder.Cube(scene);
-
-scene.onTick(deltaTime => {
-    cube.rotate(0.1 * deltaTime, 0.2 * deltaTime, 0.3 * deltaTime);
-
-    engine.render(scene);
-});
+# install dependencies (pnpm required)
+pnpm install
 ```
 
-```javascript
-import * as FORGE from '@forge-3d/core';
-
-const engine = new FORGE.Engine();
-document.body.appendChild(engine.domElement);
-
-const scene = new FORGE.Scene();
-
-const camera = new FORGE.Camera(scene);
-camera.position.z = -10.0;
-
-// TODO: shader syntax
-const shader = FORGE.Shader.load('/shaders/example_shader.fx');
-
-const texture = FORGE.Texture2D.load('/textures/example_texture.png');
-
-const material = new FORGE.ShaderMaterial(shader);
-material.setTexture2D('example_texture', texture);
-
-const cube = new FORGE.MeshBuilder.Cube({ material, parent: scene });
-
-scene.onTick((deltaTime, elapsedTime) => {
-    cube.rotate(0.1 * deltaTime, 0.2 * deltaTime, 0.3 * deltaTime);
-
-    material.setFloat('elapsedTime', elapsedTime);
-    material.setFloat2('resolution', engine.resoution);
-
-    engine.render(scene);
-});
-```
-
-```javascript
-import * as FORGE from '@forge-3d/core';
-
-const engine = new FORGE.Engine();
-document.body.appendChild(engine.domElement);
-
-const scene = new FORGE.Scene();
-
-const camera = new FORGE.Camera(scene);
-camera.position.z = -10.0;
-
-const positionBuffer = new FORGE.Float3Buffer([...]);
-const normalBuffer = new FORGE.Float3Buffer([...]);
-const uvBuffer = new FORGE.Float3Buffer([...]);
-
-const geometry = new FORGE.Geometry();
-geometry.setPosition(positionBuffer);
-geometry.setNormal(normalBuffer);
-geometry.setUV(uvBuffer);
-
-const material = new FORGE.StandardMaterial();
-
-const cube = new FORGE.Mesh(geometry, material, scene);
-
-scene.onTick(deltaTime => {
-    cube.rotate(0.1 * deltaTime, 0.2 * deltaTime, 0.3 * deltaTime);
-
-    engine.render(scene);
-});
-```
+<h2 id="contributing">Contributing</h2>
