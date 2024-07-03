@@ -6,18 +6,9 @@
         "lint": "tsc -p tsconfig.json"
     },
     "exports": {
-        ".": {
-            "import": "./build/index.js",
-            "require": "./build/index.cjs"
-        },
-        "./*": {
-            "import": "./build/*.js",
-            "require": "./build/*.cjs"
-        },
-        "./*.js": {
-            "import": "./build/*.js",
-            "require": "./build/*.cjs"
-        }
+        ".": "./build/index.js",
+        "./*": "./build/*.js",
+        "./*.js": "./build/*.js"
     },
     "devDependencies": {
         "@forge-3d/internal": "workspace:^"

@@ -18,7 +18,7 @@ export const build = async () => {
         entry: ['./src/**/*.ts'],
 
         dts: true,
-        format: ['esm', 'cjs'],
+        format: 'esm',
         minify: true,
         target: 'es2015',
 
