@@ -7,8 +7,19 @@
     },
     "exports": {
         ".": "./build/index.js",
-        "./*": "./build/*.js",
-        "./*.js": "./build/*.js"
+        "./Types": "./build/Types/index.js",
+        "./Types/*": "./build/Types/*.js",
+        "./Types/*.js": "./build/Types/*.js",
+        "./CommonObject": "./build/CommonObject.js",
+        "./CommonObject.js": "./build/CommonObject.js",
+        "./Maths": "./build/Maths/index.js",
+        "./Maths/*": "./build/Maths/*.js",
+        "./Maths/*.js": "./build/Maths/*.js",
+        "./Buffers": "./build/Buffers/index.js",
+        "./Buffers/*": "./build/Buffers/*.js",
+        "./Buffers/*.js": "./build/Buffers/*.js",
+        "./Node": "./build/Node.js",
+        "./Node.js": "./build/Node.js"
     },
     "devDependencies": {
         "@forge-3d/internal": "workspace:^"

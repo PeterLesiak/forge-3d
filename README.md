@@ -1,7 +1,7 @@
 <h1 align="center">forge-3d</h1>
 
 <div align="center">
-    <strong>Typescript library for 3d & 2d scenes powered by WebGL/WebGPU</strong>
+    <strong>Typescript library for 3d & 2d scenes using WebGL/WebGPU</strong>
 </div>
 
 <br />
@@ -28,18 +28,21 @@
 #### Instalation
 
 > ```bash
-> npm install @forge-3d/core
+> npm install --save @forge-3d/core
 > ```
 
 #### Example
 
 ```javascript
-import * as FORGE from '@forge-3d/core';
+import { Engine } from '@forge-3d/core/Engine';
+import { MeshBuilder } from '@forge-3d/core/Meshes';
 
-const engine = new FORGE.Engine();
+// Engine is responsible for rendering to the canvas
+const engine = new Engine();
 document.body.appendChild(engine.domElement);
 
-const cube = new FORGE.MeshBuilder.Cube();
+// Mesh is a collection of Geometry & Material (these are already created by MeshBuilder)
+const cube = new MeshBuilder.Cube();
 cube.position.z = 10.0;
 
 engine.render(cube);

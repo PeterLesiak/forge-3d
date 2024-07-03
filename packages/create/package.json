@@ -4,7 +4,7 @@
     "scripts": {
         "build": "tsc && vite build --outDir build",
         "lint": "tsc",
-        "dev": "vite"
+        "dev": "vite --port 5050"
     },
     "dependencies": {
         "@forge-3d/core": "workspace:^"
