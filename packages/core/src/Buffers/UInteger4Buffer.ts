@@ -1,4 +1,4 @@
-import type { Vector4Array } from '@/Types/Array';
+import type { Vector4Array } from '@/Types/Vector';
 
 import { Buffer } from './Buffer';
 

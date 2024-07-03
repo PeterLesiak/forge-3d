@@ -1,4 +1,5 @@
-import type { TypedArray, Vector4Array, Vector3Array, Vector2Array } from '@/Types/Array';
+import type { TypedArray } from '@/Types/Array';
+import type { Vector4Array, Vector3Array, Vector2Array } from '@/Types/Vector';
 
 export abstract class Buffer<T extends number | Vector2Array | Vector3Array | Vector4Array>
     implements Iterable<T>
