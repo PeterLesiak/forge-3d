@@ -1,4 +1,10 @@
-export class Vector4 {
+import { CommonObject } from '@/CommonObject';
+
+export type Vector4Array = [number, number, number, number];
+
+export class Vector4 extends CommonObject {
+    public readonly objectClassName: string = 'Vector4';
+
     public x: number;
 
     public y: number;
@@ -8,6 +14,8 @@ export class Vector4 {
     public w: number;
 
     public constructor(x: number, y: number, z: number, w: number) {
+        super();
+
         this.x = x;
         this.y = y;
         this.z = z;

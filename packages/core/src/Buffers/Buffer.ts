@@ -1,7 +1,11 @@
 import type { TypedArray } from '@/Types/Array';
-import type { Vector4Array, Vector3Array, Vector2Array } from '@/Types/Vector';
+import { CommonObject } from '@/CommonObject';
+import type { Vector2Array } from '@/Maths/Vector2';
+import type { Vector3Array } from '@/Maths/Vector3';
+import type { Vector4Array } from '@/Maths/Vector4';
 
 export abstract class Buffer<T extends number | Vector2Array | Vector3Array | Vector4Array>
+    extends CommonObject
     implements Iterable<T>
 {
     public abstract readonly components: number;

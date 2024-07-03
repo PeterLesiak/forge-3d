@@ -1,4 +1,10 @@
-export class Quaternion {
+import { CommonObject } from '@/CommonObject';
+
+export type QuaternionArray = [number, number, number, number];
+
+export class Quaternion extends CommonObject {
+    public readonly objectClassName: string = 'Quaternion';
+
     public x: number;
 
     public y: number;
@@ -8,6 +14,8 @@ export class Quaternion {
     public w: number;
 
     public constructor(x: number, y: number, z: number, w: number) {
+        super();
+
         this.x = x;
         this.y = y;
         this.z = z;

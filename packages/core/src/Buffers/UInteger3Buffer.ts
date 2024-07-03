@@ -1,8 +1,10 @@
-import type { Vector3Array } from '@/Types/Vector';
+import type { Vector3Array } from '@/Maths/Vector3';
 
 import { Buffer } from './Buffer';
 
 export class UInteger3Buffer extends Buffer<Vector3Array> {
+    public readonly objectClassName: string = 'UInteger3Buffer';
+
     public readonly components = 3;
 
     public source: Uint32Array;

@@ -1,8 +1,10 @@
-import type { Vector3Array } from '@/Types/Vector';
+import type { Vector3Array } from '@/Maths/Vector3';
 
 import { Buffer } from './Buffer';
 
 export class Float3Buffer extends Buffer<Vector3Array> {
+    public readonly objectClassName: string = 'Float3Buffer';
+
     public readonly components = 3;
 
     public source: Float32Array;

@@ -1,6 +1,8 @@
 import { Buffer } from './Buffer';
 
 export class IntegerBuffer extends Buffer<number> {
+    public readonly objectClassName: string = 'IntegerBuffer';
+
     public readonly components = 1;
 
     public source: Int32Array;

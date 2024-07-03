@@ -1,6 +1,16 @@
-import type { Matrix4x4Array } from '@/Types/Matrix';
+import { CommonObject } from '@/CommonObject';
 
-export class Matrix {
+// prettier-ignore
+export type Matrix4x4Array = [
+    number, number, number, number,
+    number, number, number, number,
+    number, number, number, number,
+    number, number, number, number,
+];
+
+export class Matrix extends CommonObject {
+    public readonly objectClassName: string = 'Matrix';
+
     public readonly elements: Matrix4x4Array;
 
     // prettier-ignore
@@ -10,6 +20,8 @@ export class Matrix {
         n31: number, n32: number, n33: number, n34: number,
         n41: number, n42: number, n43: number, n44: number,
     ) {
+        super();
+        
         this.elements = [
             n11, n12, n13, n14,
             n21, n22, n23, n24,

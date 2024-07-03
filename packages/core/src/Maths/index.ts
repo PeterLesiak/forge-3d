@@ -1,9 +1,9 @@
-export { Vector2 } from './Vector2';
-export { Vector3 } from './Vector3';
-export { Vector4 } from './Vector4';
+export { Vector2, type Vector2Array } from './Vector2';
+export { Vector3, type Vector3Array } from './Vector3';
+export { Vector4, type Vector4Array } from './Vector4';
 
-export { Quaternion } from './Quaternion';
+export { Quaternion, type QuaternionArray } from './Quaternion';
 
-export { Matrix } from './Matrix';
+export { Matrix, type Matrix4x4Array } from './Matrix';
 
 export { Transform } from './Transform';

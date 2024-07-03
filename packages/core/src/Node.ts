@@ -1,21 +1,43 @@
 import type { Nullable } from '@/Types/Utilities';
 import { Transform } from '@/Maths/Transform';
 
-export class Node extends Transform {
-    public root: Node = this;
-
-    public parent: Nullable<Node> = null;
+export class Node extends Transform implements Iterable<Node> {
+    public override readonly objectClassName: string = 'Node';
 
     public children: Node[] = [];
+
+    private _parent: Nullable<Node> = null;
+
+    public get parent(): Nullable<Node> {
+        return this._parent;
+    }
+
+    private _root: Node = this;
+
+    public get root(): Node {
+        return this._root;
+    }
 
     public constructor(parent: Nullable<Node> = null) {
         super();
 
-        this.add(parent);
+        parent?.add(this);
     }
 
     public get isEmpty(): boolean {
         return !this.children.length;
+    }
+
+    public contains(...nodes: Nullable<Node>[]): boolean {
+        for (const node of nodes) {
+            if (!node) continue;
+
+            if (node.parent === this) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public add(...nodes: Nullable<Node>[]): this {
@@ -26,7 +48,8 @@ export class Node extends Transform {
 
             this.children.push(node);
 
-            node.parent = this;
+            node._parent = this;
+            node._root = this.root;
         }
 
         return this;
@@ -42,7 +65,8 @@ export class Node extends Transform {
 
             this.children.splice(index, 1);
 
-            node.parent = null;
+            node._parent = null;
+            node._root = node;
         }
 
         return this;
@@ -52,5 +76,19 @@ export class Node extends Transform {
         this.parent?.remove(this);
 
         return this;
+    }
+
+    public *[Symbol.iterator](): Iterator<Node, void> {
+        const search = function* (root: Node): Generator<Node, void> {
+            for (const node of root.children) {
+                yield node;
+            }
+
+            for (const node of root.children) {
+                yield* search(node);
+            }
+        };
+
+        yield* search(this);
     }
 }

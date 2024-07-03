@@ -1,8 +1,10 @@
-import type { Vector4Array } from '@/Types/Vector';
+import type { Vector4Array } from '@/Maths/Vector4';
 
 import { Buffer } from './Buffer';
 
 export class Integer4Buffer extends Buffer<Vector4Array> {
+    public readonly objectClassName: string = 'Integer4Buffer';
+
     public readonly components = 4;
 
     public source: Int32Array;
