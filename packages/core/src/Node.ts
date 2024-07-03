@@ -4,7 +4,7 @@ import { Transform } from '@/Maths/Transform';
 export class Node extends Transform implements Iterable<Node> {
     public override readonly objectClassName: string = 'Node';
 
-    public children: Node[] = [];
+    public readonly children: Node[] = [];
 
     private _parent: Nullable<Node> = null;
 
@@ -29,10 +29,8 @@ export class Node extends Transform implements Iterable<Node> {
     }
 
     public contains(...nodes: Nullable<Node>[]): boolean {
-        for (const node of nodes) {
-            if (!node) continue;
-
-            if (node.parent === this) {
+        for (const node of this) {
+            if (nodes.includes(node)) {
                 return true;
             }
         }
@@ -43,6 +41,10 @@ export class Node extends Transform implements Iterable<Node> {
     public add(...nodes: Nullable<Node>[]): this {
         for (const node of nodes) {
             if (!node) continue;
+
+            if (node === this) continue;
+
+            if (node.contains(this)) continue;
 
             node.removeFromParent();
 
@@ -56,24 +58,43 @@ export class Node extends Transform implements Iterable<Node> {
     }
 
     public remove(...nodes: Nullable<Node>[]): this {
-        for (const node of nodes) {
-            if (!node) continue;
-
-            const index = this.children.indexOf(node);
-
-            if (index < 0) continue;
-
-            this.children.splice(index, 1);
-
-            node._parent = null;
-            node._root = node;
+        for (const node of this) {
+            if (nodes.includes(node)) {
+                node.removeFromParent();
+            }
         }
 
         return this;
     }
 
     public removeFromParent(): this {
-        this.parent?.remove(this);
+        if (!this.parent) return this;
+
+        const index = this.parent.children.indexOf(this);
+
+        this.parent.children.splice(index, 1);
+        this._parent = null;
+        this._root = this;
+
+        return this;
+    }
+
+    public removeAll(): this {
+        for (const node of this.children) {
+            node.removeFromParent();
+        }
+
+        return this;
+    }
+
+    public traverse(callback: (node: Node) => any, includeSelf: boolean = false): this {
+        if (includeSelf) {
+            callback(this);
+        }
+
+        for (const node of this) {
+            callback(node);
+        }
 
         return this;
     }

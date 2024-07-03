@@ -1,0 +1,15 @@
+{
+    "name": "@forge-3d/create",
+    "type": "module",
+    "scripts": {
+        "build": "tsc && vite build --outDir build",
+        "lint": "tsc",
+        "dev": "vite"
+    },
+    "dependencies": {
+        "@forge-3d/core": "workspace:^"
+    },
+    "devDependencies": {
+        "vite": "^5.3.3"
+    }
+}
