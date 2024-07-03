@@ -35,17 +35,32 @@
 
 ```javascript
 import { Engine } from '@forge-3d/core/Engine';
+import { Scene } from '@forge-3d/core/Scene';
+import { Camera } from '@forge-3d/core/Cameras/Camera';
 import { MeshBuilder } from '@forge-3d/core/Meshes';
 
 // Engine is responsible for rendering to the canvas
 const engine = new Engine();
 document.body.appendChild(engine.domElement);
 
-// Mesh is a collection of Geometry & Material (these are already created by MeshBuilder)
-const cube = new MeshBuilder.Cube();
-cube.position.z = 10.0;
+// Scene is a container for nodes (e.g. Camera & Mesh)
+const scene = new Scene();
 
-engine.render(cube);
+// Camera represents a viewer
+const camera = new Camera(scene);
+camera.position.z = -10.0;
+
+// Mesh is a collection of Geometry & Material (already defined by Cube class helper)
+const cube = new MeshBuilder.Cube(scene);
+
+// onTick is an observer run every frame (deltaTime - time between last frame in seconds)
+scene.onTick(deltaTime => {
+    // Rotation is set in Euler Angles and internally stored as Quaternion
+    cube.rotate(0.1 * deltaTime, 0.2 * deltaTime, 0.3 * deltaTime);
+
+    // Renders to the canvas
+    engine.render(scene);
+});
 ```
 
 <h2 id="documentation">Documentation</h2>
