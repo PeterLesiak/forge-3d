@@ -8,7 +8,7 @@
 
 <div align="center">
 
-![JavaScript](https://img.shields.io/badge/javascript-D69D00?style=for-the-badge&logo=javascript&logoColor=FFF)
+![JavaScript](https://img.shields.io/badge/javascript-E0B400?style=for-the-badge&logo=javascript&logoColor=FFF)
 ![TypeScript](https://img.shields.io/badge/typescript-007ACC?style=for-the-badge&logo=typescript&logoColor=FFF)
 ![Browser](https://img.shields.io/badge/browser-7D4698?style=for-the-badge&logo=googlechrome&logoColor=FFF)
 ![WebGL](https://img.shields.io/badge/webgl-990000?style=for-the-badge&logo=webgl&logoColor=FFF)
@@ -29,6 +29,18 @@
 
 > ```bash
 > npm install --save @forge-3d/core
+> ```
+>
+> ```bash
+> pnpm add --save-prod @forge-3d/core
+> ```
+>
+> ```bash
+> yarn add @forge-3d/core
+> ```
+>
+> ```bash
+> bun add @forge-3d/core
 > ```
 
 #### Example
@@ -53,7 +65,7 @@ camera.position.z = -10.0;
 // Mesh is a collection of Geometry & Material (already defined by Cube class helper)
 const cube = new MeshBuilder.Cube(scene);
 
-// onTick is an observer run every frame (deltaTime - time between last frame in seconds)
+// onTick is notified every frame (deltaTime: time between last frame in seconds)
 scene.onTick(deltaTime => {
     // Rotation is set in Euler Angles and internally stored as Quaternion
     cube.rotate(0.1 * deltaTime, 0.2 * deltaTime, 0.3 * deltaTime);
@@ -73,6 +85,9 @@ git clone https://github.com/PeterLesiak/forge-3d.git
 
 # install dependencies (pnpm required)
 pnpm install
+
+# builds for production (see scripts in package.json)
+pnpm <package>:build
 ```
 
 <h2 id="contributing">Contributing</h2>
