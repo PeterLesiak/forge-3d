@@ -87,7 +87,7 @@ git clone https://github.com/PeterLesiak/forge-3d.git
 pnpm install
 
 # builds for production (see scripts in package.json)
-pnpm <package>:build
+pnpm <package>:build # e.g. pnpm core:build
 ```
 
 <h2 id="contributing">Contributing</h2>
