@@ -16,8 +16,6 @@
 
 </div>
 
-<br />
-
 <p align="center">
   <a href="#getting-started"><strong>Getting Started</strong></a>
 </p>
