@@ -49,12 +49,13 @@
 > <script src="https://www.unpkg.com/@forge-3d/core/build/index.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 > ```
 
-#### ✨ Example - Spinning Cube
+#### ✨ Example - Spinning Cube & Camera and Lighting
 
 ```javascript
 import { Engine } from '@forge-3d/core/Engine';
 import { Scene } from '@forge-3d/core/Scene';
 import { Camera } from '@forge-3d/core/Cameras/Camera';
+import { PointLight } from '@forge-3d/core/Lights/Pointlight';
 import * as MeshBuilder from '@forge-3d/core/Meshes/MeshBuilder';
 
 // Engine is responsible for rendering to the canvas
@@ -67,6 +68,10 @@ const scene = new Scene();
 // Camera represents a viewer
 const camera = new Camera(scene);
 camera.position.z = -10.0;
+
+// PointLight is a type of light that acts like a light bulb
+const light = new PointLight(scene);
+light.position.set(0.5, 1.5, -0.5);
 
 // Mesh is a collection of Geometry & Material (already created by Cube class helper)
 const cube = new MeshBuilder.Cube(scene);
