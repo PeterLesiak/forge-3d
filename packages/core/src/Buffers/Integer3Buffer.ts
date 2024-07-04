@@ -3,8 +3,6 @@ import type { Vector3Array } from '@/Maths/Vector3';
 import { Buffer } from './Buffer';
 
 export class Integer3Buffer extends Buffer<Vector3Array> {
-    public readonly objectClassName: string = 'Integer3Buffer';
-
     public readonly components = 3;
 
     public source: Int32Array;

@@ -49,7 +49,7 @@
 import { Engine } from '@forge-3d/core/Engine';
 import { Scene } from '@forge-3d/core/Scene';
 import { Camera } from '@forge-3d/core/Cameras/Camera';
-import { MeshBuilder } from '@forge-3d/core/Meshes';
+import * as MeshBuilder from '@forge-3d/core/Meshes/MeshBuilder';
 
 // Engine is responsible for rendering to the canvas
 const engine = new Engine();

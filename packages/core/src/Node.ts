@@ -2,8 +2,6 @@ import type { Nullable } from '@/Types/Utilities';
 import { Transform } from '@/Maths/Transform';
 
 export class Node extends Transform implements Iterable<Node> {
-    public override readonly objectClassName: string = 'Node';
-
     public readonly children: Node[] = [];
 
     private _parent: Nullable<Node> = null;

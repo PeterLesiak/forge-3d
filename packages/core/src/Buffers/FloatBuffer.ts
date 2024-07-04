@@ -1,8 +1,6 @@
 import { Buffer } from './Buffer';
 
 export class FloatBuffer extends Buffer<number> {
-    public readonly objectClassName: string = 'FloatBuffer';
-
     public readonly components = 1;
 
     public source: Float32Array;

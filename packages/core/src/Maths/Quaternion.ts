@@ -1,10 +1,8 @@
-import { CommonObject } from '@/CommonObject';
+import type { Type } from '@/Types/Type';
 
 export type QuaternionArray = [number, number, number, number];
 
-export class Quaternion extends CommonObject {
-    public readonly objectClassName: string = 'Quaternion';
-
+export class Quaternion implements Type {
     public x: number;
 
     public y: number;
@@ -14,8 +12,6 @@ export class Quaternion extends CommonObject {
     public w: number;
 
     public constructor(x: number, y: number, z: number, w: number) {
-        super();
-
         this.x = x;
         this.y = y;
         this.z = z;
@@ -43,6 +39,8 @@ export class Quaternion extends CommonObject {
     public clone(): Quaternion {
         return new Quaternion(this.x, this.y, this.z, this.w);
     }
+
+    public label: string = '';
 
     public static Zero(): Quaternion {
         return new Quaternion(0.0, 0.0, 0.0, 0.0);

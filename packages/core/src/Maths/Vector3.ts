@@ -1,10 +1,8 @@
-import { CommonObject } from '@/CommonObject';
+import type { Type } from '@/Types/Type';
 
 export type Vector3Array = [number, number, number];
 
-export class Vector3 extends CommonObject {
-    public readonly objectClassName: string = 'Vector3';
-
+export class Vector3 implements Type {
     public x: number;
 
     public y: number;
@@ -12,8 +10,6 @@ export class Vector3 extends CommonObject {
     public z: number;
 
     public constructor(x: number, y: number, z: number) {
-        super();
-
         this.x = x;
         this.y = y;
         this.z = z;
@@ -38,6 +34,8 @@ export class Vector3 extends CommonObject {
     public clone(): Vector3 {
         return new Vector3(this.x, this.y, this.z);
     }
+
+    public label: string = '';
 
     public static Zero(): Vector3 {
         return new Vector3(0.0, 0.0, 0.0);

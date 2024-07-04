@@ -1,8 +1,6 @@
 import { Buffer } from './Buffer';
 
 export class UIntegerBuffer extends Buffer<number> {
-    public readonly objectClassName: string = 'UIntegerBuffer';
-
     public readonly components = 1;
 
     public source: Uint32Array;

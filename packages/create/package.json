@@ -10,6 +10,7 @@
         "@forge-3d/core": "workspace:^"
     },
     "devDependencies": {
+        "typescript": "^5.5.2",
         "vite": "^5.3.3"
     }
 }

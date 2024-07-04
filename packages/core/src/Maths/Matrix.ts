@@ -1,4 +1,4 @@
-import { CommonObject } from '@/CommonObject';
+import type { Type } from '@/Types/Type';
 
 // prettier-ignore
 export type Matrix4x4Array = [
@@ -8,9 +8,7 @@ export type Matrix4x4Array = [
     number, number, number, number,
 ];
 
-export class Matrix extends CommonObject {
-    public readonly objectClassName: string = 'Matrix';
-
+export class Matrix implements Type {
     public readonly elements: Matrix4x4Array;
 
     // prettier-ignore
@@ -20,8 +18,6 @@ export class Matrix extends CommonObject {
         n31: number, n32: number, n33: number, n34: number,
         n41: number, n42: number, n43: number, n44: number,
     ) {
-        super();
-        
         this.elements = [
             n11, n12, n13, n14,
             n21, n22, n23, n24,
@@ -106,6 +102,8 @@ export class Matrix extends CommonObject {
             this.elements[15],
         );
     }
+
+    public label: string = '';
 
     public static Zero(): Matrix {
         // prettier-ignore

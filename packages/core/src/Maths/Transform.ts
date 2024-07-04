@@ -1,12 +1,10 @@
-import { CommonObject } from '@/CommonObject';
+import type { Type } from '@/Types/Type';
 
 import { Vector3 } from './Vector3';
 import { Quaternion } from './Quaternion';
 import { Matrix } from './Matrix';
 
-export class Transform extends CommonObject {
-    public readonly objectClassName: string = 'Transform';
-
+export class Transform implements Type {
     public readonly position: Vector3 = Vector3.Zero();
 
     public readonly rotation: Quaternion = Quaternion.Identity();
@@ -14,4 +12,6 @@ export class Transform extends CommonObject {
     public readonly scale: Vector3 = Vector3.One();
 
     public readonly localMatrix: Matrix = Matrix.Identity();
+
+    public label: string = '';
 }

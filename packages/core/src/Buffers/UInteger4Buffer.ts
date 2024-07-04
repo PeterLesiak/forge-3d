@@ -3,8 +3,6 @@ import type { Vector4Array } from '@/Maths/Vector4';
 import { Buffer } from './Buffer';
 
 export class UInteger4Buffer extends Buffer<Vector4Array> {
-    public readonly objectClassName: string = 'UInteger4Buffer';
-
     public readonly components = 4;
 
     public source: Uint32Array;
