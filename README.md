@@ -10,6 +10,8 @@
 
 </div>
 
+<hr />
+
 <div align="center">
 
 ![javascript](https://img.shields.io/badge/javascript-E0B400?style=for-the-badge&logo=javascript&logoColor=FFF)
