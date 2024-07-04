@@ -2,22 +2,18 @@
     <img src="./resources/logo.png" />
 </div>
 
-<h1 align="center">forge-3d</h1>
-
-<div align="center">
-    <strong>Typescript library for 3d & 2d scenes using <b>WebGL/WebGPU</b></strong>
-</div>
-
 <br />
 
+> <div align="center">
+>    <strong>Typescript library for 3d & 2d scenes using WebGL/WebGPU</strong>
+> </div>
+
 <div align="center">
-
-![JavaScript](https://img.shields.io/badge/javascript-E0B400?style=for-the-badge&logo=javascript&logoColor=FFF)
-![TypeScript](https://img.shields.io/badge/typescript-007ACC?style=for-the-badge&logo=typescript&logoColor=FFF)
-![Browser](https://img.shields.io/badge/browser-7D4698?style=for-the-badge&logo=googlechrome&logoColor=FFF)
-![WebGL](https://img.shields.io/badge/webgl-990000?style=for-the-badge&logo=webgl&logoColor=FFF)
-![WebGPU](https://img.shields.io/badge/webgpu-005A9C?style=for-the-badge&logo=wgpu&logoColor=FFF)
-
+    <img src="https://img.shields.io/badge/javascript-E0B400?style=for-the-badge&logo=javascript&logoColor=FFF" />
+    <img src="https://img.shields.io/badge/typescript-007ACC?style=for-the-badge&logo=typescript&logoColor=FFF" />
+    <img src="https://img.shields.io/badge/browser-7D4698?style=for-the-badge&logo=googlechrome&logoColor=FFF" />
+    <img src="https://img.shields.io/badge/webgl-990000?style=for-the-badge&logo=webgl&logoColor=FFF" />
+    <img src="https://img.shields.io/badge/webgpu-005A9C?style=for-the-badge&logo=wgpu&logoColor=FFF" />
 </div>
 
 <p align="center">
@@ -27,6 +23,8 @@
     <a href="#development"><strong>Development</strong></a> ·
     <a href="#contributing"><strong>Contributing</strong></a>
 </p>
+
+<hr />
 
 <h2 id="getting-started">Getting Started</h2>
 
