@@ -1,6 +1,5 @@
 <div align="center">
     <img src="./resources/logo.png" />
-    <hr>
 </div>
 
 <h1 align="center">forge-3d</h1>
