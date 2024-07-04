@@ -11,7 +11,9 @@
         "./*.js": "./build/*.js",
         "./Types": "./build/Types/index.js",
         "./Maths": "./build/Maths/index.js",
-        "./Buffers": "./build/Buffers/index.js"
+        "./Cameras": "./build/Cameras/index.js",
+        "./Buffers": "./build/Buffers/index.js",
+        "./Meshes": "./build/Meshes/index.js"
     },
     "devDependencies": {
         "@forge-3d/internal": "workspace:^"

@@ -5,12 +5,18 @@ import { Buffer } from './Buffer';
 export class Integer3Buffer extends Buffer<Vector3Array> {
     public readonly components = 3;
 
-    public source: Int32Array;
+    public source: Int8Array | Int16Array | Int32Array;
 
-    public constructor(source: number[] | Int32Array) {
+    public constructor(source: number[] | Int8Array | Int16Array | Int32Array) {
         super();
 
-        this.source = new Int32Array(source);
+        if (Array.isArray(source)) {
+            this.source = new Int32Array(source);
+
+            return;
+        }
+
+        this.source = source;
     }
 
     public set(index: number, x: number, y: number, z: number): this {

@@ -4,7 +4,9 @@ import type { Vector2Array } from '@/Maths/Vector2';
 import type { Vector3Array } from '@/Maths/Vector3';
 import type { Vector4Array } from '@/Maths/Vector4';
 
-export abstract class Buffer<T extends number | Vector2Array | Vector3Array | Vector4Array>
+type BufferElement = number | Vector2Array | Vector3Array | Vector4Array;
+
+export abstract class Buffer<T extends BufferElement = BufferElement>
     implements Type, Iterable<T>
 {
     public abstract readonly components: number;

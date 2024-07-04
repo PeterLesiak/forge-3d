@@ -5,12 +5,20 @@ import { Buffer } from './Buffer';
 export class UInteger4Buffer extends Buffer<Vector4Array> {
     public readonly components = 4;
 
-    public source: Uint32Array;
+    public source: Uint8Array | Uint8ClampedArray | Uint16Array | Uint32Array;
 
-    public constructor(source: number[] | Uint32Array) {
+    public constructor(
+        source: number[] | Uint8Array | Uint8ClampedArray | Uint16Array | Uint32Array,
+    ) {
         super();
 
-        this.source = new Uint32Array(source);
+        if (Array.isArray(source)) {
+            this.source = new Uint32Array(source);
+
+            return;
+        }
+
+        this.source = source;
     }
 
     public set(index: number, x: number, y: number, z: number, w: number): this {
