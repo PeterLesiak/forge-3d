@@ -3,3 +3,4 @@ export * from '@/Maths';
 export * from '@/Buffers';
 export * from '@/Node';
 export * from '@/Scene';
+export * from '@/Cameras';
