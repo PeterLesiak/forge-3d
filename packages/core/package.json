@@ -13,7 +13,9 @@
         "./Maths": "./build/Maths/index.js",
         "./Cameras": "./build/Cameras/index.js",
         "./Buffers": "./build/Buffers/index.js",
-        "./Meshes": "./build/Meshes/index.js"
+        "./Meshes": "./build/Meshes/index.js",
+        "./Meshes/MeshBuilder/index": "./build/Meshes/MeshBuilder/index.js",
+        "./Meshes/MeshBuilder/index.js": "./build/Meshes/MeshBuilder/index.js"
     },
     "devDependencies": {
         "@forge-3d/internal": "workspace:^"
