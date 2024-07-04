@@ -42,6 +42,11 @@
 > ```bash
 > bun add @forge-3d/core
 > ```
+>
+> <!-- prettier-ignore -->
+> ```html
+> <script src="https://www.unpkg.com/@forge-3d/core/build/index.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+> ```
 
 #### Example - Spinning Cube
 
@@ -62,7 +67,7 @@ const scene = new Scene();
 const camera = new Camera(scene);
 camera.position.z = -10.0;
 
-// Mesh is a collection of Geometry & Material (already defined by Cube class helper)
+// Mesh is a collection of Geometry & Material (already created by Cube class helper)
 const cube = new MeshBuilder.Cube(scene);
 
 // onTick is notified every frame (deltaTime: time between last frame in seconds)
@@ -87,7 +92,7 @@ git clone https://github.com/PeterLesiak/forge-3d.git
 pnpm install
 
 # builds for production (see scripts in package.json)
-pnpm <package>:build # e.g. pnpm core:build
+pnpm <package>:build # e.g. core:build
 ```
 
 <h2 id="contributing">Contributing</h2>
