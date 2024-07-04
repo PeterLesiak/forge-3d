@@ -1,26 +1,15 @@
 import type { Nullable } from '@/Types/Utilities';
+import { Matrix } from '@/Maths/Matrix';
 import { Transform } from '@/Maths/Transform';
 
 export class Node extends Transform implements Iterable<Node> {
-    public readonly children: Node[] = [];
-
-    private _parent: Nullable<Node> = null;
-
-    public get parent(): Nullable<Node> {
-        return this._parent;
-    }
-
-    private _root: Node = this;
-
-    public get root(): Node {
-        return this._root;
-    }
-
     public constructor(parent: Nullable<Node> = null) {
         super();
 
         parent?.add(this);
     }
+
+    public readonly children: Node[] = [];
 
     public get isEmpty(): boolean {
         return !this.children.length;
@@ -34,6 +23,18 @@ export class Node extends Transform implements Iterable<Node> {
         }
 
         return false;
+    }
+
+    private _root: Node = this;
+
+    public get root(): Node {
+        return this._root;
+    }
+
+    private _parent: Nullable<Node> = null;
+
+    public get parent(): Nullable<Node> {
+        return this._parent;
     }
 
     public add(...nodes: Nullable<Node>[]): this {
@@ -108,6 +109,31 @@ export class Node extends Transform implements Iterable<Node> {
         }
 
         return this;
+    }
+
+    public worldMatrix: Matrix = Matrix.Identity();
+
+    public computeWorldMatrix(
+        updateParents: boolean = true,
+        updateChildren: boolean = false,
+    ): Matrix {
+        if (this.parent) {
+            if (updateParents) {
+                this.parent.computeWorldMatrix(true, false);
+            }
+
+            this.worldMatrix.multiplyMatrices(this.parent.worldMatrix, this.localMatrix);
+        } else {
+            this.worldMatrix.copy(this.localMatrix);
+        }
+
+        if (updateChildren) {
+            for (const child of this.children) {
+                child.computeWorldMatrix(false, true);
+            }
+        }
+
+        return this.worldMatrix;
     }
 
     public *[Symbol.iterator](): Iterator<Node, void> {

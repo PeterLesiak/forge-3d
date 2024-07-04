@@ -13,5 +13,11 @@ export class Transform implements Type {
 
     public readonly localMatrix: Matrix = Matrix.Identity();
 
+    public computeLocalMatrix(): Matrix {
+        this.localMatrix.compose(this.position, this.rotation, this.scale);
+
+        return this.localMatrix;
+    }
+
     public label: string = '';
 }
