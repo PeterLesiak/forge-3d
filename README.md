@@ -1,3 +1,8 @@
+<div align="center">
+    <img src="./resources/logo.png" />
+    <hr>
+</div>
+
 <h1 align="center">forge-3d</h1>
 
 <div align="center">
@@ -55,7 +60,7 @@
 import { Engine } from '@forge-3d/core/Engine';
 import { Scene } from '@forge-3d/core/Scene';
 import { Camera } from '@forge-3d/core/Cameras/Camera';
-import { PointLight } from '@forge-3d/core/Lights/Pointlight';
+import { PointLight } from '@forge-3d/core/Lights/PointLight';
 import * as MeshBuilder from '@forge-3d/core/Meshes/MeshBuilder';
 
 // Engine is responsible for rendering to the canvas
