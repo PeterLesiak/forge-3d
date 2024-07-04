@@ -18,6 +18,7 @@
 
 <p align="center">
     <a href="#getting-started"><strong>Getting Started</strong></a> ·
+    <a href="#more-examples"><strong>More Examples</strong></a> ·
     <a href="#documentation"><strong>Documentation</strong></a> ·
     <a href="#development"><strong>Development</strong></a> ·
     <a href="#contributing"><strong>Contributing</strong></a>
@@ -25,7 +26,7 @@
 
 <h2 id="getting-started">Getting Started</h2>
 
-#### Instalation
+#### 📦 Instalation
 
 > ```bash
 > npm install --save @forge-3d/core
@@ -48,7 +49,7 @@
 > <script src="https://www.unpkg.com/@forge-3d/core/build/index.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 > ```
 
-#### Example - Spinning Cube
+#### ✨ Example - Spinning Cube
 
 ```javascript
 import { Engine } from '@forge-3d/core/Engine';
@@ -72,13 +73,14 @@ const cube = new MeshBuilder.Cube(scene);
 
 // onTick is notified every frame (deltaTime: time between last frame in seconds)
 scene.onTick(deltaTime => {
-    // Rotation is set in Euler Angles and internally stored as Quaternion
+    // Rotation is specified in Euler Angles and internally stored as Quaternion
     cube.rotate(0.1 * deltaTime, 0.2 * deltaTime, 0.3 * deltaTime);
 
-    // Renders to the canvas
     engine.render(scene);
 });
 ```
+
+<h2 id="more-examples">More Examples</h2>
 
 <h2 id="documentation">Documentation</h2>
 
