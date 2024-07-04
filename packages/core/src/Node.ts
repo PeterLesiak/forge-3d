@@ -55,6 +55,19 @@ export class Node extends Transform implements Iterable<Node> {
         return this;
     }
 
+    public addUnSafe(...nodes: Nullable<Node>[]): this {
+        for (const node of nodes) {
+            if (!node) continue;
+
+            this.children.push(node);
+
+            node._parent = this;
+            node._root = this.root;
+        }
+
+        return this;
+    }
+
     public remove(...nodes: Nullable<Node>[]): this {
         for (const node of this) {
             if (nodes.includes(node)) {
