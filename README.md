@@ -1,7 +1,7 @@
 <h1 align="center">forge-3d</h1>
 
 <div align="center">
-    <strong>Typescript library for 3d & 2d scenes using WebGL/WebGPU</strong>
+    <strong>Typescript library for 3d & 2d scenes using <b>WebGL/WebGPU</b></strong>
 </div>
 
 <br />
@@ -43,7 +43,7 @@
 > bun add @forge-3d/core
 > ```
 
-#### Example
+#### Example - Spinning Cube
 
 ```javascript
 import { Engine } from '@forge-3d/core/Engine';
