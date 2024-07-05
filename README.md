@@ -20,17 +20,33 @@
 
 </div>
 
-<p align="center">
-    <a href="#getting-started"><strong>Getting Started</strong></a> ·
-    <a href="#more-examples"><strong>More Examples</strong></a> ·
-    <a href="#documentation"><strong>Documentation</strong></a> ·
-    <a href="#development"><strong>Development</strong></a> ·
-    <a href="#contributing"><strong>Contributing</strong></a>
-</p>
+<div align="center">
+
+[**Getting Started**](#getting-started) ·
+[**More Examples**](#more-examples) ·
+[**Documentation**](#documentation) ·
+[**Development**](#development) ·
+[**Contributing**](#contributing)
+
+</div>
 
 <hr />
 
 <h2 id="getting-started">Getting Started</h2>
+
+#### 🏹 Quickly bootstrap a new project
+
+> ```bash
+> npm create @forge-3d # or pnpm yarn bun
+> ```
+>
+> ```bash
+> cd <project-path>
+> ```
+>
+> ```bash
+> npm install # or pnpm yarn bun
+> ```
 
 #### 📦 Instalation
 
@@ -75,14 +91,14 @@
 > const camera = new Camera(scene);
 > camera.position.z = -10.0;
 >
-> // PointLight is a type of light that acts like a light bulb
+> // PointLight behaves similarly to a light bulb
 > const light = new PointLight(scene);
 > light.position.set(0.5, 1.5, -0.5);
 >
-> // Mesh is a collection of Geometry & Material (already created by Cube class helper)
+> // Mesh is a collection of Geometry & Material (already created by Cube helper)
 > const cube = new MeshBuilder.Cube(scene);
 >
-> // onTick is notified every frame (deltaTime: time between last frame in seconds)
+> // onTick is notified every frame
 > scene.onTick(deltaTime => {
 >     // Rotation is specified in Euler Angles and internally stored as Quaternion
 >     cube.rotate(0.1 * deltaTime, 0.2 * deltaTime, 0.3 * deltaTime);
