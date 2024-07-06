@@ -1,4 +1,4 @@
-export { Buffer } from './Buffer';
+export { Buffer, type BufferElement } from './Buffer';
 
 export { IntegerBuffer } from './IntegerBuffer';
 export { Integer2Buffer } from './Integer2Buffer';

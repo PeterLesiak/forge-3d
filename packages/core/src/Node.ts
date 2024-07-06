@@ -1,28 +1,21 @@
 import type { Nullable } from '@/Types/Utilities';
+import { Observable, type Observer, type ObserverFunction } from '@/Observer';
 import { Matrix } from '@/Maths/Matrix';
 import { Transform } from '@/Maths/Transform';
+
+export type OnChildAdded = ObserverFunction<{ dispatcher: Node; node: Node }>;
+
+export type OnChildRemoved = ObserverFunction<{ dispatcher: Node; child: Node; parent: Node }>;
+
+export type OnBeforeRender = ObserverFunction<{ dispatcher: Node }>;
+
+export type OnAfterRender = ObserverFunction<{ dispatcher: Node }>;
 
 export class Node extends Transform implements Iterable<Node> {
     public constructor(parent: Nullable<Node> = null) {
         super();
 
         parent?.add(this);
-    }
-
-    public readonly children: Node[] = [];
-
-    public get isEmpty(): boolean {
-        return !this.children.length;
-    }
-
-    public contains(...nodes: Nullable<Node>[]): boolean {
-        for (const node of this) {
-            if (nodes.includes(node)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private _root: Node = this;
@@ -37,13 +30,35 @@ export class Node extends Transform implements Iterable<Node> {
         return this._parent;
     }
 
+    public readonly children: Node[] = [];
+
+    public get isEmpty(): boolean {
+        return !this.children.length;
+    }
+
+    public has(...nodes: Nullable<Node>[]): boolean {
+        for (const node of this) {
+            if (nodes.includes(node)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public onChildAddedObservable = new Observable<OnChildAdded>();
+
+    public onChildAdded(callback: OnChildAdded): Observer<OnChildAdded> {
+        return this.onChildAddedObservable.add(callback);
+    }
+
     public add(...nodes: Nullable<Node>[]): this {
         for (const node of nodes) {
             if (!node) continue;
 
-            if (node === this) continue;
+            if (node == this) continue;
 
-            if (node.contains(this)) continue;
+            if (node.has(this)) continue;
 
             node.removeFromParent();
 
@@ -51,6 +66,11 @@ export class Node extends Transform implements Iterable<Node> {
 
             node._parent = this;
             node._root = this.root;
+
+            this.traverseParents(
+                parent => parent.onChildAddedObservable.dispatch({ dispatcher: parent, node }),
+                true,
+            );
         }
 
         return this;
@@ -60,13 +80,26 @@ export class Node extends Transform implements Iterable<Node> {
         for (const node of nodes) {
             if (!node) continue;
 
+            node.removeFromParent();
+
             this.children.push(node);
 
             node._parent = this;
             node._root = this.root;
+
+            this.traverseParents(
+                parent => parent.onChildAddedObservable.dispatch({ dispatcher: parent, node }),
+                true,
+            );
         }
 
         return this;
+    }
+
+    public onChildRemovedObservable = new Observable<OnChildRemoved>();
+
+    public onChildRemoved(callback: OnChildRemoved): Observer<OnChildRemoved> {
+        return this.onChildRemovedObservable.add(callback);
     }
 
     public remove(...nodes: Nullable<Node>[]): this {
@@ -80,18 +113,31 @@ export class Node extends Transform implements Iterable<Node> {
     }
 
     public removeFromParent(): this {
-        if (!this.parent) return this;
+        const parent = this.parent;
 
-        const index = this.parent.children.indexOf(this);
+        if (!parent) return this;
 
-        this.parent.children.splice(index, 1);
+        const index = parent.children.indexOf(this);
+
+        parent.children.splice(index, 1);
+
         this._parent = null;
         this._root = this;
+
+        this.traverseParents(
+            node =>
+                node.onChildRemovedObservable.dispatch({
+                    dispatcher: node,
+                    child: this,
+                    parent,
+                }),
+            true,
+        );
 
         return this;
     }
 
-    public removeAll(): this {
+    public clear(): this {
         for (const node of this.children) {
             node.removeFromParent();
         }
@@ -99,7 +145,7 @@ export class Node extends Transform implements Iterable<Node> {
         return this;
     }
 
-    public traverse(callback: (node: Node) => any, includeSelf: boolean = false): this {
+    public traverse(callback: (node: Node) => void, includeSelf: boolean = false): this {
         if (includeSelf) {
             callback(this);
         }
@@ -109,6 +155,33 @@ export class Node extends Transform implements Iterable<Node> {
         }
 
         return this;
+    }
+
+    public traverseParents(
+        callback: (node: Node) => void,
+        includeSelf: boolean = false,
+    ): this {
+        if (includeSelf) {
+            callback(this);
+        }
+
+        if (this.parent) {
+            this.parent.traverseParents(callback, true);
+        }
+
+        return this;
+    }
+
+    public onBeforeRenderObservable = new Observable<OnBeforeRender>();
+
+    public onBeforeRender(callback: OnBeforeRender): Observer<OnBeforeRender> {
+        return this.onBeforeRenderObservable.add(callback);
+    }
+
+    public onAfterRenderObservable = new Observable<OnAfterRender>();
+
+    public onAfterRender(callback: OnAfterRender): Observer<OnAfterRender> {
+        return this.onAfterRenderObservable.add(callback);
     }
 
     public worldMatrix: Matrix = Matrix.Identity();

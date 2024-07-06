@@ -1,3 +1,4 @@
-import * as FORGE from '@forge-3d/core';
+import { Node } from '@forge-3d/core/Node';
 
-console.log(FORGE);
+const root = new Node();
+root.label = 'root';

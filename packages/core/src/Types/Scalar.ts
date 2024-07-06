@@ -1,3 +1,3 @@
-export type Radians = number;
+export type Degrees = number;
 
-export type Degress = number;
+export type Radians = number;

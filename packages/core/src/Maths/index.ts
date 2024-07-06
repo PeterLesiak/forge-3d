@@ -1,6 +1,10 @@
+export { UIDGenerator, type UID } from './UIDGenerator';
+
 export { CoordinateSystem } from './CoordinateSystem';
 
-export { Viewport } from './Viewport';
+export { equals, EPSILON } from './Utilities';
+
+export { Viewport, type ViewportArray } from './Viewport';
 
 export { Vector2, type Vector2Array } from './Vector2';
 export { Vector3, type Vector3Array } from './Vector3';

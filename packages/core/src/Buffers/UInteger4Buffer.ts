@@ -1,3 +1,4 @@
+import type { UIntegerArray } from '@/Types/Array';
 import type { Vector4Array } from '@/Maths/Vector4';
 
 import { Buffer } from './Buffer';
@@ -5,37 +6,35 @@ import { Buffer } from './Buffer';
 export class UInteger4Buffer extends Buffer<Vector4Array> {
     public readonly components = 4;
 
-    public source: Uint8Array | Uint8ClampedArray | Uint16Array | Uint32Array;
+    protected _source: UIntegerArray;
 
-    public constructor(
-        source: number[] | Uint8Array | Uint8ClampedArray | Uint16Array | Uint32Array,
-    ) {
+    public constructor(source: number[] | UIntegerArray) {
         super();
 
         if (Array.isArray(source)) {
-            this.source = new Uint32Array(source);
+            this._source = new Uint32Array(source);
 
             return;
         }
 
-        this.source = source;
+        this._source = source.map(value => value);
     }
 
     public set(index: number, x: number, y: number, z: number, w: number): this {
-        this.source[index + 0] = x;
-        this.source[index + 1] = y;
-        this.source[index + 2] = z;
-        this.source[index + 3] = w;
+        this._source[index + 0] = x;
+        this._source[index + 1] = y;
+        this._source[index + 2] = z;
+        this._source[index + 3] = w;
 
         return this;
     }
 
     public get(index: number): Vector4Array {
         return [
-            this.source[index + 0],
-            this.source[index + 1],
-            this.source[index + 2],
-            this.source[index + 3],
+            this._source[index + 0],
+            this._source[index + 1],
+            this._source[index + 2],
+            this._source[index + 3],
         ];
     }
 }
