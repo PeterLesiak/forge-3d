@@ -6,22 +6,36 @@ import type { Float2Buffer } from '@/Buffers/Float2Buffer';
 import type { Float3Buffer } from '@/Buffers/Float3Buffer';
 
 export class Geometry implements Type {
-    private _buffers: Map<string, Buffer> = new Map();
+    public buffers = new Map<string, Buffer>();
+
+    public clone(): Geometry {
+        const geometry = new Geometry();
+
+        this.buffers.forEach((buffer, name) => {
+            geometry.setBuffer(name, buffer.clone());
+        });
+
+        if (this.indexBuffer) {
+            geometry.setIndex(this.indexBuffer.clone());
+        }
+
+        return geometry;
+    }
 
     public setBuffer(name: string, buffer: Buffer): this {
-        this._buffers.set(name, buffer);
+        this.buffers.set(name, buffer);
 
         return this;
     }
 
     public getBuffer(name: string): Nullable<Buffer> {
-        const buffer = this._buffers.get(name);
+        const buffer = this.buffers.get(name);
 
         return buffer ? buffer : null;
     }
 
     public deleteBuffer(name: string): this {
-        this._buffers.delete(name);
+        this.buffers.delete(name);
 
         return this;
     }

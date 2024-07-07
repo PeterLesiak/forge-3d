@@ -1,34 +1,61 @@
+import type { Type } from '@/Types/Type';
 import type { FloatArray } from '@/Types/Array';
+import { Observable, type Observer, makeProxyObserver } from '@/Observer';
 import type { Vector3Array } from '@/Maths/Vector3';
 
-import { Buffer } from './Buffer';
+import type { OnBufferUpdate } from './Buffer';
 
-export class Float3Buffer extends Buffer<Vector3Array> {
-    public readonly components = 3;
+export class Float3Buffer implements Type, Iterable<Vector3Array> {
+    public readonly source: FloatArray;
 
-    protected _source: FloatArray;
+    public onUpdateObservable = new Observable<OnBufferUpdate<Float3Buffer>>();
+
+    public onUpdate(
+        callback: OnBufferUpdate<Float3Buffer>,
+    ): Observer<OnBufferUpdate<Float3Buffer>> {
+        return this.onUpdateObservable.add(callback);
+    }
 
     public constructor(source: number[] | FloatArray) {
-        super();
+        const proxyTarget = Array.isArray(source) ? new Float32Array(source) : source;
 
-        if (Array.isArray(source)) {
-            this._source = new Float32Array(source);
+        this.source = makeProxyObserver(proxyTarget, ({ previous }) => {
+            this.onUpdateObservable.dispatch({
+                dispatcher: this,
+                previous: new Float3Buffer(previous),
+            });
+        });
+    }
 
-            return;
-        }
+    public clone(): Float3Buffer {
+        return new Float3Buffer(this.source.map(value => value));
+    }
 
-        this._source = source.map(value => value);
+    public get length(): number {
+        return this.source.length / 3;
+    }
+
+    public get(index: number): Vector3Array {
+        return [this.source[index], this.source[index + 1], this.source[index + 2]];
     }
 
     public set(index: number, x: number, y: number, z: number): this {
-        this._source[index + 0] = x;
-        this._source[index + 1] = y;
-        this._source[index + 2] = z;
+        const previous = this.clone();
+
+        this.source[index + 0] = x;
+        this.source[index + 1] = y;
+        this.source[index + 2] = z;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
 
         return this;
     }
 
-    public get(index: number): Vector3Array {
-        return [this._source[index], this._source[index + 1], this._source[index + 2]];
+    public label: string = '';
+
+    public *[Symbol.iterator](): Iterator<Vector3Array> {
+        for (let i = 0; i < this.source.length; i += 3) {
+            yield this.get(i);
+        }
     }
 }

@@ -1,31 +1,88 @@
 import type { DataArray } from '@/Types/Array';
 import type { Type } from '@/Types/Type';
+import { Observable, type Observer, type ObserverFunction } from '@/Observer';
 
 import { equals } from './Utilities';
 
 export type QuaternionArray = [number, number, number, number];
 
+export type OnQuaternionUpdate = ObserverFunction<{
+    dispatcher: Quaternion;
+    previous: Quaternion;
+}>;
+
 export class Quaternion implements Type, Iterable<number> {
-    public x: number;
+    public onUpdateObservable = new Observable<OnQuaternionUpdate>();
 
-    public y: number;
+    public onUpdate(callback: OnQuaternionUpdate): Observer<OnQuaternionUpdate> {
+        return this.onUpdateObservable.add(callback);
+    }
 
-    public z: number;
+    private _x: number;
 
-    public w: number;
+    public get x(): number {
+        return this._x;
+    }
+
+    public set x(value: number) {
+        const previous = this.clone();
+
+        this._x = value;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+    }
+
+    private _y: number;
+
+    public get y(): number {
+        return this._y;
+    }
+
+    public set y(value: number) {
+        const previous = this.clone();
+
+        this._y = value;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+    }
+
+    private _z: number;
+
+    public get z(): number {
+        return this._z;
+    }
+
+    public set z(value: number) {
+        const previous = this.clone();
+
+        this._z = value;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+    }
+
+    private _w: number;
+
+    public get w(): number {
+        return this._w;
+    }
+
+    public set w(value: number) {
+        const previous = this.clone();
+
+        this._w = value;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+    }
 
     public constructor(x: number, y: number, z: number, w: number) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.w = w;
+        this._x = x;
+        this._y = y;
+        this._z = z;
+        this._w = w;
     }
 
     public copy(other: Quaternion): this {
-        this.x = other.x;
-        this.y = other.y;
-        this.z = other.z;
-        this.w = other.w;
+        this.set(other.x, other.y, other.z, other.w);
 
         return this;
     }
@@ -35,19 +92,20 @@ export class Quaternion implements Type, Iterable<number> {
     }
 
     public set(x: number, y: number, z: number, w: number): this {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.w = w;
+        const previous = this.clone();
+
+        this._x = x;
+        this._y = y;
+        this._z = z;
+        this._w = w;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
 
         return this;
     }
 
     public setScalar(scalar: number): this {
-        this.x = scalar;
-        this.y = scalar;
-        this.z = scalar;
-        this.w = scalar;
+        this.set(scalar, scalar, scalar, scalar);
 
         return this;
     }
@@ -76,10 +134,7 @@ export class Quaternion implements Type, Iterable<number> {
     }
 
     public fromArray(array: DataArray, offset: number = 0): this {
-        this.x = array[offset + 0];
-        this.y = array[offset + 1];
-        this.z = array[offset + 2];
-        this.w = array[offset + 3];
+        this.set(array[offset], array[offset + 1], array[offset + 2], array[offset + 3]);
 
         return this;
     }
@@ -98,6 +153,8 @@ export class Quaternion implements Type, Iterable<number> {
     }
 
     public multiplyQuaternions(a: Quaternion, b: Quaternion): this {
+        const previous = this.clone();
+
         const ax = a.x;
         const ay = a.y;
         const az = a.z;
@@ -108,19 +165,24 @@ export class Quaternion implements Type, Iterable<number> {
         const bz = b.z;
         const bw = b.w;
 
-        this.x = ax * bw + aw * bx + ay * bz - az * by;
-        this.y = ay * bw + aw * by + az * bx - ax * bz;
-        this.z = az * bw + aw * bz + ax * by - ay * bx;
-        this.w = aw * bw - ax * bx - ay * by - az * bz;
+        this._x = ax * bw + aw * bx + ay * bz - az * by;
+        this._y = ay * bw + aw * by + az * bx - ax * bz;
+        this._z = az * bw + aw * bz + ax * by - ay * bx;
+        this._w = aw * bw - ax * bx - ay * by - az * bz;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+
+        return this;
+    }
+
+    public multiplyFlat(x: number, y: number, z: number, w: number): this {
+        this.set(this.x * x, this.y * y, this.z * z, this.w * w);
 
         return this;
     }
 
     public multiplyScalar(scalar: number): this {
-        this.x *= scalar;
-        this.y *= scalar;
-        this.z *= scalar;
-        this.w *= scalar;
+        this.set(this.x * scalar, this.y * scalar, this.z * scalar, this.w * scalar);
 
         return this;
     }
@@ -151,9 +213,7 @@ export class Quaternion implements Type, Iterable<number> {
     }
 
     public conjugate(): this {
-        this.x *= -1.0;
-        this.y *= -1.0;
-        this.z *= -1.0;
+        this.multiplyFlat(-1.0, -1.0, -1.0, 1.0);
 
         return this;
     }
@@ -197,8 +257,7 @@ export class Quaternion implements Type, Iterable<number> {
             return this;
         }
 
-        this.conjugate();
-        this.multiplyScalar(1.0 / dot);
+        this.multiplyFlat(-1.0 / dot, -1.0 / dot, -1.0 / dot, 1.0 / dot);
 
         return this;
     }

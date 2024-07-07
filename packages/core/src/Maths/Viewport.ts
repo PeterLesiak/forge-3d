@@ -1,21 +1,53 @@
 import type { DataArray } from '@/Types/Array';
 import type { Type } from '@/Types/Type';
+import { Observable, type Observer, type ObserverFunction } from '@/Observer';
 
 export type ViewportArray = [number, number];
 
-export class Viewport implements Type, Iterable<number> {
-    public width: number;
+export type OnViewportUpdate = ObserverFunction<{ dispatcher: Viewport; previous: Viewport }>;
 
-    public height: number;
+export class Viewport implements Type, Iterable<number> {
+    public onUpdateObservable = new Observable<OnViewportUpdate>();
+
+    public onUpdate(callback: OnViewportUpdate): Observer<OnViewportUpdate> {
+        return this.onUpdateObservable.add(callback);
+    }
+
+    private _width: number;
+
+    public get width(): number {
+        return this._width;
+    }
+
+    public set width(value: number) {
+        const previous = this.clone();
+
+        this._width = value;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+    }
+
+    private _height: number;
+
+    public get height(): number {
+        return this._height;
+    }
+
+    public set height(value: number) {
+        const previous = this.clone();
+
+        this._height = value;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+    }
 
     public constructor(width: number, height: number) {
-        this.width = width;
-        this.height = height;
+        this._width = width;
+        this._height = height;
     }
 
     public copy(other: Viewport): this {
-        this.width = other.width;
-        this.height = other.height;
+        this.set(other.width, other.height);
 
         return this;
     }
@@ -25,16 +57,18 @@ export class Viewport implements Type, Iterable<number> {
     }
 
     public set(width: number, height: number): this {
-        this.width = width;
-        this.height = height;
+        const previous = this.clone();
+
+        this._width = width;
+        this._height = height;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
 
         return this;
     }
 
     public setScalar(scalar: number): this {
-        this.width = scalar;
-        this.height = scalar;
-
+        this.set(scalar, scalar);
         return this;
     }
 
@@ -49,8 +83,7 @@ export class Viewport implements Type, Iterable<number> {
     }
 
     public fromArray(array: DataArray, offset: number = 0): this {
-        this.width = array[offset + 0];
-        this.height = array[offset + 1];
+        this.set(array[offset], array[offset + 1]);
 
         return this;
     }

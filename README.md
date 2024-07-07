@@ -99,7 +99,7 @@
 > const cube = new MeshBuilder.Cube(scene);
 >
 > // onTick is notified every frame
-> scene.onTick(deltaTime => {
+> scene.onTick(({ deltaTime }) => {
 >     // Rotation is specified in Euler Angles and internally stored as Quaternion
 >     cube.rotate(0.1 * deltaTime, 0.2 * deltaTime, 0.3 * deltaTime);
 >

@@ -1,27 +1,70 @@
 import type { DataArray } from '@/Types/Array';
 import type { Type } from '@/Types/Type';
+import { Observable, type Observer, type ObserverFunction } from '@/Observer';
 
 import { equals } from './Utilities';
 
 export type Vector3Array = [number, number, number];
 
+export type OnVector3Update = ObserverFunction<{ dispatcher: Vector3; previous: Vector3 }>;
+
 export class Vector3 implements Type, Iterable<number> {
-    public x: number;
+    public onUpdateObservable = new Observable<OnVector3Update>();
 
-    public y: number;
+    public onUpdate(callback: OnVector3Update): Observer<OnVector3Update> {
+        return this.onUpdateObservable.add(callback);
+    }
 
-    public z: number;
+    private _x: number;
+
+    public get x(): number {
+        return this._x;
+    }
+
+    public set x(value: number) {
+        const previous = this.clone();
+
+        this._x = value;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+    }
+
+    private _y: number;
+
+    public get y(): number {
+        return this._y;
+    }
+
+    public set y(value: number) {
+        const previous = this.clone();
+
+        this._y = value;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+    }
+
+    private _z: number;
+
+    public get z(): number {
+        return this._z;
+    }
+
+    public set z(value: number) {
+        const previous = this.clone();
+
+        this._z = value;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+    }
 
     public constructor(x: number, y: number, z: number) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this._x = x;
+        this._y = y;
+        this._z = z;
     }
 
     public copy(other: Vector3): this {
-        this.x = other.x;
-        this.y = other.y;
-        this.z = other.z;
+        this.set(other.x, other.y, other.z);
 
         return this;
     }
@@ -31,17 +74,19 @@ export class Vector3 implements Type, Iterable<number> {
     }
 
     public set(x: number, y: number, z: number): this {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        const previous = this.clone();
+
+        this._x = x;
+        this._y = y;
+        this._z = z;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
 
         return this;
     }
 
     public setScalar(scalar: number): this {
-        this.x = scalar;
-        this.y = scalar;
-        this.z = scalar;
+        this.set(scalar, scalar, scalar);
 
         return this;
     }
@@ -57,9 +102,7 @@ export class Vector3 implements Type, Iterable<number> {
     }
 
     public fromArray(array: DataArray, offset: number = 0): this {
-        this.x = array[offset + 0];
-        this.y = array[offset + 1];
-        this.z = array[offset + 2];
+        this.set(array[offset], array[offset + 1], array[offset + 2]);
 
         return this;
     }
@@ -77,17 +120,13 @@ export class Vector3 implements Type, Iterable<number> {
     }
 
     public addVectors(a: Vector3, b: Vector3): this {
-        this.x = a.x + b.x;
-        this.y = a.y + b.y;
-        this.z = a.z + b.z;
+        this.set(a.x + b.x, a.y + b.y, a.z + b.z);
 
         return this;
     }
 
     public addScalar(scalar: number): this {
-        this.x += scalar;
-        this.y += scalar;
-        this.z += scalar;
+        this.set(this.x + scalar, this.y + scalar, this.z + scalar);
 
         return this;
     }
@@ -99,17 +138,13 @@ export class Vector3 implements Type, Iterable<number> {
     }
 
     public subtractVectors(a: Vector3, b: Vector3): this {
-        this.x = a.x - b.x;
-        this.y = a.y - b.y;
-        this.z = a.z - b.z;
+        this.set(a.x - b.x, a.y - b.y, a.z - b.z);
 
         return this;
     }
 
     public subtractScalar(scalar: number): this {
-        this.x -= scalar;
-        this.y -= scalar;
-        this.z -= scalar;
+        this.set(this.x - scalar, this.y - scalar, this.z - scalar);
 
         return this;
     }
@@ -121,17 +156,13 @@ export class Vector3 implements Type, Iterable<number> {
     }
 
     public multiplyVectors(a: Vector3, b: Vector3): this {
-        this.x = a.x * b.x;
-        this.y = a.y * b.y;
-        this.z = a.z * b.z;
+        this.set(a.x * b.x, a.y * b.y, a.z * b.z);
 
         return this;
     }
 
     public multiplyScalar(scalar: number): this {
-        this.x *= scalar;
-        this.y *= scalar;
-        this.z *= scalar;
+        this.set(this.x * scalar, this.y * scalar, this.z * scalar);
 
         return this;
     }
@@ -143,17 +174,13 @@ export class Vector3 implements Type, Iterable<number> {
     }
 
     public divideVectors(a: Vector3, b: Vector3): this {
-        this.x = a.x / b.x;
-        this.y = a.y / b.y;
-        this.z = a.z / b.z;
+        this.set(a.x / b.x, a.y / b.y, a.z / b.z);
 
         return this;
     }
 
     public divideScalar(scalar: number): this {
-        this.x /= scalar;
-        this.y /= scalar;
-        this.z /= scalar;
+        this.set(this.x / scalar, this.y / scalar, this.z / scalar);
 
         return this;
     }

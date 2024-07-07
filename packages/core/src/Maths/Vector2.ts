@@ -1,23 +1,55 @@
 import type { DataArray } from '@/Types/Array';
 import type { Type } from '@/Types/Type';
+import { Observable, type Observer, type ObserverFunction } from '@/Observer';
 
 import { equals } from './Utilities';
 
 export type Vector2Array = [number, number];
 
-export class Vector2 implements Type, Iterable<number> {
-    public x: number;
+export type OnVector2Update = ObserverFunction<{ dispatcher: Vector2; previous: Vector2 }>;
 
-    public y: number;
+export class Vector2 implements Type, Iterable<number> {
+    public onUpdateObservable = new Observable<OnVector2Update>();
+
+    public onUpdate(callback: OnVector2Update): Observer<OnVector2Update> {
+        return this.onUpdateObservable.add(callback);
+    }
+
+    private _x: number;
+
+    public get x(): number {
+        return this._x;
+    }
+
+    public set x(value: number) {
+        const previous = this.clone();
+
+        this._x = value;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+    }
+
+    private _y: number;
+
+    public get y(): number {
+        return this._y;
+    }
+
+    public set y(value: number) {
+        const previous = this.clone();
+
+        this._y = value;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+    }
 
     public constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y;
+        this._x = x;
+        this._y = y;
     }
 
     public copy(other: Vector2): this {
-        this.x = other.x;
-        this.y = other.y;
+        this.set(other.x, other.y);
 
         return this;
     }
@@ -27,15 +59,18 @@ export class Vector2 implements Type, Iterable<number> {
     }
 
     public set(x: number, y: number): this {
-        this.x = x;
-        this.y = y;
+        const previous = this.clone();
+
+        this._x = x;
+        this._y = y;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
 
         return this;
     }
 
     public setScalar(scalar: number): this {
-        this.x = scalar;
-        this.y = scalar;
+        this.set(scalar, scalar);
 
         return this;
     }
@@ -51,8 +86,7 @@ export class Vector2 implements Type, Iterable<number> {
     }
 
     public fromArray(array: DataArray, offset: number = 0): this {
-        this.x = array[offset + 0];
-        this.y = array[offset + 1];
+        this.set(array[offset], array[offset + 1]);
 
         return this;
     }
@@ -69,15 +103,13 @@ export class Vector2 implements Type, Iterable<number> {
     }
 
     public addVectors(a: Vector2, b: Vector2): this {
-        this.x = a.x + b.x;
-        this.y = a.y + b.y;
+        this.set(a.x + b.x, a.y + b.y);
 
         return this;
     }
 
     public addScalar(scalar: number): this {
-        this.x += scalar;
-        this.y += scalar;
+        this.set(this.x + scalar, this.y + scalar);
 
         return this;
     }
@@ -89,15 +121,13 @@ export class Vector2 implements Type, Iterable<number> {
     }
 
     public subtractVectors(a: Vector2, b: Vector2): this {
-        this.x = a.x - b.x;
-        this.y = a.y - b.y;
+        this.set(a.x - b.x, a.y - b.y);
 
         return this;
     }
 
     public subtractScalar(scalar: number): this {
-        this.x -= scalar;
-        this.y -= scalar;
+        this.set(this.x - scalar, this.y - scalar);
 
         return this;
     }
@@ -109,15 +139,13 @@ export class Vector2 implements Type, Iterable<number> {
     }
 
     public multiplyVectors(a: Vector2, b: Vector2): this {
-        this.x = a.x * b.x;
-        this.y = a.y * b.y;
+        this.set(a.x * b.x, a.y * b.y);
 
         return this;
     }
 
     public multiplyScalar(scalar: number): this {
-        this.x *= scalar;
-        this.y *= scalar;
+        this.set(this.x * scalar, this.y * scalar);
 
         return this;
     }
@@ -129,15 +157,13 @@ export class Vector2 implements Type, Iterable<number> {
     }
 
     public divideVectors(a: Vector2, b: Vector2): this {
-        this.x = a.x / b.x;
-        this.y = a.y / b.y;
+        this.set(a.x / b.x, a.y / b.y);
 
         return this;
     }
 
     public divideScalar(scalar: number): this {
-        this.x /= scalar;
-        this.y /= scalar;
+        this.set(this.x / scalar, this.y / scalar);
 
         return this;
     }

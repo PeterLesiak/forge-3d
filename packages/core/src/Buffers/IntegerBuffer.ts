@@ -1,31 +1,58 @@
+import type { Type } from '@/Types/Type';
 import type { IntegerArray } from '@/Types/Array';
+import { Observable, type Observer, makeProxyObserver } from '@/Observer';
 
-import { Buffer } from './Buffer';
+import type { OnBufferUpdate } from './Buffer';
 
-export class IntegerBuffer extends Buffer<number> {
-    public readonly components = 1;
+export class IntegerBuffer implements Type, Iterable<number> {
+    public readonly source: IntegerArray;
 
-    protected _source: IntegerArray;
+    public onUpdateObservable = new Observable<OnBufferUpdate<IntegerBuffer>>();
 
-    public constructor(source: number[] | Int8Array | Int16Array | Int32Array) {
-        super();
+    public onUpdate(
+        callback: OnBufferUpdate<IntegerBuffer>,
+    ): Observer<OnBufferUpdate<IntegerBuffer>> {
+        return this.onUpdateObservable.add(callback);
+    }
 
-        if (Array.isArray(source)) {
-            this._source = new Int32Array(source);
+    public constructor(source: number[] | IntegerArray) {
+        const proxyTarget = Array.isArray(source) ? new Int32Array(source) : source;
 
-            return;
-        }
+        this.source = makeProxyObserver(proxyTarget, ({ previous }) => {
+            this.onUpdateObservable.dispatch({
+                dispatcher: this,
+                previous: new IntegerBuffer(previous),
+            });
+        });
+    }
 
-        this._source = source;
+    public clone(): IntegerBuffer {
+        return new IntegerBuffer(this.source.map(value => value));
+    }
+
+    public get length(): number {
+        return this.source.length;
+    }
+
+    public get(index: number): number {
+        return this.source[index];
     }
 
     public set(index: number, value: number): this {
-        this._source[index] = value;
+        const previous = this.clone();
+
+        this.source[index] = value;
+
+        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
 
         return this;
     }
 
-    public get(index: number): number {
-        return this._source[index];
+    public label: string = '';
+
+    public *[Symbol.iterator](): Iterator<number> {
+        for (let i = 0; i < this.source.length; ++i) {
+            yield this.source[i];
+        }
     }
 }

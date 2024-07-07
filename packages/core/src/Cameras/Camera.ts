@@ -41,4 +41,22 @@ export class Camera extends Node {
 
         return this.viewMatrix;
     }
+
+    public override copy(other: Camera): this {
+        super.copy(other);
+
+        this.fov = other.fov;
+        this.near = other.near;
+        this.far = other.far;
+
+        return this;
+    }
+
+    public override clone(): Camera {
+        const camera = new Camera();
+
+        camera.copy(this);
+
+        return camera;
+    }
 }

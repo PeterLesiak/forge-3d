@@ -19,5 +19,21 @@ export class Transform implements Type {
         return this.localMatrix;
     }
 
+    public copy(other: Transform): this {
+        this.position.copy(other.position);
+        this.rotation.copy(other.rotation);
+        this.scale.copy(other.scale);
+
+        return this;
+    }
+
+    public clone(): Transform {
+        const transform = new Transform();
+
+        transform.copy(this);
+
+        return transform;
+    }
+
     public label: string = '';
 }

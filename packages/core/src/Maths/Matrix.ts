@@ -16,7 +16,6 @@ export type Matrix4x4Array = [
 ];
 
 export class Matrix implements Type, Iterable<number> {
-    // prettier-ignore
     public readonly elements: Matrix4x4Array;
 
     // prettier-ignore
