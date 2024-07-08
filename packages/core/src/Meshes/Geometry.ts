@@ -1,17 +1,20 @@
 import type { Type } from '@/Types/Type';
 import type { Nullable } from '@/Types/Utilities';
+import { Observable, type Observer, type ObserverFunction } from '@/Observer';
 import type { Buffer } from '@/Buffers/Buffer';
 import type { UIntegerBuffer } from '@/Buffers/UIntegerBuffer';
 import type { Float2Buffer } from '@/Buffers/Float2Buffer';
 import type { Float3Buffer } from '@/Buffers/Float3Buffer';
 
+export type OnGeometryUpdate = ObserverFunction<{ dispatcher: Geometry; previous: Geometry }>;
+
 export class Geometry implements Type {
-    public buffers = new Map<string, Buffer>();
+    private _buffers = new Map<string, Buffer>();
 
     public clone(): Geometry {
         const geometry = new Geometry();
 
-        this.buffers.forEach((buffer, name) => {
+        this._buffers.forEach((buffer, name) => {
             geometry.setBuffer(name, buffer.clone());
         });
 
@@ -22,20 +25,34 @@ export class Geometry implements Type {
         return geometry;
     }
 
+    public readonly onGeometryUpdateObservable = new Observable<OnGeometryUpdate>();
+
+    public onGeometryUpdate(callback: OnGeometryUpdate): Observer<OnGeometryUpdate> {
+        return this.onGeometryUpdateObservable.add(callback);
+    }
+
     public setBuffer(name: string, buffer: Buffer): this {
-        this.buffers.set(name, buffer);
+        const previous = this.clone();
+
+        this._buffers.set(name, buffer);
+
+        this.onGeometryUpdateObservable.dispatch({ dispatcher: this, previous });
 
         return this;
     }
 
     public getBuffer(name: string): Nullable<Buffer> {
-        const buffer = this.buffers.get(name);
+        const buffer = this._buffers.get(name);
 
         return buffer ? buffer : null;
     }
 
     public deleteBuffer(name: string): this {
-        this.buffers.delete(name);
+        const previous = this.clone();
+
+        this._buffers.delete(name);
+
+        this.onGeometryUpdateObservable.dispatch({ dispatcher: this, previous });
 
         return this;
     }

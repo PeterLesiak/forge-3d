@@ -53,7 +53,7 @@ export class Node extends Transform implements Iterable<Node> {
         return false;
     }
 
-    public onChildAddedObservable = new Observable<OnChildAdded<this>>();
+    public readonly onChildAddedObservable = new Observable<OnChildAdded<this>>();
 
     public onChildAdded(callback: OnChildAdded): Observer<OnChildAdded<this>> {
         return this.onChildAddedObservable.add(callback);
@@ -103,7 +103,7 @@ export class Node extends Transform implements Iterable<Node> {
         return this;
     }
 
-    public onChildRemovedObservable = new Observable<OnChildRemoved<this>>();
+    public readonly onChildRemovedObservable = new Observable<OnChildRemoved<this>>();
 
     public onChildRemoved(callback: OnChildRemoved): Observer<OnChildRemoved<this>> {
         return this.onChildRemovedObservable.add(callback);
@@ -179,13 +179,13 @@ export class Node extends Transform implements Iterable<Node> {
         return this;
     }
 
-    public onBeforeRenderObservable = new Observable<OnBeforeRender<this>>();
+    public readonly onBeforeRenderObservable = new Observable<OnBeforeRender<this>>();
 
     public onBeforeRender(callback: OnBeforeRender<this>): Observer<OnBeforeRender<this>> {
         return this.onBeforeRenderObservable.add(callback);
     }
 
-    public onAfterRenderObservable = new Observable<OnAfterRender<this>>();
+    public readonly onAfterRenderObservable = new Observable<OnAfterRender<this>>();
 
     public onAfterRender(callback: OnAfterRender<this>): Observer<OnAfterRender<this>> {
         return this.onAfterRenderObservable.add(callback);

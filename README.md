@@ -68,7 +68,7 @@
 >
 > <!-- prettier-ignore -->
 > ```html
-> <script src="https://www.unpkg.com/@forge-3d/core/build/index.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+> <script src="https://esm.run/@forge-3d/core" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 > ```
 
 #### ✨ Example - Spinning Cube & Camera and Lighting

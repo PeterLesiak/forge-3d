@@ -1,5 +1,5 @@
-export { Geometry } from './Geometry';
+export { Geometry, type OnGeometryUpdate } from './Geometry';
 
-export { Mesh } from './Mesh';
+export { Mesh, type OnGeometryChange } from './Mesh';
 
 export * as MeshBuilder from './MeshBuilder';

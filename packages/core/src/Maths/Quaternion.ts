@@ -12,7 +12,7 @@ export type OnQuaternionUpdate = ObserverFunction<{
 }>;
 
 export class Quaternion implements Type, Iterable<number> {
-    public onUpdateObservable = new Observable<OnQuaternionUpdate>();
+    public readonly onUpdateObservable = new Observable<OnQuaternionUpdate>();
 
     public onUpdate(callback: OnQuaternionUpdate): Observer<OnQuaternionUpdate> {
         return this.onUpdateObservable.add(callback);

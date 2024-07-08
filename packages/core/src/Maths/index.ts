@@ -12,6 +12,6 @@ export { Vector4, type OnVector4Update, type Vector4Array } from './Vector4';
 
 export { Quaternion, type OnQuaternionUpdate, type QuaternionArray } from './Quaternion';
 
-export { Matrix, type Matrix4x4Array } from './Matrix';
+export { Matrix, type OnMatrixUpdate, type Matrix4x4Array } from './Matrix';
 
-export { Transform } from './Transform';
+export { Transform, type OnTransformUpdate } from './Transform';

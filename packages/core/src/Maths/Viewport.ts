@@ -7,7 +7,7 @@ export type ViewportArray = [number, number];
 export type OnViewportUpdate = ObserverFunction<{ dispatcher: Viewport; previous: Viewport }>;
 
 export class Viewport implements Type, Iterable<number> {
-    public onUpdateObservable = new Observable<OnViewportUpdate>();
+    public readonly onUpdateObservable = new Observable<OnViewportUpdate>();
 
     public onUpdate(callback: OnViewportUpdate): Observer<OnViewportUpdate> {
         return this.onUpdateObservable.add(callback);

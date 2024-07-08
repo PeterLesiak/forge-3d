@@ -2,23 +2,6 @@ import type { Type } from '@/Types/Type';
 
 export type ObserverFunction<T = undefined> = (event: T) => void;
 
-export const makeProxyObserver = <T extends object>(
-    target: T,
-    onUpdate: ObserverFunction<{ previous: T; current: T }>,
-): T => {
-    return new Proxy(target, {
-        set(target, p, newValue) {
-            const previous = JSON.parse(JSON.stringify(target));
-
-            const result = Reflect.set(target, p, newValue);
-
-            onUpdate({ previous, current: target });
-
-            return result;
-        },
-    });
-};
-
 export class Observer<T extends ObserverFunction<any>> {
     public observable: Observable<T>;
 
@@ -64,7 +47,7 @@ export class Observable<T extends ObserverFunction<any>> implements Type {
     }
 
     public clear(): this {
-        this._observers.length = 0;
+        this._observers = [];
 
         return this;
     }

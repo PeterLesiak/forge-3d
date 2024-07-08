@@ -1,14 +1,40 @@
 import type { Type } from '@/Types/Type';
 import type { UIntegerArray } from '@/Types/Array';
-import { Observable, type Observer, makeProxyObserver } from '@/Observer';
+import { Observable, type Observer } from '@/Observer';
 import type { Vector4Array } from '@/Maths/Vector4';
 
 import type { OnBufferUpdate } from './Buffer';
 
 export class UInteger4Buffer implements Type, Iterable<Vector4Array> {
-    public readonly source: UIntegerArray;
+    private readonly _source: UIntegerArray;
 
-    public onUpdateObservable = new Observable<OnBufferUpdate<UInteger4Buffer>>();
+    public constructor(source: number[] | UIntegerArray) {
+        if (Array.isArray(source)) {
+            this._source = new Uint32Array(source);
+            return;
+        }
+
+        this._source = source.map(value => value);
+    }
+
+    public clone(): UInteger4Buffer {
+        return new UInteger4Buffer(this._source.map(value => value));
+    }
+
+    public get length(): number {
+        return this._source.length / 4;
+    }
+
+    public get(index: number): Vector4Array {
+        return [
+            this._source[index + 0],
+            this._source[index + 1],
+            this._source[index + 2],
+            this._source[index + 3],
+        ];
+    }
+
+    public readonly onUpdateObservable = new Observable<OnBufferUpdate<UInteger4Buffer>>();
 
     public onUpdate(
         callback: OnBufferUpdate<UInteger4Buffer>,
@@ -16,41 +42,13 @@ export class UInteger4Buffer implements Type, Iterable<Vector4Array> {
         return this.onUpdateObservable.add(callback);
     }
 
-    public constructor(source: number[] | UIntegerArray) {
-        const proxyTarget = Array.isArray(source) ? new Uint32Array(source) : source;
-
-        this.source = makeProxyObserver(proxyTarget, ({ previous }) => {
-            this.onUpdateObservable.dispatch({
-                dispatcher: this,
-                previous: new UInteger4Buffer(previous),
-            });
-        });
-    }
-
-    public clone(): UInteger4Buffer {
-        return new UInteger4Buffer(this.source.map(value => value));
-    }
-
-    public get length(): number {
-        return this.source.length / 4;
-    }
-
-    public get(index: number): Vector4Array {
-        return [
-            this.source[index + 0],
-            this.source[index + 1],
-            this.source[index + 2],
-            this.source[index + 3],
-        ];
-    }
-
     public set(index: number, x: number, y: number, z: number, w: number): this {
         const previous = this.clone();
 
-        this.source[index + 0] = x;
-        this.source[index + 1] = y;
-        this.source[index + 2] = z;
-        this.source[index + 3] = w;
+        this._source[index + 0] = x;
+        this._source[index + 1] = y;
+        this._source[index + 2] = z;
+        this._source[index + 3] = w;
 
         this.onUpdateObservable.dispatch({ dispatcher: this, previous });
 
@@ -60,7 +58,7 @@ export class UInteger4Buffer implements Type, Iterable<Vector4Array> {
     public label: string = '';
 
     public *[Symbol.iterator](): Iterator<Vector4Array> {
-        for (let i = 0; i < this.source.length; i += 4) {
+        for (let i = 0; i < this._source.length; i += 4) {
             yield this.get(i);
         }
     }

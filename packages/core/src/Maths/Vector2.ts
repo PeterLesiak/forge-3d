@@ -9,7 +9,7 @@ export type Vector2Array = [number, number];
 export type OnVector2Update = ObserverFunction<{ dispatcher: Vector2; previous: Vector2 }>;
 
 export class Vector2 implements Type, Iterable<number> {
-    public onUpdateObservable = new Observable<OnVector2Update>();
+    public readonly onUpdateObservable = new Observable<OnVector2Update>();
 
     public onUpdate(callback: OnVector2Update): Observer<OnVector2Update> {
         return this.onUpdateObservable.add(callback);
