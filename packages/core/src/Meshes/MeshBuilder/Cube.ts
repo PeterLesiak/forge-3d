@@ -3,12 +3,20 @@ import type { Node } from '@/Node';
 import { UIntegerBuffer } from '@/Buffers/UIntegerBuffer';
 import { Float2Buffer } from '@/Buffers/Float2Buffer';
 import { Float3Buffer } from '@/Buffers/Float3Buffer';
+import type { Material } from '@/Materials/Material';
+import { StandardMaterial } from '@/Materials/StandardMaterial';
 
 import { Geometry } from '../Geometry';
 import { Mesh } from '../Mesh';
 
+export interface CubeConfiguration {
+    material?: Material;
+
+    parent?: Nullable<Node>;
+}
+
 export class Cube extends Mesh {
-    public constructor(parent: Nullable<Node> = null) {
+    public constructor(configuration: CubeConfiguration = {}) {
         // prettier-ignore
         const indexBuffer = new UIntegerBuffer([
             // front
@@ -160,6 +168,10 @@ export class Cube extends Mesh {
         geometry.setNormal(normalBuffer);
         geometry.setUV(uvBuffer);
 
-        super(geometry, parent);
+        const material = configuration.material || new StandardMaterial();
+
+        const parent = configuration.parent || null;
+
+        super(geometry, material, parent);
     }
 }

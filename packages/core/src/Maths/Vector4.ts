@@ -1,81 +1,24 @@
 import type { DataArray } from '@/Types/Array';
 import type { Type } from '@/Types/Type';
-import { Observable, type Observer, type ObserverFunction } from '@/Observer';
 
 import { equals } from './Utilities';
 
 export type Vector4Array = [number, number, number, number];
 
-export type OnVector4Update = ObserverFunction<{ dispatcher: Vector4; previous: Vector4 }>;
-
 export class Vector4 implements Type, Iterable<number> {
-    public readonly onUpdateObservable = new Observable<OnVector4Update>();
+    public x: number;
 
-    public onUpdate(callback: OnVector4Update): Observer<OnVector4Update> {
-        return this.onUpdateObservable.add(callback);
-    }
+    public y: number;
 
-    private _x: number;
+    public z: number;
 
-    public get x(): number {
-        return this._x;
-    }
-
-    public set x(value: number) {
-        const previous = this.clone();
-
-        this._x = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _y: number;
-
-    public get y(): number {
-        return this._y;
-    }
-
-    public set y(value: number) {
-        const previous = this.clone();
-
-        this._y = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _z: number;
-
-    public get z(): number {
-        return this._z;
-    }
-
-    public set z(value: number) {
-        const previous = this.clone();
-
-        this._z = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _w: number;
-
-    public get w(): number {
-        return this._w;
-    }
-
-    public set w(value: number) {
-        const previous = this.clone();
-
-        this._w = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
+    public w: number;
 
     public constructor(x: number, y: number, z: number, w: number) {
-        this._x = x;
-        this._y = y;
-        this._z = z;
-        this._w = w;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
     }
 
     public copy(other: Vector4): this {
@@ -89,20 +32,26 @@ export class Vector4 implements Type, Iterable<number> {
     }
 
     public set(x: number, y: number, z: number, w: number): this {
-        const previous = this.clone();
-
-        this._x = x;
-        this._y = y;
-        this._z = z;
-        this._w = w;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
 
         return this;
     }
 
     public setScalar(scalar: number): this {
         this.set(scalar, scalar, scalar, scalar);
+
+        return this;
+    }
+
+    public get isIdentity(): boolean {
+        return this.x == 0.0 && this.y == 0.0 && this.z == 0.0 && this.w == 1.0;
+    }
+
+    public setIdentity(): this {
+        this.set(0.0, 0.0, 0.0, 1.0);
 
         return this;
     }
@@ -255,40 +204,44 @@ export class Vector4 implements Type, Iterable<number> {
         return `(${this.x}, ${this.y}, ${this.z}, ${this.w})`;
     }
 
-    public static Zero(): Vector4 {
+    public static get identity(): Vector4 {
+        return new Vector4(0.0, 0.0, 0.0, 1.0);
+    }
+
+    public static get zero(): Vector4 {
         return new Vector4(0.0, 0.0, 0.0, 0.0);
     }
 
-    public static One(): Vector4 {
+    public static get one(): Vector4 {
         return new Vector4(1.0, 1.0, 1.0, 1.0);
     }
 
-    public static PositiveInfinity(): Vector4 {
+    public static get positiveInfinity(): Vector4 {
         return new Vector4(Infinity, Infinity, Infinity, Infinity);
     }
 
-    public static NegativeInfinity(): Vector4 {
+    public static get negativeInfinity(): Vector4 {
         return new Vector4(-Infinity, -Infinity, -Infinity, -Infinity);
     }
 
-    public static FromArray(array: DataArray, offset?: number): Vector4 {
-        return Vector4.Zero().fromArray(array, offset);
+    public static fromArray(array: DataArray, offset?: number): Vector4 {
+        return Vector4.zero.fromArray(array, offset);
     }
 
-    public static Add(a: Vector4, b: Vector4): Vector4 {
-        return Vector4.Zero().addVectors(a, b);
+    public static add(a: Vector4, b: Vector4): Vector4 {
+        return Vector4.zero.addVectors(a, b);
     }
 
-    public static Subtract(a: Vector4, b: Vector4): Vector4 {
-        return Vector4.Zero().subtractVectors(a, b);
+    public static subtract(a: Vector4, b: Vector4): Vector4 {
+        return Vector4.zero.subtractVectors(a, b);
     }
 
-    public static Multiply(a: Vector4, b: Vector4): Vector4 {
-        return Vector4.Zero().multiplyVectors(a, b);
+    public static multiply(a: Vector4, b: Vector4): Vector4 {
+        return Vector4.zero.multiplyVectors(a, b);
     }
 
-    public static Divide(a: Vector4, b: Vector4): Vector4 {
-        return Vector4.Zero().divideVectors(a, b);
+    public static divide(a: Vector4, b: Vector4): Vector4 {
+        return Vector4.zero.divideVectors(a, b);
     }
 
     public label: string = '';

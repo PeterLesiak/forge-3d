@@ -1,66 +1,21 @@
 import type { DataArray } from '@/Types/Array';
 import type { Type } from '@/Types/Type';
-import { Observable, type Observer, type ObserverFunction } from '@/Observer';
 
 import { equals } from './Utilities';
 
 export type Vector3Array = [number, number, number];
 
-export type OnVector3Update = ObserverFunction<{ dispatcher: Vector3; previous: Vector3 }>;
-
 export class Vector3 implements Type, Iterable<number> {
-    public readonly onUpdateObservable = new Observable<OnVector3Update>();
+    public x: number;
 
-    public onUpdate(callback: OnVector3Update): Observer<OnVector3Update> {
-        return this.onUpdateObservable.add(callback);
-    }
+    public y: number;
 
-    private _x: number;
-
-    public get x(): number {
-        return this._x;
-    }
-
-    public set x(value: number) {
-        const previous = this.clone();
-
-        this._x = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _y: number;
-
-    public get y(): number {
-        return this._y;
-    }
-
-    public set y(value: number) {
-        const previous = this.clone();
-
-        this._y = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _z: number;
-
-    public get z(): number {
-        return this._z;
-    }
-
-    public set z(value: number) {
-        const previous = this.clone();
-
-        this._z = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
+    public z: number;
 
     public constructor(x: number, y: number, z: number) {
-        this._x = x;
-        this._y = y;
-        this._z = z;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     public copy(other: Vector3): this {
@@ -74,13 +29,9 @@ export class Vector3 implements Type, Iterable<number> {
     }
 
     public set(x: number, y: number, z: number): this {
-        const previous = this.clone();
-
-        this._x = x;
-        this._y = y;
-        this._z = z;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+        this.x = x;
+        this.y = y;
+        this.z = z;
 
         return this;
     }
@@ -237,64 +188,64 @@ export class Vector3 implements Type, Iterable<number> {
         return `(${this.x}, ${this.y}, ${this.z})`;
     }
 
-    public static Zero(): Vector3 {
+    public static get zero(): Vector3 {
         return new Vector3(0.0, 0.0, 0.0);
     }
 
-    public static One(): Vector3 {
+    public static get one(): Vector3 {
         return new Vector3(1.0, 1.0, 1.0);
     }
 
-    public static Left(): Vector3 {
+    public static get left(): Vector3 {
         return new Vector3(-1.0, 0.0, 0.0);
     }
 
-    public static Right(): Vector3 {
+    public static get right(): Vector3 {
         return new Vector3(1.0, 0.0, 0.0);
     }
 
-    public static Up(): Vector3 {
+    public static get up(): Vector3 {
         return new Vector3(0.0, 1.0, 0.0);
     }
 
-    public static Down(): Vector3 {
+    public static get down(): Vector3 {
         return new Vector3(0.0, -1.0, 0.0);
     }
 
-    public static Forward(): Vector3 {
+    public static get forward(): Vector3 {
         return new Vector3(0.0, 0.0, 1.0);
     }
 
-    public static Back(): Vector3 {
+    public static get back(): Vector3 {
         return new Vector3(0.0, 0.0, -1.0);
     }
 
-    public static PositiveInfinity(): Vector3 {
+    public static get positiveInfinity(): Vector3 {
         return new Vector3(Infinity, Infinity, Infinity);
     }
 
-    public static NegativeInfinity(): Vector3 {
+    public static get negativeInfinity(): Vector3 {
         return new Vector3(-Infinity, -Infinity, -Infinity);
     }
 
-    public static FromArray(array: DataArray, offset?: number): Vector3 {
-        return Vector3.Zero().fromArray(array, offset);
+    public static fromArray(array: DataArray, offset?: number): Vector3 {
+        return Vector3.zero.fromArray(array, offset);
     }
 
-    public static Add(a: Vector3, b: Vector3): Vector3 {
-        return Vector3.Zero().addVectors(a, b);
+    public static add(a: Vector3, b: Vector3): Vector3 {
+        return Vector3.zero.addVectors(a, b);
     }
 
-    public static Subtract(a: Vector3, b: Vector3): Vector3 {
-        return Vector3.Zero().subtractVectors(a, b);
+    public static subtract(a: Vector3, b: Vector3): Vector3 {
+        return Vector3.zero.subtractVectors(a, b);
     }
 
-    public static Multiply(a: Vector3, b: Vector3): Vector3 {
-        return Vector3.Zero().multiplyVectors(a, b);
+    public static multiply(a: Vector3, b: Vector3): Vector3 {
+        return Vector3.zero.multiplyVectors(a, b);
     }
 
-    public static Divide(a: Vector3, b: Vector3): Vector3 {
-        return Vector3.Zero().divideVectors(a, b);
+    public static divide(a: Vector3, b: Vector3): Vector3 {
+        return Vector3.zero.divideVectors(a, b);
     }
 
     public label: string = '';

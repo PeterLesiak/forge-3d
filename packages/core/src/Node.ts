@@ -55,7 +55,7 @@ export class Node extends Transform implements Iterable<Node> {
 
     public readonly onChildAddedObservable = new Observable<OnChildAdded<this>>();
 
-    public onChildAdded(callback: OnChildAdded): Observer<OnChildAdded<this>> {
+    public onChildAdded(callback: OnChildAdded) {
         return this.onChildAddedObservable.add(callback);
     }
 
@@ -105,7 +105,7 @@ export class Node extends Transform implements Iterable<Node> {
 
     public readonly onChildRemovedObservable = new Observable<OnChildRemoved<this>>();
 
-    public onChildRemoved(callback: OnChildRemoved): Observer<OnChildRemoved<this>> {
+    public onChildRemoved(callback: OnChildRemoved) {
         return this.onChildRemovedObservable.add(callback);
     }
 
@@ -181,22 +181,19 @@ export class Node extends Transform implements Iterable<Node> {
 
     public readonly onBeforeRenderObservable = new Observable<OnBeforeRender<this>>();
 
-    public onBeforeRender(callback: OnBeforeRender<this>): Observer<OnBeforeRender<this>> {
+    public onBeforeRender(callback: OnBeforeRender<this>) {
         return this.onBeforeRenderObservable.add(callback);
     }
 
     public readonly onAfterRenderObservable = new Observable<OnAfterRender<this>>();
 
-    public onAfterRender(callback: OnAfterRender<this>): Observer<OnAfterRender<this>> {
+    public onAfterRender(callback: OnAfterRender<this>) {
         return this.onAfterRenderObservable.add(callback);
     }
 
-    public worldMatrix: Matrix = Matrix.Identity();
+    public readonly worldMatrix = Matrix.identity;
 
-    public computeWorldMatrix(
-        updateParents: boolean = true,
-        updateChildren: boolean = false,
-    ): Matrix {
+    public computeWorldMatrix(updateParents = true, updateChildren = false): Matrix {
         if (this.parent) {
             if (updateParents) {
                 this.parent.computeWorldMatrix(true, false);

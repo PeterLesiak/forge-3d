@@ -1,11 +1,11 @@
-import type { Type } from '@/Types/Type';
 import type { IntegerArray } from '@/Types/Array';
-import { Observable, type Observer } from '@/Observer';
 import type { Vector3Array } from '@/Maths/Vector3';
 
-import type { OnBufferUpdate } from './Buffer';
+import type { Buffer } from './Buffer';
 
-export class Integer3Buffer implements Type, Iterable<Vector3Array> {
+export class Integer3Buffer implements Buffer<Vector3Array> {
+    public readonly components = 3;
+
     private readonly _source: IntegerArray;
 
     public constructor(source: number[] | IntegerArray) {
@@ -18,41 +18,29 @@ export class Integer3Buffer implements Type, Iterable<Vector3Array> {
     }
 
     public clone(): Integer3Buffer {
-        return new Integer3Buffer(this._source.map(value => value));
+        return new Integer3Buffer(this._source);
     }
 
-    public get length(): number {
-        return this._source.length / 3;
+    public get size(): number {
+        return this._source.length / this.components;
     }
 
     public get(index: number): Vector3Array {
         return [this._source[index], this._source[index + 1], this._source[index + 2]];
     }
 
-    public readonly onUpdateObservable = new Observable<OnBufferUpdate<Integer3Buffer>>();
-
-    public onUpdate(
-        callback: OnBufferUpdate<Integer3Buffer>,
-    ): Observer<OnBufferUpdate<Integer3Buffer>> {
-        return this.onUpdateObservable.add(callback);
-    }
-
     public set(index: number, x: number, y: number, z: number): this {
-        const previous = this.clone();
-
         this._source[index + 0] = x;
         this._source[index + 1] = y;
         this._source[index + 2] = z;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
 
         return this;
     }
 
     public label: string = '';
 
-    public *[Symbol.iterator](): Iterator<Vector3Array> {
-        for (let i = 0; i < this._source.length; i += 3) {
+    public *[Symbol.iterator](): Iterator<Vector3Array, void> {
+        for (let i = 0; i < this._source.length; i += this.components) {
             yield this.get(i);
         }
     }

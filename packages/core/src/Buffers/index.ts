@@ -1,4 +1,4 @@
-export type { Buffer, OnBufferUpdate } from './Buffer';
+export type { Buffer } from './Buffer';
 
 export { IntegerBuffer } from './IntegerBuffer';
 export { Integer2Buffer } from './Integer2Buffer';

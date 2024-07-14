@@ -1,1 +1,1 @@
-export { Camera, type OnCameraUpdate } from './Camera';
+export { Camera } from './Camera';

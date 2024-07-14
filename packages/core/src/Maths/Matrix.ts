@@ -1,7 +1,6 @@
 import type { Radians } from '@/Types/Scalar';
 import type { DataArray } from '@/Types/Array';
 import type { Type } from '@/Types/Type';
-import { Observable, type Observer, type ObserverFunction } from '@/Observer';
 
 import { CoordinateSystem } from './CoordinateSystem';
 import { equals } from './Utilities';
@@ -16,238 +15,38 @@ export type Matrix4x4Array = [
     number, number, number, number,
 ];
 
-export type OnMatrixUpdate = ObserverFunction<{ dispatcher: Matrix; previous: Matrix }>;
-
 export class Matrix implements Type, Iterable<number> {
-    public readonly onUpdateObservable = new Observable<OnMatrixUpdate>();
+    public n11: number;
 
-    public onUpdate(callback: OnMatrixUpdate): Observer<OnMatrixUpdate> {
-        return this.onUpdateObservable.add(callback);
-    }
+    public n12: number;
 
-    private _n11: number;
+    public n13: number;
 
-    public get n11(): number {
-        return this._n11;
-    }
+    public n14: number;
 
-    public set n11(value: number) {
-        const previous = this.clone();
+    public n21: number;
 
-        this._n11 = value;
+    public n22: number;
 
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
+    public n23: number;
 
-    private _n12: number;
+    public n24: number;
 
-    public get n12(): number {
-        return this._n12;
-    }
+    public n31: number;
 
-    public set n12(value: number) {
-        const previous = this.clone();
+    public n32: number;
 
-        this._n12 = value;
+    public n33: number;
 
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
+    public n34: number;
 
-    private _n13: number;
+    public n41: number;
 
-    public get n13(): number {
-        return this._n13;
-    }
+    public n42: number;
 
-    public set n13(value: number) {
-        const previous = this.clone();
+    public n43: number;
 
-        this._n13 = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _n14: number;
-
-    public get n14(): number {
-        return this._n14;
-    }
-
-    public set n14(value: number) {
-        const previous = this.clone();
-
-        this._n14 = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _n21: number;
-
-    public get n21(): number {
-        return this._n21;
-    }
-
-    public set n21(value: number) {
-        const previous = this.clone();
-
-        this._n21 = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _n22: number;
-
-    public get n22(): number {
-        return this._n22;
-    }
-
-    public set n22(value: number) {
-        const previous = this.clone();
-
-        this._n22 = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _n23: number;
-
-    public get n23(): number {
-        return this._n23;
-    }
-
-    public set n23(value: number) {
-        const previous = this.clone();
-
-        this._n23 = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _n24: number;
-
-    public get n24(): number {
-        return this._n24;
-    }
-
-    public set n24(value: number) {
-        const previous = this.clone();
-
-        this._n24 = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _n31: number;
-
-    public get n31(): number {
-        return this._n31;
-    }
-
-    public set n31(value: number) {
-        const previous = this.clone();
-
-        this._n31 = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _n32: number;
-
-    public get n32(): number {
-        return this._n32;
-    }
-
-    public set n32(value: number) {
-        const previous = this.clone();
-
-        this._n32 = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _n33: number;
-
-    public get n33(): number {
-        return this._n33;
-    }
-
-    public set n33(value: number) {
-        const previous = this.clone();
-
-        this._n33 = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _n34: number;
-
-    public get n34(): number {
-        return this._n34;
-    }
-
-    public set n34(value: number) {
-        const previous = this.clone();
-
-        this._n34 = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _n41: number;
-
-    public get n41(): number {
-        return this._n41;
-    }
-
-    public set n41(value: number) {
-        const previous = this.clone();
-
-        this._n41 = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _n42: number;
-
-    public get n42(): number {
-        return this._n42;
-    }
-
-    public set n42(value: number) {
-        const previous = this.clone();
-
-        this._n42 = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _n43: number;
-
-    public get n43(): number {
-        return this._n43;
-    }
-
-    public set n43(value: number) {
-        const previous = this.clone();
-
-        this._n43 = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _n44: number;
-
-    public get n44(): number {
-        return this._n44;
-    }
-
-    public set n44(value: number) {
-        const previous = this.clone();
-
-        this._n44 = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
+    public n44: number;
 
     // prettier-ignore
     public constructor(
@@ -256,10 +55,10 @@ export class Matrix implements Type, Iterable<number> {
         n31: number, n32: number, n33: number, n34: number,
         n41: number, n42: number, n43: number, n44: number,
     ) {
-        this._n11 = n11; this._n12 = n12; this._n13 = n13; this._n14 = n14;
-        this._n21 = n21; this._n22 = n22; this._n23 = n23; this._n24 = n24;
-        this._n31 = n31; this._n32 = n32; this._n33 = n33; this._n34 = n34;
-        this._n41 = n41; this._n42 = n42; this._n43 = n43; this._n44 = n44;
+        this.n11 = n11; this.n12 = n12; this.n13 = n13; this.n14 = n14;
+        this.n21 = n21; this.n22 = n22; this.n23 = n23; this.n24 = n24;
+        this.n31 = n31; this.n32 = n32; this.n33 = n33; this.n34 = n34;
+        this.n41 = n41; this.n42 = n42; this.n43 = n43; this.n44 = n44;
     }
 
     public copy(other: Matrix): this {
@@ -269,7 +68,7 @@ export class Matrix implements Type, Iterable<number> {
             other.n21, other.n22, other.n23, other.n24,
             other.n31, other.n32, other.n33, other.n34,
             other.n41, other.n42, other.n43, other.n44,
-        )
+        );
 
         return this;
     }
@@ -291,14 +90,10 @@ export class Matrix implements Type, Iterable<number> {
         n31: number, n32: number, n33: number, n34: number,
         n41: number, n42: number, n43: number, n44: number,
     ) {
-        const previous = this.clone();
-
-        this._n11 = n11; this._n12 = n12; this._n13 = n13; this._n14 = n14;
-        this._n21 = n21; this._n22 = n22; this._n23 = n23; this._n24 = n24;
-        this._n31 = n31; this._n32 = n32; this._n33 = n33; this._n34 = n34;
-        this._n41 = n41; this._n42 = n42; this._n43 = n43; this._n44 = n44;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+        this.n11 = n11; this.n12 = n12; this.n13 = n13; this.n14 = n14;
+        this.n21 = n21; this.n22 = n22; this.n23 = n23; this.n24 = n24;
+        this.n31 = n31; this.n32 = n32; this.n33 = n33; this.n34 = n34;
+        this.n41 = n41; this.n42 = n42; this.n43 = n43; this.n44 = n44;
     }
 
     public setScalar(scalar: number): this {
@@ -696,7 +491,7 @@ export class Matrix implements Type, Iterable<number> {
         return `(${n11}, ${n12}, ${n13}, ${n14}\n${n21}, ${n22}, ${n23}, ${n24}\n${n31}, ${n32}, ${n33}, ${n34}\n${n41}, ${n42}, ${n43}, ${n44}\n)`;
     }
 
-    public static Identity(): Matrix {
+    public static get identity(): Matrix {
         // prettier-ignore
         return new Matrix(
             1.0, 0.0, 0.0, 0.0,
@@ -706,7 +501,7 @@ export class Matrix implements Type, Iterable<number> {
         );
     }
 
-    public static Zero(): Matrix {
+    public static get zero(): Matrix {
         // prettier-ignore
         return new Matrix(
             0.0, 0.0, 0.0, 0.0,
@@ -716,26 +511,26 @@ export class Matrix implements Type, Iterable<number> {
         );
     }
 
-    public static FromArray(array: DataArray, offset?: number): Matrix {
-        return Matrix.Identity().fromArray(array, offset);
+    public static fromArray(array: DataArray, offset?: number): Matrix {
+        return Matrix.identity.fromArray(array, offset);
     }
 
-    public static Multiply(a: Matrix, b: Matrix): Matrix {
-        return Matrix.Identity().multiplyMatrices(a, b);
+    public static multiply(a: Matrix, b: Matrix): Matrix {
+        return Matrix.identity.multiplyMatrices(a, b);
     }
 
-    public static Compose(translation: Vector3, rotation: Quaternion, scale: Vector3): Matrix {
-        return Matrix.Identity().compose(translation, rotation, scale);
+    public static compose(translation: Vector3, rotation: Quaternion, scale: Vector3): Matrix {
+        return Matrix.identity.compose(translation, rotation, scale);
     }
 
-    public static Perspective(
+    public static perspective(
         fovy: Radians,
         aspect: number,
         near: number,
         far: number,
         coordinateSystem: CoordinateSystem,
     ): Matrix {
-        return Matrix.Identity().perspective(fovy, aspect, near, far, coordinateSystem);
+        return Matrix.identity.perspective(fovy, aspect, near, far, coordinateSystem);
     }
 
     public label: string = '';

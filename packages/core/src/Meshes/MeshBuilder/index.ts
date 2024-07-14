@@ -1,1 +1,1 @@
-export { Cube } from './Cube';
+export { Cube, type CubeConfiguration } from './Cube';

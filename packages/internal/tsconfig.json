@@ -11,12 +11,14 @@
         "moduleResolution": "Bundler",
         "allowImportingTsExtensions": true,
         "resolveJsonModule": true,
+        "esModuleInterop": true,
         "isolatedModules": true,
         "moduleDetection": "force",
         "noEmit": true,
 
         "strict": true,
         "checkJs": true,
+        "verbatimModuleSyntax": true,
         "noUnusedParameters": false,
         "noFallthroughCasesInSwitch": true,
         "noImplicitOverride": true

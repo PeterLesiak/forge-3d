@@ -1,8 +1,8 @@
 import type { Type } from '@/Types/Type';
 
-export type ObserverFunction<T = undefined> = (event: T) => void;
+export type ObserverFunction<T = any> = (event: T) => void;
 
-export class Observer<T extends ObserverFunction<any>> {
+export class Observer<T extends ObserverFunction> {
     public observable: Observable<T>;
 
     public callback: T;
@@ -17,8 +17,8 @@ export class Observer<T extends ObserverFunction<any>> {
     }
 }
 
-export class Observable<T extends ObserverFunction<any>> implements Type {
-    private _observers: Observer<T>[] = [];
+export class Observable<T extends ObserverFunction> implements Type {
+    private readonly _observers: Observer<T>[] = [];
 
     public add(callback: T): Observer<T> {
         const observer = new Observer(this, callback);
@@ -47,7 +47,7 @@ export class Observable<T extends ObserverFunction<any>> implements Type {
     }
 
     public clear(): this {
-        this._observers = [];
+        this._observers.length = 0;
 
         return this;
     }

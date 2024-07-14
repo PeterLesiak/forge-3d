@@ -1,51 +1,18 @@
 import type { DataArray } from '@/Types/Array';
 import type { Type } from '@/Types/Type';
-import { Observable, type Observer, type ObserverFunction } from '@/Observer';
 
 import { equals } from './Utilities';
 
 export type Vector2Array = [number, number];
 
-export type OnVector2Update = ObserverFunction<{ dispatcher: Vector2; previous: Vector2 }>;
-
 export class Vector2 implements Type, Iterable<number> {
-    public readonly onUpdateObservable = new Observable<OnVector2Update>();
+    public x: number;
 
-    public onUpdate(callback: OnVector2Update): Observer<OnVector2Update> {
-        return this.onUpdateObservable.add(callback);
-    }
-
-    private _x: number;
-
-    public get x(): number {
-        return this._x;
-    }
-
-    public set x(value: number) {
-        const previous = this.clone();
-
-        this._x = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _y: number;
-
-    public get y(): number {
-        return this._y;
-    }
-
-    public set y(value: number) {
-        const previous = this.clone();
-
-        this._y = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
+    public y: number;
 
     public constructor(x: number, y: number) {
-        this._x = x;
-        this._y = y;
+        this.x = x;
+        this.y = y;
     }
 
     public copy(other: Vector2): this {
@@ -59,12 +26,8 @@ export class Vector2 implements Type, Iterable<number> {
     }
 
     public set(x: number, y: number): this {
-        const previous = this.clone();
-
-        this._x = x;
-        this._y = y;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+        this.x = x;
+        this.y = y;
 
         return this;
     }
@@ -216,56 +179,56 @@ export class Vector2 implements Type, Iterable<number> {
         return `(${this.x}, ${this.y})`;
     }
 
-    public static Zero(): Vector2 {
+    public static get zero(): Vector2 {
         return new Vector2(0.0, 0.0);
     }
 
-    public static One(): Vector2 {
+    public static get one(): Vector2 {
         return new Vector2(1.0, 1.0);
     }
 
-    public static Left(): Vector2 {
+    public static get left(): Vector2 {
         return new Vector2(-1.0, 0.0);
     }
 
-    public static Right(): Vector2 {
+    public static get right(): Vector2 {
         return new Vector2(1.0, 0.0);
     }
 
-    public static Up(): Vector2 {
+    public static get up(): Vector2 {
         return new Vector2(0.0, 1.0);
     }
 
-    public static Down(): Vector2 {
+    public static get down(): Vector2 {
         return new Vector2(0.0, -1.0);
     }
 
-    public static PositiveInfinity(): Vector2 {
+    public static get positiveInfinity(): Vector2 {
         return new Vector2(Infinity, Infinity);
     }
 
-    public static NegativeInfinity(): Vector2 {
+    public static get negativeInfinity(): Vector2 {
         return new Vector2(-Infinity, -Infinity);
     }
 
-    public static FromArray(array: DataArray, offset?: number): Vector2 {
-        return Vector2.Zero().fromArray(array, offset);
+    public static fromArray(array: DataArray, offset?: number): Vector2 {
+        return Vector2.zero.fromArray(array, offset);
     }
 
-    public static Add(a: Vector2, b: Vector2): Vector2 {
-        return Vector2.Zero().addVectors(a, b);
+    public static add(a: Vector2, b: Vector2): Vector2 {
+        return Vector2.zero.addVectors(a, b);
     }
 
-    public static Subtract(a: Vector2, b: Vector2): Vector2 {
-        return Vector2.Zero().subtractVectors(a, b);
+    public static subtract(a: Vector2, b: Vector2): Vector2 {
+        return Vector2.zero.subtractVectors(a, b);
     }
 
-    public static Multiply(a: Vector2, b: Vector2): Vector2 {
-        return Vector2.Zero().multiplyVectors(a, b);
+    public static multiply(a: Vector2, b: Vector2): Vector2 {
+        return Vector2.zero.multiplyVectors(a, b);
     }
 
-    public static Divide(a: Vector2, b: Vector2): Vector2 {
-        return Vector2.Zero().divideVectors(a, b);
+    public static divide(a: Vector2, b: Vector2): Vector2 {
+        return Vector2.zero.divideVectors(a, b);
     }
 
     public label: string = '';

@@ -1,10 +1,10 @@
-import type { Type } from '@/Types/Type';
 import type { UIntegerArray } from '@/Types/Array';
-import { Observable, type Observer } from '@/Observer';
 
-import type { OnBufferUpdate } from './Buffer';
+import type { Buffer } from './Buffer';
 
-export class UIntegerBuffer implements Type, Iterable<number> {
+export class UIntegerBuffer implements Buffer<number> {
+    public readonly components = 1;
+
     private readonly _source: UIntegerArray;
 
     public constructor(source: number[] | UIntegerArray) {
@@ -17,39 +17,27 @@ export class UIntegerBuffer implements Type, Iterable<number> {
     }
 
     public clone(): UIntegerBuffer {
-        return new UIntegerBuffer(this._source.map(value => value));
+        return new UIntegerBuffer(this._source);
     }
 
-    public get length(): number {
-        return this._source.length;
+    public get size(): number {
+        return this._source.length / this.components;
     }
 
     public get(index: number): number {
         return this._source[index];
     }
 
-    public readonly onUpdateObservable = new Observable<OnBufferUpdate<UIntegerBuffer>>();
-
-    public onUpdate(
-        callback: OnBufferUpdate<UIntegerBuffer>,
-    ): Observer<OnBufferUpdate<UIntegerBuffer>> {
-        return this.onUpdateObservable.add(callback);
-    }
-
     public set(index: number, value: number): this {
-        const previous = this.clone();
-
         this._source[index] = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
 
         return this;
     }
 
     public label: string = '';
 
-    public *[Symbol.iterator](): Iterator<number> {
-        for (let i = 0; i < this._source.length; ++i) {
+    public *[Symbol.iterator](): Iterator<number, void> {
+        for (let i = 0; i < this._source.length; i += this.components) {
             yield this._source[i];
         }
     }

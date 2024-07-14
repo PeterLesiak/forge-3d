@@ -1,84 +1,24 @@
 import type { DataArray } from '@/Types/Array';
 import type { Type } from '@/Types/Type';
-import { Observable, type Observer, type ObserverFunction } from '@/Observer';
 
 import { equals } from './Utilities';
 
 export type QuaternionArray = [number, number, number, number];
 
-export type OnQuaternionUpdate = ObserverFunction<{
-    dispatcher: Quaternion;
-    previous: Quaternion;
-}>;
-
 export class Quaternion implements Type, Iterable<number> {
-    public readonly onUpdateObservable = new Observable<OnQuaternionUpdate>();
+    public x: number;
 
-    public onUpdate(callback: OnQuaternionUpdate): Observer<OnQuaternionUpdate> {
-        return this.onUpdateObservable.add(callback);
-    }
+    public y: number;
 
-    private _x: number;
+    public z: number;
 
-    public get x(): number {
-        return this._x;
-    }
-
-    public set x(value: number) {
-        const previous = this.clone();
-
-        this._x = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _y: number;
-
-    public get y(): number {
-        return this._y;
-    }
-
-    public set y(value: number) {
-        const previous = this.clone();
-
-        this._y = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _z: number;
-
-    public get z(): number {
-        return this._z;
-    }
-
-    public set z(value: number) {
-        const previous = this.clone();
-
-        this._z = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _w: number;
-
-    public get w(): number {
-        return this._w;
-    }
-
-    public set w(value: number) {
-        const previous = this.clone();
-
-        this._w = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
+    public w: number;
 
     public constructor(x: number, y: number, z: number, w: number) {
-        this._x = x;
-        this._y = y;
-        this._z = z;
-        this._w = w;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
     }
 
     public copy(other: Quaternion): this {
@@ -92,14 +32,10 @@ export class Quaternion implements Type, Iterable<number> {
     }
 
     public set(x: number, y: number, z: number, w: number): this {
-        const previous = this.clone();
-
-        this._x = x;
-        this._y = y;
-        this._z = z;
-        this._w = w;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
 
         return this;
     }
@@ -153,8 +89,6 @@ export class Quaternion implements Type, Iterable<number> {
     }
 
     public multiplyQuaternions(a: Quaternion, b: Quaternion): this {
-        const previous = this.clone();
-
         const ax = a.x;
         const ay = a.y;
         const az = a.z;
@@ -165,12 +99,10 @@ export class Quaternion implements Type, Iterable<number> {
         const bz = b.z;
         const bw = b.w;
 
-        this._x = ax * bw + aw * bx + ay * bz - az * by;
-        this._y = ay * bw + aw * by + az * bx - ax * bz;
-        this._z = az * bw + aw * bz + ax * by - ay * bx;
-        this._w = aw * bw - ax * bx - ay * by - az * bz;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+        this.x = ax * bw + aw * bx + ay * bz - az * by;
+        this.y = ay * bw + aw * by + az * bx - ax * bz;
+        this.z = az * bw + aw * bz + ax * by - ay * bx;
+        this.w = aw * bw - ax * bx - ay * by - az * bz;
 
         return this;
     }
@@ -270,23 +202,23 @@ export class Quaternion implements Type, Iterable<number> {
         return `(${this.x}, ${this.y}, ${this.z}, ${this.w})`;
     }
 
-    public static Identity(): Quaternion {
+    public static get identity(): Quaternion {
         return new Quaternion(0.0, 0.0, 0.0, 1.0);
     }
 
-    public static Zero(): Quaternion {
+    public static get zero(): Quaternion {
         return new Quaternion(0.0, 0.0, 0.0, 0.0);
     }
 
-    public static FromArray(array: DataArray, offset?: number): Quaternion {
-        return Quaternion.Identity().fromArray(array, offset);
+    public static fromArray(array: DataArray, offset?: number): Quaternion {
+        return Quaternion.identity.fromArray(array, offset);
     }
 
-    public static Multiply(a: Quaternion, b: Quaternion): Quaternion {
-        return Quaternion.Zero().multiplyQuaternions(a, b);
+    public static multiply(a: Quaternion, b: Quaternion): Quaternion {
+        return Quaternion.zero.multiplyQuaternions(a, b);
     }
 
-    public static Conjugate(other: Quaternion): Quaternion {
+    public static conjugate(other: Quaternion): Quaternion {
         return other.clone().conjugate();
     }
 

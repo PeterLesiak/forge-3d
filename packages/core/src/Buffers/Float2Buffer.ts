@@ -1,11 +1,11 @@
-import type { Type } from '@/Types/Type';
 import type { FloatArray } from '@/Types/Array';
-import { Observable, type Observer } from '@/Observer';
 import type { Vector2Array } from '@/Maths/Vector2';
 
-import type { OnBufferUpdate } from './Buffer';
+import type { Buffer } from './Buffer';
 
-export class Float2Buffer implements Type, Iterable<Vector2Array> {
+export class Float2Buffer implements Buffer<Vector2Array> {
+    public readonly components = 2;
+
     private readonly _source: FloatArray;
 
     public constructor(source: number[] | FloatArray) {
@@ -18,40 +18,28 @@ export class Float2Buffer implements Type, Iterable<Vector2Array> {
     }
 
     public clone(): Float2Buffer {
-        return new Float2Buffer(this._source.map(value => value));
+        return new Float2Buffer(this._source);
     }
 
-    public get length(): number {
-        return this._source.length / 2;
+    public get size(): number {
+        return this._source.length / this.components;
     }
 
     public get(index: number): Vector2Array {
         return [this._source[index], this._source[index + 1]];
     }
 
-    public readonly onUpdateObservable = new Observable<OnBufferUpdate<Float2Buffer>>();
-
-    public onUpdate(
-        callback: OnBufferUpdate<Float2Buffer>,
-    ): Observer<OnBufferUpdate<Float2Buffer>> {
-        return this.onUpdateObservable.add(callback);
-    }
-
     public set(index: number, x: number, y: number): this {
-        const previous = this.clone();
-
         this._source[index + 0] = x;
         this._source[index + 1] = y;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
 
         return this;
     }
 
     public label: string = '';
 
-    public *[Symbol.iterator](): Iterator<Vector2Array> {
-        for (let i = 0; i < this._source.length; i += 2) {
+    public *[Symbol.iterator](): Iterator<Vector2Array, void> {
+        for (let i = 0; i < this._source.length; i += this.components) {
             yield this.get(i);
         }
     }

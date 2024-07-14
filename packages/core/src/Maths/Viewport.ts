@@ -1,49 +1,16 @@
 import type { DataArray } from '@/Types/Array';
 import type { Type } from '@/Types/Type';
-import { Observable, type Observer, type ObserverFunction } from '@/Observer';
 
 export type ViewportArray = [number, number];
 
-export type OnViewportUpdate = ObserverFunction<{ dispatcher: Viewport; previous: Viewport }>;
-
 export class Viewport implements Type, Iterable<number> {
-    public readonly onUpdateObservable = new Observable<OnViewportUpdate>();
+    public width: number;
 
-    public onUpdate(callback: OnViewportUpdate): Observer<OnViewportUpdate> {
-        return this.onUpdateObservable.add(callback);
-    }
-
-    private _width: number;
-
-    public get width(): number {
-        return this._width;
-    }
-
-    public set width(value: number) {
-        const previous = this.clone();
-
-        this._width = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    private _height: number;
-
-    public get height(): number {
-        return this._height;
-    }
-
-    public set height(value: number) {
-        const previous = this.clone();
-
-        this._height = value;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
-    }
+    public height: number;
 
     public constructor(width: number, height: number) {
-        this._width = width;
-        this._height = height;
+        this.width = width;
+        this.height = height;
     }
 
     public copy(other: Viewport): this {
@@ -57,12 +24,8 @@ export class Viewport implements Type, Iterable<number> {
     }
 
     public set(width: number, height: number): this {
-        const previous = this.clone();
-
-        this._width = width;
-        this._height = height;
-
-        this.onUpdateObservable.dispatch({ dispatcher: this, previous });
+        this.width = width;
+        this.height = height;
 
         return this;
     }
@@ -109,20 +72,20 @@ export class Viewport implements Type, Iterable<number> {
         return `(${this.width}, ${this.height})`;
     }
 
-    public static Zero(): Viewport {
+    public static get zero(): Viewport {
         return new Viewport(0.0, 0.0);
     }
 
-    public static One(): Viewport {
+    public static get one(): Viewport {
         return new Viewport(1.0, 1.0);
     }
 
-    public static PositiveInfinity(): Viewport {
+    public static get positiveInfinity(): Viewport {
         return new Viewport(Infinity, Infinity);
     }
 
-    public static FromArray(array: DataArray, offset?: number): Viewport {
-        return Viewport.Zero().fromArray(array, offset);
+    public static fromArray(array: DataArray, offset?: number): Viewport {
+        return Viewport.zero.fromArray(array, offset);
     }
 
     public label: string = '';

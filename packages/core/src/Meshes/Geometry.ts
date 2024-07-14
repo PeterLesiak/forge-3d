@@ -1,58 +1,55 @@
 import type { Type } from '@/Types/Type';
 import type { Nullable } from '@/Types/Utilities';
-import { Observable, type Observer, type ObserverFunction } from '@/Observer';
 import type { Buffer } from '@/Buffers/Buffer';
 import type { UIntegerBuffer } from '@/Buffers/UIntegerBuffer';
 import type { Float2Buffer } from '@/Buffers/Float2Buffer';
 import type { Float3Buffer } from '@/Buffers/Float3Buffer';
 
-export type OnGeometryUpdate = ObserverFunction<{ dispatcher: Geometry; previous: Geometry }>;
-
 export class Geometry implements Type {
     private _buffers = new Map<string, Buffer>();
 
-    public clone(): Geometry {
-        const geometry = new Geometry();
+    public copy(other: Geometry): this {
+        this.clear();
 
-        this._buffers.forEach((buffer, name) => {
-            geometry.setBuffer(name, buffer.clone());
+        other._buffers.forEach((buffer, name) => {
+            this.set(name, buffer);
         });
 
-        if (this.indexBuffer) {
-            geometry.setIndex(this.indexBuffer.clone());
+        if (other.indexBuffer) {
+            this.setIndex(other.indexBuffer);
         }
-
-        return geometry;
-    }
-
-    public readonly onGeometryUpdateObservable = new Observable<OnGeometryUpdate>();
-
-    public onGeometryUpdate(callback: OnGeometryUpdate): Observer<OnGeometryUpdate> {
-        return this.onGeometryUpdateObservable.add(callback);
-    }
-
-    public setBuffer(name: string, buffer: Buffer): this {
-        const previous = this.clone();
-
-        this._buffers.set(name, buffer);
-
-        this.onGeometryUpdateObservable.dispatch({ dispatcher: this, previous });
 
         return this;
     }
 
-    public getBuffer(name: string): Nullable<Buffer> {
+    public clone(): Geometry {
+        const geometry = new Geometry();
+
+        geometry.copy(this);
+
+        return geometry;
+    }
+
+    public set(name: string, buffer: Buffer): this {
+        this._buffers.set(name, buffer);
+
+        return this;
+    }
+
+    public get(name: string): Nullable<Buffer> {
         const buffer = this._buffers.get(name);
 
         return buffer ? buffer : null;
     }
 
-    public deleteBuffer(name: string): this {
-        const previous = this.clone();
-
+    public delete(name: string): this {
         this._buffers.delete(name);
 
-        this.onGeometryUpdateObservable.dispatch({ dispatcher: this, previous });
+        return this;
+    }
+
+    public clear(): this {
+        this._buffers.clear();
 
         return this;
     }
@@ -72,39 +69,27 @@ export class Geometry implements Type {
     }
 
     public setPosition(buffer: Float3Buffer): this {
-        return this.setBuffer('position', buffer);
-    }
-
-    public getPosition(): Nullable<Float3Buffer> {
-        return this.getBuffer('position') as Float3Buffer;
+        return this.set('position', buffer);
     }
 
     public deletePosition(): this {
-        return this.deleteBuffer('position');
+        return this.delete('position');
     }
 
     public setNormal(buffer: Float3Buffer): this {
-        return this.setBuffer('normal', buffer);
-    }
-
-    public getNormal(): Nullable<Float3Buffer> {
-        return this.getBuffer('normal') as Float3Buffer;
+        return this.set('normal', buffer);
     }
 
     public deleteNormal(): this {
-        return this.deleteBuffer('normal');
+        return this.delete('normal');
     }
 
     public setUV(buffer: Float2Buffer): this {
-        return this.setBuffer('uv', buffer);
-    }
-
-    public getUV(): Nullable<Float2Buffer> {
-        return this.getBuffer('uv') as Float2Buffer;
+        return this.set('uv', buffer);
     }
 
     public deleteUV(): this {
-        return this.deleteBuffer('uv');
+        return this.delete('uv');
     }
 
     public label: string = '';

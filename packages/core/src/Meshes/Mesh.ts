@@ -1,52 +1,32 @@
 import type { Nullable } from '@/Types/Utilities';
-import { Observable, type Observer, type ObserverFunction } from '@/Observer';
 import { Node } from '@/Node';
+import type { Material } from '@/Materials/Material';
 
-import { Geometry } from './Geometry';
-
-export type OnGeometryChange = ObserverFunction<{ dispatcher: Mesh; previous: Mesh }>;
+import type { Geometry } from './Geometry';
 
 export class Mesh extends Node {
-    public readonly onGeometryChangeObservable = new Observable<OnGeometryChange>();
+    public geometry: Geometry;
 
-    public onGeometryChange(callback: OnGeometryChange): Observer<OnGeometryChange> {
-        return this.onGeometryChangeObservable.add(callback);
-    }
+    public material: Material;
 
-    private _geometry: Geometry;
-
-    public get geometry(): Geometry {
-        return this._geometry;
-    }
-
-    public set geometry(value: Geometry) {
-        const previous = this.clone();
-
-        this._geometry = value;
-
-        this.onGeometryChangeObservable.dispatch({ dispatcher: this, previous });
-    }
-
-    public constructor(geometry: Geometry, parent: Nullable<Node> = null) {
+    public constructor(geometry: Geometry, material: Material, parent: Nullable<Node> = null) {
         super(parent);
 
-        this._geometry = geometry;
+        this.geometry = geometry;
+        this.material = material;
     }
 
     public override copy(other: Mesh): this {
         super.copy(other);
 
-        const previous = new Mesh(this.geometry.clone());
-
-        this._geometry = other.geometry.clone();
-
-        this.onGeometryChangeObservable.dispatch({ dispatcher: this, previous });
+        this.geometry = other.geometry.clone();
+        this.material = other.material.clone();
 
         return this;
     }
 
     public override clone(): Mesh {
-        const mesh = new Mesh(this.geometry);
+        const mesh = new Mesh(this.geometry, this.material);
 
         mesh.copy(this);
 

@@ -4,5 +4,7 @@ export * from '@/Maths';
 export * from '@/Buffers';
 export * from '@/Node';
 export * from '@/Scene';
+export * from '@/Shaders';
 export * from '@/Cameras';
+export * from '@/Materials';
 export * from '@/Meshes';
