@@ -1,0 +1,21 @@
+import { Timer } from './Timer';
+
+export class FixedTimer extends Timer {
+    public frameRate: number = 60.0;
+
+    public constructor(frameRate?: number) {
+        super();
+
+        if (frameRate) {
+            this.frameRate = frameRate;
+        }
+    }
+
+    public override get deltaTime(): number {
+        if (!this.isRunning) {
+            return 0.0;
+        }
+
+        return 1.0 / this.frameRate;
+    }
+}

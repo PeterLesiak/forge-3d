@@ -1,7 +1,8 @@
 import type { Nullable } from '@/Types/Utilities';
-import { Observable, type ObserverFunction } from '@/Observer';
+import { Observable, Observer, type ObserverFunction } from '@/Observer';
 import { Matrix } from '@/Maths/Matrix';
 import { Transform } from '@/Maths/Transform';
+import { Timer } from '@/Animations/Timer';
 
 export type OnChildAdded<T extends Node = Node> = ObserverFunction<{
     dispatcher: T;
@@ -14,15 +15,42 @@ export type OnChildRemoved<T extends Node = Node> = ObserverFunction<{
     parent: Node;
 }>;
 
+export type OnTick<T extends Node = Node> = ObserverFunction<{
+    dispatcher: T;
+    deltaTime: number;
+    elapsedTime: number;
+}>;
+
 export type OnBeforeRender<T extends Node = Node> = ObserverFunction<T>;
 
 export type OnAfterRender<T extends Node = Node> = ObserverFunction<T>;
 
 export class Node extends Transform implements Iterable<Node> {
+    public readonly timer = new Timer();
+
+    public readonly onTickObservable = new Observable<OnTick<this>>();
+
+    public onTick(callback: OnTick<this>): Observer<OnTick<this>> {
+        return this.onTickObservable.add(callback);
+    }
+
     public constructor(parent: Nullable<Node> = null) {
         super();
 
         parent?.add(this);
+
+        const update = (): void => {
+            requestAnimationFrame(update);
+
+            this.onTickObservable.dispatch({
+                dispatcher: this,
+                deltaTime: this.timer.deltaTime,
+                elapsedTime: this.timer.elapsedTime,
+            });
+        };
+
+        this.timer.start();
+        requestAnimationFrame(update);
     }
 
     /** @internal */
@@ -182,13 +210,13 @@ export class Node extends Transform implements Iterable<Node> {
 
     public readonly onBeforeRenderObservable = new Observable<OnBeforeRender<this>>();
 
-    public onBeforeRender(callback: OnBeforeRender<this>) {
+    public onBeforeRender(callback: OnBeforeRender<this>): Observer<OnBeforeRender<this>> {
         return this.onBeforeRenderObservable.add(callback);
     }
 
     public readonly onAfterRenderObservable = new Observable<OnAfterRender<this>>();
 
-    public onAfterRender(callback: OnAfterRender<this>) {
+    public onAfterRender(callback: OnAfterRender<this>): Observer<OnAfterRender<this>> {
         return this.onAfterRenderObservable.add(callback);
     }
 

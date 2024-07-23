@@ -1,6 +1,7 @@
 export * from '@/Types';
 export * from '@/Observer';
 export * from '@/Maths';
+export * from '@/Animations';
 export * from '@/Buffers';
 export * from '@/Node';
 export * from '@/Scene';
