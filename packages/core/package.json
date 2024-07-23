@@ -11,8 +11,10 @@
         "./*.js": "./build/*.js",
         "./Types": "./build/Types/index.js",
         "./Maths": "./build/Maths/index.js",
-        "./Cameras": "./build/Cameras/index.js",
         "./Buffers": "./build/Buffers/index.js",
+        "./Cameras": "./build/Cameras/index.js",
+        "./Shaders": "./build/Shaders/index.js",
+        "./Materials": "./build/Materials/index.js",
         "./Meshes": "./build/Meshes/index.js",
         "./Meshes/MeshBuilder/index": "./build/Meshes/MeshBuilder/index.js",
         "./Meshes/MeshBuilder/index.js": "./build/Meshes/MeshBuilder/index.js"

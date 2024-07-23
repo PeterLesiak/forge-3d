@@ -46,7 +46,7 @@ export class Quaternion implements Type, Iterable<number> {
         return this;
     }
 
-    public get isIdentity(): boolean {
+    public isIdentity(): boolean {
         return this.x == 0.0 && this.y == 0.0 && this.z == 0.0 && this.w == 1.0;
     }
 
@@ -59,7 +59,7 @@ export class Quaternion implements Type, Iterable<number> {
         return this;
     }
 
-    public get isZero(): boolean {
+    public isZero(): boolean {
         return this.x == 0.0 && this.y == 0.0 && this.z == 0.0 && this.w == 0.0;
     }
 
@@ -140,7 +140,7 @@ export class Quaternion implements Type, Iterable<number> {
         );
     }
 
-    public exactlyEquals(other: Quaternion): boolean {
+    public equalsExactly(other: Quaternion): boolean {
         return this.equals(other, 0.0);
     }
 
@@ -172,7 +172,7 @@ export class Quaternion implements Type, Iterable<number> {
         return this;
     }
 
-    public get normalized(): Quaternion {
+    public normalized(): Quaternion {
         return this.clone().normalize();
     }
 
@@ -194,7 +194,7 @@ export class Quaternion implements Type, Iterable<number> {
         return this;
     }
 
-    public get inverse(): Quaternion {
+    public inverse(): Quaternion {
         return this.clone().invert();
     }
 
@@ -202,20 +202,20 @@ export class Quaternion implements Type, Iterable<number> {
         return `(${this.x}, ${this.y}, ${this.z}, ${this.w})`;
     }
 
-    public static get identity(): Quaternion {
+    public static identity(): Quaternion {
         return new Quaternion(0.0, 0.0, 0.0, 1.0);
     }
 
-    public static get zero(): Quaternion {
+    public static zero(): Quaternion {
         return new Quaternion(0.0, 0.0, 0.0, 0.0);
     }
 
     public static fromArray(array: DataArray, offset?: number): Quaternion {
-        return Quaternion.identity.fromArray(array, offset);
+        return Quaternion.identity().fromArray(array, offset);
     }
 
     public static multiply(a: Quaternion, b: Quaternion): Quaternion {
-        return Quaternion.zero.multiplyQuaternions(a, b);
+        return Quaternion.zero().multiplyQuaternions(a, b);
     }
 
     public static conjugate(other: Quaternion): Quaternion {

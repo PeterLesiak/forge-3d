@@ -29,7 +29,7 @@ export class Camera extends Node {
         return camera;
     }
 
-    public readonly projectionMatrix = Matrix.identity;
+    public readonly projectionMatrix = Matrix.identity();
 
     public computeProjectionMatrix(
         viewport: Viewport,
@@ -48,7 +48,7 @@ export class Camera extends Node {
         return this.projectionMatrix;
     }
 
-    public readonly viewMatrix = Matrix.identity;
+    public readonly viewMatrix = Matrix.identity();
 
     public computeViewMatrix(computeWorldMatrix = true): Matrix {
         if (computeWorldMatrix) {

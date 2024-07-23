@@ -3,33 +3,31 @@ import type { FloatArray } from '@/Types/Array';
 import type { Buffer } from './Buffer';
 
 export class FloatBuffer implements Buffer<number> {
-    public readonly components = 1;
-
-    private readonly _source: FloatArray;
+    public readonly source: FloatArray;
 
     public constructor(source: number[] | FloatArray) {
         if (Array.isArray(source)) {
-            this._source = new Float32Array(source);
+            this.source = new Float32Array(source);
             return;
         }
 
-        this._source = source.map(value => value);
+        this.source = source.map(value => value);
     }
 
     public clone(): FloatBuffer {
-        return new FloatBuffer(this._source);
+        return new FloatBuffer(this.source);
     }
 
     public get size(): number {
-        return this._source.length / this.components;
+        return this.source.length;
     }
 
     public get(index: number): number {
-        return this._source[index];
+        return this.source[index];
     }
 
     public set(index: number, value: number): this {
-        this._source[index] = value;
+        this.source[index] = value;
 
         return this;
     }
@@ -37,8 +35,8 @@ export class FloatBuffer implements Buffer<number> {
     public label: string = '';
 
     public *[Symbol.iterator](): Iterator<number, void> {
-        for (let i = 0; i < this._source.length; i += this.components) {
-            yield this._source[i];
+        for (let i = 0; i < this.source.length; ++i) {
+            yield this.source[i];
         }
     }
 }

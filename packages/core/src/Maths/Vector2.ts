@@ -38,7 +38,7 @@ export class Vector2 implements Type, Iterable<number> {
         return this;
     }
 
-    public get isZero(): boolean {
+    public isZero(): boolean {
         return this.x == 0.0 && this.y == 0.0;
     }
 
@@ -141,7 +141,7 @@ export class Vector2 implements Type, Iterable<number> {
         return equals(this.x, other.x, threshold) && equals(this.y, other.y, threshold);
     }
 
-    public exactlyEquals(other: Vector2): boolean {
+    public equalsExactly(other: Vector2): boolean {
         return this.equals(other, 0.0);
     }
 
@@ -167,7 +167,7 @@ export class Vector2 implements Type, Iterable<number> {
         return this;
     }
 
-    public get normalized(): Vector2 {
+    public normalized(): Vector2 {
         return this.clone().normalize();
     }
 
@@ -179,56 +179,56 @@ export class Vector2 implements Type, Iterable<number> {
         return `(${this.x}, ${this.y})`;
     }
 
-    public static get zero(): Vector2 {
+    public static zero(): Vector2 {
         return new Vector2(0.0, 0.0);
     }
 
-    public static get one(): Vector2 {
+    public static one(): Vector2 {
         return new Vector2(1.0, 1.0);
     }
 
-    public static get left(): Vector2 {
+    public static left(): Vector2 {
         return new Vector2(-1.0, 0.0);
     }
 
-    public static get right(): Vector2 {
+    public static right(): Vector2 {
         return new Vector2(1.0, 0.0);
     }
 
-    public static get up(): Vector2 {
+    public static up(): Vector2 {
         return new Vector2(0.0, 1.0);
     }
 
-    public static get down(): Vector2 {
+    public static down(): Vector2 {
         return new Vector2(0.0, -1.0);
     }
 
-    public static get positiveInfinity(): Vector2 {
+    public static positiveInfinity(): Vector2 {
         return new Vector2(Infinity, Infinity);
     }
 
-    public static get negativeInfinity(): Vector2 {
+    public static negativeInfinity(): Vector2 {
         return new Vector2(-Infinity, -Infinity);
     }
 
     public static fromArray(array: DataArray, offset?: number): Vector2 {
-        return Vector2.zero.fromArray(array, offset);
+        return Vector2.zero().fromArray(array, offset);
     }
 
     public static add(a: Vector2, b: Vector2): Vector2 {
-        return Vector2.zero.addVectors(a, b);
+        return Vector2.zero().addVectors(a, b);
     }
 
     public static subtract(a: Vector2, b: Vector2): Vector2 {
-        return Vector2.zero.subtractVectors(a, b);
+        return Vector2.zero().subtractVectors(a, b);
     }
 
     public static multiply(a: Vector2, b: Vector2): Vector2 {
-        return Vector2.zero.multiplyVectors(a, b);
+        return Vector2.zero().multiplyVectors(a, b);
     }
 
     public static divide(a: Vector2, b: Vector2): Vector2 {
-        return Vector2.zero.divideVectors(a, b);
+        return Vector2.zero().divideVectors(a, b);
     }
 
     public label: string = '';

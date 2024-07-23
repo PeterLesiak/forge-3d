@@ -6,8 +6,6 @@ import type { Vector4Array } from '@/Maths/Vector4';
 export type BufferElement = number | Vector2Array | Vector3Array | Vector4Array;
 
 export interface Buffer<T extends BufferElement = BufferElement> extends Type, Iterable<T> {
-    readonly components: number;
-
     clone(): Buffer<T>;
 
     get size(): number;

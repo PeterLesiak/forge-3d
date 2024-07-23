@@ -42,7 +42,7 @@ export class Vector3 implements Type, Iterable<number> {
         return this;
     }
 
-    public get isZero(): boolean {
+    public isZero(): boolean {
         return this.x == 0.0 && this.y == 0.0 && this.z == 0.0;
     }
 
@@ -150,7 +150,7 @@ export class Vector3 implements Type, Iterable<number> {
         );
     }
 
-    public exactlyEquals(other: Vector3): boolean {
+    public equalsExactly(other: Vector3): boolean {
         return this.equals(other, 0.0);
     }
 
@@ -176,7 +176,7 @@ export class Vector3 implements Type, Iterable<number> {
         return this;
     }
 
-    public get normalized(): Vector3 {
+    public normalized(): Vector3 {
         return this.clone().normalize();
     }
 
@@ -188,64 +188,64 @@ export class Vector3 implements Type, Iterable<number> {
         return `(${this.x}, ${this.y}, ${this.z})`;
     }
 
-    public static get zero(): Vector3 {
+    public static zero(): Vector3 {
         return new Vector3(0.0, 0.0, 0.0);
     }
 
-    public static get one(): Vector3 {
+    public static one(): Vector3 {
         return new Vector3(1.0, 1.0, 1.0);
     }
 
-    public static get left(): Vector3 {
+    public static left(): Vector3 {
         return new Vector3(-1.0, 0.0, 0.0);
     }
 
-    public static get right(): Vector3 {
+    public static right(): Vector3 {
         return new Vector3(1.0, 0.0, 0.0);
     }
 
-    public static get up(): Vector3 {
+    public static up(): Vector3 {
         return new Vector3(0.0, 1.0, 0.0);
     }
 
-    public static get down(): Vector3 {
+    public static down(): Vector3 {
         return new Vector3(0.0, -1.0, 0.0);
     }
 
-    public static get forward(): Vector3 {
+    public static forward(): Vector3 {
         return new Vector3(0.0, 0.0, 1.0);
     }
 
-    public static get back(): Vector3 {
+    public static back(): Vector3 {
         return new Vector3(0.0, 0.0, -1.0);
     }
 
-    public static get positiveInfinity(): Vector3 {
+    public static positiveInfinity(): Vector3 {
         return new Vector3(Infinity, Infinity, Infinity);
     }
 
-    public static get negativeInfinity(): Vector3 {
+    public static negativeInfinity(): Vector3 {
         return new Vector3(-Infinity, -Infinity, -Infinity);
     }
 
     public static fromArray(array: DataArray, offset?: number): Vector3 {
-        return Vector3.zero.fromArray(array, offset);
+        return Vector3.zero().fromArray(array, offset);
     }
 
     public static add(a: Vector3, b: Vector3): Vector3 {
-        return Vector3.zero.addVectors(a, b);
+        return Vector3.zero().addVectors(a, b);
     }
 
     public static subtract(a: Vector3, b: Vector3): Vector3 {
-        return Vector3.zero.subtractVectors(a, b);
+        return Vector3.zero().subtractVectors(a, b);
     }
 
     public static multiply(a: Vector3, b: Vector3): Vector3 {
-        return Vector3.zero.multiplyVectors(a, b);
+        return Vector3.zero().multiplyVectors(a, b);
     }
 
     public static divide(a: Vector3, b: Vector3): Vector3 {
-        return Vector3.zero.divideVectors(a, b);
+        return Vector3.zero().divideVectors(a, b);
     }
 
     public label: string = '';

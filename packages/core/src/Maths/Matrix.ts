@@ -108,7 +108,7 @@ export class Matrix implements Type, Iterable<number> {
         return this;
     }
 
-    public get isIdentity(): boolean {
+    public isIdentity(): boolean {
         // prettier-ignore
         return (
             this.n11 == 1.0 && this.n12 == 0.0 && this.n13 == 0.0 && this.n14 == 0.0 &&
@@ -130,7 +130,7 @@ export class Matrix implements Type, Iterable<number> {
         return this;
     }
 
-    public get isZero(): boolean {
+    public isZero(): boolean {
         // prettier-ignore
         return (
             this.n11 == 0.0 && this.n12 == 0.0 && this.n13 == 0.0 && this.n14 == 0.0 &&
@@ -280,7 +280,7 @@ export class Matrix implements Type, Iterable<number> {
         );
     }
 
-    public exactlyEquals(other: Matrix): boolean {
+    public equalsExactly(other: Matrix): boolean {
         return this.equals(other, 0.0);
     }
 
@@ -382,7 +382,7 @@ export class Matrix implements Type, Iterable<number> {
         return this;
     }
 
-    public get inverse(): Matrix {
+    public inverse(): Matrix {
         return this.clone().invert();
     }
 
@@ -491,7 +491,7 @@ export class Matrix implements Type, Iterable<number> {
         return `(${n11}, ${n12}, ${n13}, ${n14}\n${n21}, ${n22}, ${n23}, ${n24}\n${n31}, ${n32}, ${n33}, ${n34}\n${n41}, ${n42}, ${n43}, ${n44}\n)`;
     }
 
-    public static get identity(): Matrix {
+    public static identity(): Matrix {
         // prettier-ignore
         return new Matrix(
             1.0, 0.0, 0.0, 0.0,
@@ -501,7 +501,7 @@ export class Matrix implements Type, Iterable<number> {
         );
     }
 
-    public static get zero(): Matrix {
+    public static zero(): Matrix {
         // prettier-ignore
         return new Matrix(
             0.0, 0.0, 0.0, 0.0,
@@ -512,15 +512,15 @@ export class Matrix implements Type, Iterable<number> {
     }
 
     public static fromArray(array: DataArray, offset?: number): Matrix {
-        return Matrix.identity.fromArray(array, offset);
+        return Matrix.identity().fromArray(array, offset);
     }
 
     public static multiply(a: Matrix, b: Matrix): Matrix {
-        return Matrix.identity.multiplyMatrices(a, b);
+        return Matrix.identity().multiplyMatrices(a, b);
     }
 
     public static compose(translation: Vector3, rotation: Quaternion, scale: Vector3): Matrix {
-        return Matrix.identity.compose(translation, rotation, scale);
+        return Matrix.identity().compose(translation, rotation, scale);
     }
 
     public static perspective(
@@ -530,7 +530,7 @@ export class Matrix implements Type, Iterable<number> {
         far: number,
         coordinateSystem: CoordinateSystem,
     ): Matrix {
-        return Matrix.identity.perspective(fovy, aspect, near, far, coordinateSystem);
+        return Matrix.identity().perspective(fovy, aspect, near, far, coordinateSystem);
     }
 
     public label: string = '';

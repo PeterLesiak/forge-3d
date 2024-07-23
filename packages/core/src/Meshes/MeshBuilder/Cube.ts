@@ -4,7 +4,6 @@ import { UIntegerBuffer } from '@/Buffers/UIntegerBuffer';
 import { Float2Buffer } from '@/Buffers/Float2Buffer';
 import { Float3Buffer } from '@/Buffers/Float3Buffer';
 import type { Material } from '@/Materials/Material';
-import { StandardMaterial } from '@/Materials/StandardMaterial';
 
 import { Geometry } from '../Geometry';
 import { Mesh } from '../Mesh';
@@ -168,9 +167,9 @@ export class Cube extends Mesh {
         geometry.setNormal(normalBuffer);
         geometry.setUV(uvBuffer);
 
-        const material = configuration.material || new StandardMaterial();
+        const material = configuration.material;
 
-        const parent = configuration.parent || null;
+        const parent = configuration.parent;
 
         super(geometry, material, parent);
     }

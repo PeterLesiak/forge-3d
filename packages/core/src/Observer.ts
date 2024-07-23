@@ -18,12 +18,13 @@ export class Observer<T extends ObserverFunction> {
 }
 
 export class Observable<T extends ObserverFunction> implements Type {
-    private readonly _observers: Observer<T>[] = [];
+    /** @internal */
+    private readonly observers: Observer<T>[] = [];
 
     public add(callback: T): Observer<T> {
         const observer = new Observer(this, callback);
 
-        this._observers.push(observer);
+        this.observers.push(observer);
 
         return observer;
     }
@@ -31,29 +32,29 @@ export class Observable<T extends ObserverFunction> implements Type {
     public addFirst(callback: T): Observer<T> {
         const observer = new Observer(this, callback);
 
-        this._observers.unshift(observer);
+        this.observers.unshift(observer);
 
         return observer;
     }
 
     public remove(observer: Observer<T>): this {
-        const index = this._observers.indexOf(observer);
+        const index = this.observers.indexOf(observer);
 
         if (index >= 0) {
-            this._observers.splice(index, 1);
+            this.observers.splice(index, 1);
         }
 
         return this;
     }
 
     public clear(): this {
-        this._observers.length = 0;
+        this.observers.length = 0;
 
         return this;
     }
 
     public dispatch(data: Parameters<T>[0]): this {
-        for (const observer of this._observers) {
+        for (const observer of this.observers) {
             observer.callback(data);
         }
 

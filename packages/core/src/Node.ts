@@ -1,5 +1,5 @@
 import type { Nullable } from '@/Types/Utilities';
-import { Observable, type Observer, type ObserverFunction } from '@/Observer';
+import { Observable, type ObserverFunction } from '@/Observer';
 import { Matrix } from '@/Maths/Matrix';
 import { Transform } from '@/Maths/Transform';
 
@@ -25,16 +25,17 @@ export class Node extends Transform implements Iterable<Node> {
         parent?.add(this);
     }
 
-    private _root: Node = this;
+    /** @internal */
+    private internalRoot: Node = this;
 
     public get root(): Node {
-        return this._root;
+        return this.internalRoot;
     }
 
-    private _parent: Nullable<Node> = null;
+    private internalParent: Nullable<Node> = null;
 
     public get parent(): Nullable<Node> {
-        return this._parent;
+        return this.internalParent;
     }
 
     public readonly children: Node[] = [];
@@ -71,8 +72,8 @@ export class Node extends Transform implements Iterable<Node> {
 
             this.children.push(node);
 
-            node._parent = this;
-            node._root = this.root;
+            node.internalParent = this;
+            node.internalRoot = this.root;
 
             this.traverseParents(
                 parent => parent.onChildAddedObservable.dispatch({ dispatcher: parent, node }),
@@ -91,8 +92,8 @@ export class Node extends Transform implements Iterable<Node> {
 
             this.children.push(node);
 
-            node._parent = this;
-            node._root = this.root;
+            node.internalParent = this;
+            node.internalRoot = this.root;
 
             this.traverseParents(
                 parent => parent.onChildAddedObservable.dispatch({ dispatcher: parent, node }),
@@ -128,8 +129,8 @@ export class Node extends Transform implements Iterable<Node> {
 
         parent.children.splice(index, 1);
 
-        this._parent = null;
-        this._root = this;
+        this.internalParent = null;
+        this.internalRoot = this;
 
         this.traverseParents(
             node =>
@@ -191,7 +192,7 @@ export class Node extends Transform implements Iterable<Node> {
         return this.onAfterRenderObservable.add(callback);
     }
 
-    public readonly worldMatrix = Matrix.identity;
+    public readonly worldMatrix = Matrix.identity();
 
     public computeWorldMatrix(updateParents = true, updateChildren = false): Matrix {
         if (this.parent) {

@@ -4,41 +4,39 @@ import type { Vector4Array } from '@/Maths/Vector4';
 import type { Buffer } from './Buffer';
 
 export class UInteger4Buffer implements Buffer<Vector4Array> {
-    public readonly components = 4;
-
-    private readonly _source: UIntegerArray;
+    public readonly source: UIntegerArray;
 
     public constructor(source: number[] | UIntegerArray) {
         if (Array.isArray(source)) {
-            this._source = new Uint32Array(source);
+            this.source = new Uint32Array(source);
             return;
         }
 
-        this._source = source.map(value => value);
+        this.source = source.map(value => value);
     }
 
     public clone(): UInteger4Buffer {
-        return new UInteger4Buffer(this._source);
+        return new UInteger4Buffer(this.source);
     }
 
     public get size(): number {
-        return this._source.length / this.components;
+        return this.source.length / 4;
     }
 
     public get(index: number): Vector4Array {
         return [
-            this._source[index + 0],
-            this._source[index + 1],
-            this._source[index + 2],
-            this._source[index + 3],
+            this.source[index + 0],
+            this.source[index + 1],
+            this.source[index + 2],
+            this.source[index + 3],
         ];
     }
 
     public set(index: number, x: number, y: number, z: number, w: number): this {
-        this._source[index + 0] = x;
-        this._source[index + 1] = y;
-        this._source[index + 2] = z;
-        this._source[index + 3] = w;
+        this.source[index + 0] = x;
+        this.source[index + 1] = y;
+        this.source[index + 2] = z;
+        this.source[index + 3] = w;
 
         return this;
     }
@@ -46,7 +44,7 @@ export class UInteger4Buffer implements Buffer<Vector4Array> {
     public label: string = '';
 
     public *[Symbol.iterator](): Iterator<Vector4Array, void> {
-        for (let i = 0; i < this._source.length; i += this.components) {
+        for (let i = 0; i < this.source.length; i += 4) {
             yield this.get(i);
         }
     }

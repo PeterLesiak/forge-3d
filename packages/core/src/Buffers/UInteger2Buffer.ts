@@ -4,34 +4,32 @@ import type { Vector2Array } from '@/Maths/Vector2';
 import type { Buffer } from './Buffer';
 
 export class UInteger2Buffer implements Buffer<Vector2Array> {
-    public readonly components = 2;
-
-    private readonly _source: UIntegerArray;
+    public readonly source: UIntegerArray;
 
     public constructor(source: number[] | UIntegerArray) {
         if (Array.isArray(source)) {
-            this._source = new Uint32Array(source);
+            this.source = new Uint32Array(source);
             return;
         }
 
-        this._source = source.map(value => value);
+        this.source = source.map(value => value);
     }
 
     public clone(): UInteger2Buffer {
-        return new UInteger2Buffer(this._source);
+        return new UInteger2Buffer(this.source);
     }
 
     public get size(): number {
-        return this._source.length / this.components;
+        return this.source.length / 2;
     }
 
     public get(index: number): Vector2Array {
-        return [this._source[index], this._source[index + 1]];
+        return [this.source[index], this.source[index + 1]];
     }
 
     public set(index: number, x: number, y: number): this {
-        this._source[index + 0] = x;
-        this._source[index + 1] = y;
+        this.source[index + 0] = x;
+        this.source[index + 1] = y;
 
         return this;
     }
@@ -39,7 +37,7 @@ export class UInteger2Buffer implements Buffer<Vector2Array> {
     public label: string = '';
 
     public *[Symbol.iterator](): Iterator<Vector2Array, void> {
-        for (let i = 0; i < this._source.length; i += this.components) {
+        for (let i = 0; i < this.source.length; i += 2) {
             yield this.get(i);
         }
     }

@@ -46,7 +46,7 @@ export class Vector4 implements Type, Iterable<number> {
         return this;
     }
 
-    public get isIdentity(): boolean {
+    public isIdentity(): boolean {
         return this.x == 0.0 && this.y == 0.0 && this.z == 0.0 && this.w == 1.0;
     }
 
@@ -56,7 +56,7 @@ export class Vector4 implements Type, Iterable<number> {
         return this;
     }
 
-    public get isZero(): boolean {
+    public isZero(): boolean {
         return this.x == 0.0 && this.y == 0.0 && this.z == 0.0 && this.w == 0.0;
     }
 
@@ -166,7 +166,7 @@ export class Vector4 implements Type, Iterable<number> {
         );
     }
 
-    public exactlyEquals(other: Vector4): boolean {
+    public equalsExactly(other: Vector4): boolean {
         return this.equals(other, 0.0);
     }
 
@@ -192,7 +192,7 @@ export class Vector4 implements Type, Iterable<number> {
         return this;
     }
 
-    public get normalized(): Vector4 {
+    public normalized(): Vector4 {
         return this.clone().normalize();
     }
 
@@ -204,44 +204,44 @@ export class Vector4 implements Type, Iterable<number> {
         return `(${this.x}, ${this.y}, ${this.z}, ${this.w})`;
     }
 
-    public static get identity(): Vector4 {
+    public static identity(): Vector4 {
         return new Vector4(0.0, 0.0, 0.0, 1.0);
     }
 
-    public static get zero(): Vector4 {
+    public static zero(): Vector4 {
         return new Vector4(0.0, 0.0, 0.0, 0.0);
     }
 
-    public static get one(): Vector4 {
+    public static one(): Vector4 {
         return new Vector4(1.0, 1.0, 1.0, 1.0);
     }
 
-    public static get positiveInfinity(): Vector4 {
+    public static positiveInfinity(): Vector4 {
         return new Vector4(Infinity, Infinity, Infinity, Infinity);
     }
 
-    public static get negativeInfinity(): Vector4 {
+    public static negativeInfinity(): Vector4 {
         return new Vector4(-Infinity, -Infinity, -Infinity, -Infinity);
     }
 
     public static fromArray(array: DataArray, offset?: number): Vector4 {
-        return Vector4.zero.fromArray(array, offset);
+        return Vector4.zero().fromArray(array, offset);
     }
 
     public static add(a: Vector4, b: Vector4): Vector4 {
-        return Vector4.zero.addVectors(a, b);
+        return Vector4.zero().addVectors(a, b);
     }
 
     public static subtract(a: Vector4, b: Vector4): Vector4 {
-        return Vector4.zero.subtractVectors(a, b);
+        return Vector4.zero().subtractVectors(a, b);
     }
 
     public static multiply(a: Vector4, b: Vector4): Vector4 {
-        return Vector4.zero.multiplyVectors(a, b);
+        return Vector4.zero().multiplyVectors(a, b);
     }
 
     public static divide(a: Vector4, b: Vector4): Vector4 {
-        return Vector4.zero.divideVectors(a, b);
+        return Vector4.zero().divideVectors(a, b);
     }
 
     public label: string = '';

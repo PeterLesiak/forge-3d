@@ -5,11 +5,11 @@ import { Quaternion } from './Quaternion';
 import { Matrix } from './Matrix';
 
 export class Transform implements Type {
-    public readonly position = Vector3.zero;
+    public readonly position = Vector3.zero();
 
-    public readonly rotation = Quaternion.identity;
+    public readonly rotation = Quaternion.identity();
 
-    public readonly scale = Vector3.one;
+    public readonly scale = Vector3.one();
 
     public copy(other: Transform): this {
         this.position.copy(other.position);
@@ -27,7 +27,7 @@ export class Transform implements Type {
         return transform;
     }
 
-    public readonly localMatrix = Matrix.identity;
+    public readonly localMatrix = Matrix.identity();
 
     public computeLocalMatrix(): Matrix {
         this.localMatrix.compose(this.position, this.rotation, this.scale);

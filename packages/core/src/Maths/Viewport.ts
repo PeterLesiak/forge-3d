@@ -1,6 +1,8 @@
 import type { DataArray } from '@/Types/Array';
 import type { Type } from '@/Types/Type';
 
+import { equals } from './Utilities';
+
 export type ViewportArray = [number, number];
 
 export class Viewport implements Type, Iterable<number> {
@@ -35,7 +37,7 @@ export class Viewport implements Type, Iterable<number> {
         return this;
     }
 
-    public get isZero(): boolean {
+    public isZero(): boolean {
         return this.width == 0.0 && this.height == 0.0;
     }
 
@@ -62,6 +64,17 @@ export class Viewport implements Type, Iterable<number> {
         return [this.width, this.height];
     }
 
+    public equals(other: Viewport, threshold?: number): boolean {
+        return (
+            equals(this.width, other.width, threshold) &&
+            equals(this.height, other.height, threshold)
+        );
+    }
+
+    public equalsExactly(other: Viewport): boolean {
+        return this.equals(other, 0.0);
+    }
+
     public get aspect(): number {
         const aspect = this.width / this.height;
 
@@ -72,20 +85,20 @@ export class Viewport implements Type, Iterable<number> {
         return `(${this.width}, ${this.height})`;
     }
 
-    public static get zero(): Viewport {
+    public static zero(): Viewport {
         return new Viewport(0.0, 0.0);
     }
 
-    public static get one(): Viewport {
+    public static one(): Viewport {
         return new Viewport(1.0, 1.0);
     }
 
-    public static get positiveInfinity(): Viewport {
+    public static positiveInfinity(): Viewport {
         return new Viewport(Infinity, Infinity);
     }
 
     public static fromArray(array: DataArray, offset?: number): Viewport {
-        return Viewport.zero.fromArray(array, offset);
+        return Viewport.zero().fromArray(array, offset);
     }
 
     public label: string = '';

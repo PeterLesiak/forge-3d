@@ -1,6 +1,7 @@
 import type { Nullable } from '@/Types/Utilities';
 import { Node } from '@/Node';
 import type { Material } from '@/Materials/Material';
+import { StandardMaterial } from '@/Materials/StandardMaterial';
 
 import type { Geometry } from './Geometry';
 
@@ -9,7 +10,11 @@ export class Mesh extends Node {
 
     public material: Material;
 
-    public constructor(geometry: Geometry, material: Material, parent: Nullable<Node> = null) {
+    public constructor(
+        geometry: Geometry,
+        material: Material = new StandardMaterial(),
+        parent: Nullable<Node> = null,
+    ) {
         super(parent);
 
         this.geometry = geometry;

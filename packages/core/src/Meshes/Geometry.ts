@@ -6,12 +6,13 @@ import type { Float2Buffer } from '@/Buffers/Float2Buffer';
 import type { Float3Buffer } from '@/Buffers/Float3Buffer';
 
 export class Geometry implements Type {
-    private _buffers = new Map<string, Buffer>();
+    /** @internal */
+    private buffers = new Map<string, Buffer>();
 
     public copy(other: Geometry): this {
         this.clear();
 
-        other._buffers.forEach((buffer, name) => {
+        other.buffers.forEach((buffer, name) => {
             this.set(name, buffer);
         });
 
@@ -31,25 +32,25 @@ export class Geometry implements Type {
     }
 
     public set(name: string, buffer: Buffer): this {
-        this._buffers.set(name, buffer);
+        this.buffers.set(name, buffer);
 
         return this;
     }
 
     public get(name: string): Nullable<Buffer> {
-        const buffer = this._buffers.get(name);
+        const buffer = this.buffers.get(name);
 
         return buffer ? buffer : null;
     }
 
     public delete(name: string): this {
-        this._buffers.delete(name);
+        this.buffers.delete(name);
 
         return this;
     }
 
     public clear(): this {
-        this._buffers.clear();
+        this.buffers.clear();
 
         return this;
     }
