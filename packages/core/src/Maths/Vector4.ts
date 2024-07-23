@@ -200,6 +200,15 @@ export class Vector4 implements Type, Iterable<number> {
         return this.x * other.x + this.y * other.y + this.z * other.z + this.w * other.w;
     }
 
+    public translate(x: number, y: number, z: number, w: number): this {
+        this.x += x;
+        this.y += y;
+        this.z += z;
+        this.w += w;
+
+        return this;
+    }
+
     public toString(): string {
         return `(${this.x}, ${this.y}, ${this.z}, ${this.w})`;
     }

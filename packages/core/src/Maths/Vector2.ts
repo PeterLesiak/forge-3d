@@ -175,6 +175,13 @@ export class Vector2 implements Type, Iterable<number> {
         return this.x * other.x + this.y * other.y;
     }
 
+    public translate(x: number, y: number): this {
+        this.x += x;
+        this.y += y;
+
+        return this;
+    }
+
     public toString(): string {
         return `(${this.x}, ${this.y})`;
     }

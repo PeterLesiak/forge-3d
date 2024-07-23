@@ -184,6 +184,14 @@ export class Vector3 implements Type, Iterable<number> {
         return this.x * other.x + this.y * other.y + this.z * other.z;
     }
 
+    public translate(x: number, y: number, z: number): this {
+        this.x += x;
+        this.y += y;
+        this.z += z;
+
+        return this;
+    }
+
     public toString(): string {
         return `(${this.x}, ${this.y}, ${this.z})`;
     }

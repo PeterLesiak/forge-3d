@@ -1,21 +1,27 @@
 import type { Nullable } from '@/Types/Utilities';
-import type { Node } from '@/Node';
 import { UIntegerBuffer } from '@/Buffers/UIntegerBuffer';
 import { Float2Buffer } from '@/Buffers/Float2Buffer';
 import { Float3Buffer } from '@/Buffers/Float3Buffer';
+import type { Node } from '@/Node';
 import type { Material } from '@/Materials/Material';
 
 import { Geometry } from '../Geometry';
 import { Mesh } from '../Mesh';
 
-export interface CubeConfiguration {
+export interface CubeProperties {
     material?: Material;
 
     parent?: Nullable<Node>;
 }
 
-export class Cube extends Mesh {
-    public constructor(configuration: CubeConfiguration = {}) {
+export class Cube extends Mesh implements CubeProperties {
+    public constructor(properties: CubeProperties);
+
+    public constructor(parent: Nullable<Node>);
+
+    public constructor();
+
+    public constructor(properties: CubeProperties | Nullable<Node> = {}) {
         // prettier-ignore
         const indexBuffer = new UIntegerBuffer([
             // front
@@ -167,9 +173,18 @@ export class Cube extends Mesh {
         geometry.setNormal(normalBuffer);
         geometry.setUV(uvBuffer);
 
-        const material = configuration.material;
+        let material: Material | undefined = undefined;
+        let parent: Nullable<Node> | undefined = undefined;
 
-        const parent = configuration.parent;
+        if (properties) {
+            if ('material' in properties) {
+                material = properties.material;
+            }
+
+            if ('parent' in properties) {
+                parent = properties.parent;
+            }
+        }
 
         super(geometry, material, parent);
     }

@@ -13,7 +13,7 @@ export class Mesh extends Node {
     public constructor(
         geometry: Geometry,
         material: Material = new StandardMaterial(),
-        parent: Nullable<Node> = null,
+        parent?: Nullable<Node>,
     ) {
         super(parent);
 
