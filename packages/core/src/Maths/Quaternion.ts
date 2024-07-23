@@ -1,7 +1,10 @@
+import type { Radians } from '@/Types/Scalar';
 import type { DataArray } from '@/Types/Array';
 import type { Type } from '@/Types/Type';
 
 import { equals } from './Utilities';
+
+export type EulerOrder = 'xyz' | 'xzy' | 'yxz' | 'yzx' | 'zxy' | 'zyx';
 
 export type QuaternionArray = [number, number, number, number];
 
@@ -59,7 +62,7 @@ export class Quaternion implements Type, Iterable<number> {
         return this;
     }
 
-    public isZero(): boolean {
+    public isinzero(): boolean {
         return this.x == 0.0 && this.y == 0.0 && this.z == 0.0 && this.w == 0.0;
     }
 
@@ -198,6 +201,61 @@ export class Quaternion implements Type, Iterable<number> {
         return this.clone().invert();
     }
 
+    public fromEuler(x: Radians, y: Radians, z: Radians, order: EulerOrder = 'xyz'): this {
+        const sinx = Math.sin(x * 0.5);
+        const cosx = Math.cos(x * 0.5);
+        const siny = Math.sin(y * 0.5);
+        const cosy = Math.cos(y * 0.5);
+        const sinz = Math.sin(z * 0.5);
+        const cosz = Math.cos(z * 0.5);
+
+        switch (order) {
+            case 'xyz':
+                this.x = sinx * cosy * cosz + cosx * siny * sinz;
+                this.y = cosx * siny * cosz - sinx * cosy * sinz;
+                this.z = cosx * cosy * sinz + sinx * siny * cosz;
+                this.w = cosx * cosy * cosz - sinx * siny * sinz;
+                break;
+
+            case 'xzy':
+                this.x = sinx * cosy * cosz - cosx * siny * sinz;
+                this.y = cosx * siny * cosz - sinx * cosy * sinz;
+                this.z = cosx * cosy * sinz + sinx * siny * cosz;
+                this.w = cosx * cosy * cosz + sinx * siny * sinz;
+                break;
+
+            case 'yxz':
+                this.x = sinx * cosy * cosz + cosx * siny * sinz;
+                this.y = cosx * siny * cosz - sinx * cosy * sinz;
+                this.z = cosx * cosy * sinz - sinx * siny * cosz;
+                this.w = cosx * cosy * cosz + sinx * siny * sinz;
+                break;
+
+            case 'yzx':
+                this.x = sinx * cosy * cosz + cosx * siny * sinz;
+                this.y = cosx * siny * cosz + sinx * cosy * sinz;
+                this.z = cosx * cosy * sinz - sinx * siny * cosz;
+                this.w = cosx * cosy * cosz - sinx * siny * sinz;
+                break;
+
+            case 'zxy':
+                this.x = sinx * cosy * cosz - cosx * siny * sinz;
+                this.y = cosx * siny * cosz + sinx * cosy * sinz;
+                this.z = cosx * cosy * sinz + sinx * siny * cosz;
+                this.w = cosx * cosy * cosz - sinx * siny * sinz;
+                break;
+
+            case 'zyx':
+                this.x = sinx * cosy * cosz - cosx * siny * sinz;
+                this.y = cosx * siny * cosz + sinx * cosy * sinz;
+                this.z = cosx * cosy * sinz - sinx * siny * cosz;
+                this.w = cosx * cosy * cosz + sinx * siny * sinz;
+                break;
+        }
+
+        return this;
+    }
+
     public toString(): string {
         return `(${this.x}, ${this.y}, ${this.z}, ${this.w})`;
     }
@@ -220,6 +278,15 @@ export class Quaternion implements Type, Iterable<number> {
 
     public static conjugate(other: Quaternion): Quaternion {
         return other.clone().conjugate();
+    }
+
+    public static fromEuler(
+        x: Radians,
+        y: Radians,
+        z: Radians,
+        order?: EulerOrder,
+    ): Quaternion {
+        return Quaternion.identity().fromEuler(x, y, z, order);
     }
 
     public label: string = '';
