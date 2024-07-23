@@ -1,8 +1,9 @@
 import { build as tsup } from 'tsup';
 
+const MEGA_BYTES = 1024 * 1024;
+
 /** @param {number} bytes */
 const formatMegaBytes = (bytes, decimals = 3) => {
-    const MEGA_BYTES = 1024 * 1024;
 
     const mb = bytes / MEGA_BYTES;
 
