@@ -533,6 +533,10 @@ export class Matrix implements Type, Iterable<number> {
         return Matrix.identity().perspective(fovy, aspect, near, far, coordinateSystem);
     }
 
+    public get objectClassName(): string {
+        return 'Matrix';
+    }
+
     public label: string = '';
 
     public *[Symbol.iterator](): Iterator<number, void> {

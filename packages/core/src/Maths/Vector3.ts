@@ -256,6 +256,10 @@ export class Vector3 implements Type, Iterable<number> {
         return Vector3.zero().divideVectors(a, b);
     }
 
+    public get objectClassName(): string {
+        return 'Vector3';
+    }
+
     public label: string = '';
 
     public *[Symbol.iterator](): Iterator<number, void> {

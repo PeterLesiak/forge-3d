@@ -101,6 +101,10 @@ export class Viewport implements Type, Iterable<number> {
         return Viewport.zero().fromArray(array, offset);
     }
 
+    public get objectClassName(): string {
+        return 'Viewport';
+    }
+
     public label: string = '';
 
     public *[Symbol.iterator](): Iterator<number, void> {

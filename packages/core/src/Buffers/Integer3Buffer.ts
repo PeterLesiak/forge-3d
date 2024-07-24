@@ -35,6 +35,10 @@ export class Integer3Buffer implements Buffer<Vector3Array> {
         return this;
     }
 
+    public get objectClassName(): string {
+        return 'Integer3Buffer';
+    }
+
     public label: string = '';
 
     public *[Symbol.iterator](): Iterator<Vector3Array, void> {

@@ -41,6 +41,10 @@ export class Integer4Buffer implements Buffer<Vector4Array> {
         return this;
     }
 
+    public get objectClassName(): string {
+        return 'Integer4Buffer';
+    }
+
     public label: string = '';
 
     public *[Symbol.iterator](): Iterator<Vector4Array, void> {

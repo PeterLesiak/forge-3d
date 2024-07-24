@@ -90,5 +90,9 @@ export class Transform implements Type {
         return this.localMatrix;
     }
 
+    public get objectClassName(): string {
+        return 'Transform';
+    }
+
     public label: string = '';
 }

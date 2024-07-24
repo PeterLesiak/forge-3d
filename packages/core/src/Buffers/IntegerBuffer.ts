@@ -32,6 +32,10 @@ export class IntegerBuffer implements Buffer<number> {
         return this;
     }
 
+    public get objectClassName(): string {
+        return 'IntegerBuffer';
+    }
+
     public label: string = '';
 
     public *[Symbol.iterator](): Iterator<number, void> {

@@ -2,7 +2,7 @@ import type { Type } from '@/Types/Type';
 
 export type ObserverFunction<T = any> = (event: T) => void;
 
-export class Observer<T extends ObserverFunction> {
+export class Observer<T extends ObserverFunction> implements Type {
     public observable: Observable<T>;
 
     public callback: T;
@@ -15,6 +15,12 @@ export class Observer<T extends ObserverFunction> {
     public remove(): void {
         this.observable.remove(this);
     }
+
+    public get objectClassName(): string {
+        return 'Observer';
+    }
+
+    public label: string = '';
 }
 
 export class Observable<T extends ObserverFunction> implements Type {
@@ -59,6 +65,10 @@ export class Observable<T extends ObserverFunction> implements Type {
         }
 
         return this;
+    }
+
+    public get objectClassName(): string {
+        return 'Observable';
     }
 
     public label: string = '';

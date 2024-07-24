@@ -18,4 +18,8 @@ export class FixedTimer extends Timer {
 
         return 1.0 / this.frameRate;
     }
+
+    public override get objectClassName(): string {
+        return 'FixedTimer';
+    }
 }

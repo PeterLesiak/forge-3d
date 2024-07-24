@@ -7,4 +7,8 @@ export class Scene extends Node {
 
         return super.computeWorldMatrix(false, true);
     }
+
+    public override get objectClassName(): string {
+        return 'Scene';
+    }
 }

@@ -242,6 +242,10 @@ export class Node extends Transform implements Iterable<Node> {
         return this.worldMatrix;
     }
 
+    public override get objectClassName(): string {
+        return 'Node';
+    }
+
     public *[Symbol.iterator](): Iterator<Node, void> {
         const search = function* (root: Node): Generator<Node, void> {
             for (const node of root.children) {

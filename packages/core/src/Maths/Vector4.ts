@@ -253,6 +253,10 @@ export class Vector4 implements Type, Iterable<number> {
         return Vector4.zero().divideVectors(a, b);
     }
 
+    public get objectClassName(): string {
+        return 'Vector4';
+    }
+
     public label: string = '';
 
     public *[Symbol.iterator](): Iterator<number, void> {

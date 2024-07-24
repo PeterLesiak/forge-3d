@@ -59,4 +59,8 @@ export class Camera extends Node {
 
         return this.viewMatrix;
     }
+
+    public override get objectClassName(): string {
+        return 'Camera';
+    }
 }

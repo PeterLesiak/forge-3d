@@ -60,5 +60,9 @@ export class Timer implements Type {
         return deltaTime;
     }
 
+    public get objectClassName(): string {
+        return 'Timer';
+    }
+
     public label: string = '';
 }

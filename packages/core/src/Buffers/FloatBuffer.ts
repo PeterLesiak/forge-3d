@@ -32,6 +32,10 @@ export class FloatBuffer implements Buffer<number> {
         return this;
     }
 
+    public get objectClassName(): string {
+        return 'FloatBuffer';
+    }
+
     public label: string = '';
 
     public *[Symbol.iterator](): Iterator<number, void> {

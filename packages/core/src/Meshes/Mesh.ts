@@ -37,4 +37,8 @@ export class Mesh extends Node {
 
         return mesh;
     }
+
+    public override get objectClassName(): string {
+        return 'Mesh';
+    }
 }

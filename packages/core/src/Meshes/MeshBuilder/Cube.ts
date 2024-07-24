@@ -188,4 +188,8 @@ export class Cube extends Mesh implements CubeProperties {
 
         super(geometry, material, parent);
     }
+
+    public override get objectClassName(): string {
+        return 'Cube';
+    }
 }

@@ -20,5 +20,9 @@ export class Material implements Type {
         return material;
     }
 
+    public get objectClassName(): string {
+        return 'Material';
+    }
+
     public label: string = '';
 }

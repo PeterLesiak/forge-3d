@@ -8,4 +8,8 @@ export class StandardMaterial extends Material {
     public constructor() {
         super(StandardMaterial.shader);
     }
+
+    public override get objectClassName(): string {
+        return 'StandardMaterial';
+    }
 }

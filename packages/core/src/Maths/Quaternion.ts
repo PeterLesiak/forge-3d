@@ -289,6 +289,10 @@ export class Quaternion implements Type, Iterable<number> {
         return Quaternion.identity().fromEuler(x, y, z, order);
     }
 
+    public get objectClassName(): string {
+        return 'Quaternion';
+    }
+
     public label: string = '';
 
     public *[Symbol.iterator](): Iterator<number, void> {

@@ -93,5 +93,9 @@ export class Geometry implements Type {
         return this.delete('uv');
     }
 
+    public get objectClassName(): string {
+        return 'Geometry';
+    }
+
     public label: string = '';
 }

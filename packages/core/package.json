@@ -17,7 +17,8 @@
         "./Shaders": "./build/Shaders/index.js",
         "./Materials": "./build/Materials/index.js",
         "./Meshes": "./build/Meshes/index.js",
-        "./Meshes/MeshBuilder": "./build/Meshes/MeshBuilder/index.js"
+        "./Meshes/MeshBuilder": "./build/Meshes/MeshBuilder/index.js",
+        "./Backends": "./build/Backends/index.js"
     },
     "devDependencies": {
         "@forge-3d/internal": "workspace:^"

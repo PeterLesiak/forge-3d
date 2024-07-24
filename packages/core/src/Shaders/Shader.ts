@@ -7,5 +7,9 @@ export class Shader implements Type {
         this.source = source;
     }
 
+    public get objectClassName(): string {
+        return 'Shader';
+    }
+
     public label: string = '';
 }

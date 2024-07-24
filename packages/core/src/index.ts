@@ -9,4 +9,5 @@ export * from '@/Cameras';
 export * from '@/Shaders';
 export * from '@/Materials';
 export * from '@/Meshes';
+export * from '@/Backends';
 export * from '@/Engine';
