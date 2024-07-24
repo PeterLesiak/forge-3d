@@ -1,4 +1,6 @@
+export * from '@/Package';
 export * from '@/Types';
+export * from '@/Logger';
 export * from '@/Observer';
 export * from '@/Maths';
 export * from '@/Animations';

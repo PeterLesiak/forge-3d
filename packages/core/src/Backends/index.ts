@@ -1,7 +1,7 @@
-export { type Backend } from './Backend';
+export { type Backend, BackendNotSupportedError } from './Backend';
 
 export { EmptyBackend } from './EmptyBackend';
-export { WebGLBackend } from './WebGLBackend';
-export { WebGPUBackend } from './WebGPUBackend';
+export { WebGLBackend, WebGLBackendNotSupportedError } from './WebGLBackend';
+export { WebGPUBackend, WebGPUBackendNotSupportedError } from './WebGPUBackend';
 
 export { backendFallback } from './Fallback';

@@ -1,18 +1,24 @@
 import type { Backend } from './Backend';
 import { EmptyBackend } from './EmptyBackend';
-import { WebGLBackend } from './WebGLBackend';
-import { WebGPUBackend } from './WebGPUBackend';
-
-const fallbackBackends = [WebGPUBackend, WebGLBackend] as const;
+import { WebGLBackend, WebGLBackendNotSupportedError } from './WebGLBackend';
+import { WebGPUBackend, WebGPUBackendNotSupportedError } from './WebGPUBackend';
 
 export const backendFallback = (contextProvider: HTMLCanvasElement): Backend => {
-    for (const fallbackBackend of fallbackBackends) {
-        const backend = new fallbackBackend();
-
-        if (backend.initialize(contextProvider)) {
-            return backend;
+    try {
+        return new WebGPUBackend(contextProvider);
+    } catch (error) {
+        if (!(error instanceof WebGPUBackendNotSupportedError)) {
+            throw error;
         }
     }
 
-    return new EmptyBackend();
+    try {
+        return new WebGLBackend(contextProvider);
+    } catch (error) {
+        if (!(error instanceof WebGLBackendNotSupportedError)) {
+            throw error;
+        }
+    }
+
+    return new EmptyBackend(contextProvider);
 };

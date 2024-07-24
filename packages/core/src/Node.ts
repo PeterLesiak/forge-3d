@@ -1,4 +1,5 @@
 import type { Nullable } from '@/Types/Utilities';
+import { logger } from '@/Logger';
 import { Observable, Observer, type ObserverFunction } from '@/Observer';
 import { Matrix } from '@/Maths/Matrix';
 import { Transform } from '@/Maths/Transform';
@@ -92,9 +93,17 @@ export class Node extends Transform implements Iterable<Node> {
         for (const node of nodes) {
             if (!node) continue;
 
-            if (node == this) continue;
+            if (node == this) {
+                logger.warn(`Can not add a node to itself. Label: "${this.label}"`);
+                continue;
+            }
 
-            if (node.has(this)) continue;
+            if (node.has(this)) {
+                logger.warn(
+                    `Attempting to add node in a recursive hierarchy. Label: "${this.label}"`,
+                );
+                continue;
+            }
 
             node.removeFromParent();
 

@@ -1,29 +1,29 @@
+import { name, version } from '@/Package';
 import type { Type } from '@/Types/Type';
+import { logger } from '@/Logger';
 import type { Node } from '@/Node';
 import type { Backend } from '@/Backends/Backend';
 import { backendFallback } from '@/Backends/Fallback';
 
 export interface EngineProperties {
-    readonly domElement: HTMLCanvasElement;
-
     readonly backend: Backend;
+
+    readonly domElement: HTMLCanvasElement;
 }
 
 export class Engine implements EngineProperties, Type {
-    public readonly domElement: HTMLCanvasElement;
-
     public readonly backend: Backend;
 
+    public readonly domElement: HTMLCanvasElement;
+
     public constructor(properties: Partial<EngineProperties> = {}) {
-        this.domElement = properties.domElement ?? document.createElement('canvas');
+        const contextProvider = properties.domElement ?? document.createElement('canvas');
 
-        const backend = properties.backend;
+        this.backend = properties.backend ?? backendFallback(contextProvider);
 
-        if (backend && backend.initialize(this.domElement)) {
-            this.backend = backend;
-        } else {
-            this.backend = backendFallback(this.domElement);
-        }
+        this.domElement = this.backend.contextProvider;
+
+        logger.special(`Using ${name} v${version} with ${this.backend.renderingAPI}`);
     }
 
     public render(node: Node): this {

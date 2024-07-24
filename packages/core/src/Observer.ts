@@ -1,4 +1,5 @@
 import type { Type } from '@/Types/Type';
+import { logger } from '@/Logger';
 
 export type ObserverFunction<T = any> = (event: T) => void;
 
@@ -48,6 +49,10 @@ export class Observable<T extends ObserverFunction> implements Type {
 
         if (index >= 0) {
             this.observers.splice(index, 1);
+        } else {
+            logger.warn(
+                `Can not remove an observer thats bound to different observable. Label: "${this.label}"`,
+            );
         }
 
         return this;

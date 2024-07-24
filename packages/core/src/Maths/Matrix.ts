@@ -1,6 +1,7 @@
 import type { Radians } from '@/Types/Scalar';
 import type { DataArray } from '@/Types/Array';
 import type { Type } from '@/Types/Type';
+import { logger } from '@/Logger';
 
 import { CoordinateSystem } from './CoordinateSystem';
 import { equals } from './Utilities';
@@ -456,6 +457,12 @@ export class Matrix implements Type, Iterable<number> {
             case CoordinateSystem.WebGPUCoordinateSystem:
                 this.n33 = far * nf;
                 this.n34 = far * near * nf;
+                break;
+
+            default:
+                logger.warn(
+                    `Invalid coordinate system: "${coordinateSystem}". Label: "${this.label}"`,
+                );
                 break;
         }
 

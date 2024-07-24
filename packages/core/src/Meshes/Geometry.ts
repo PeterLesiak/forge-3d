@@ -1,5 +1,6 @@
 import type { Type } from '@/Types/Type';
 import type { Nullable } from '@/Types/Utilities';
+import { logger } from '@/Logger';
 import type { Buffer } from '@/Buffers/Buffer';
 import type { UIntegerBuffer } from '@/Buffers/UIntegerBuffer';
 import type { Float2Buffer } from '@/Buffers/Float2Buffer';
@@ -44,7 +45,11 @@ export class Geometry implements Type {
     }
 
     public delete(name: string): this {
-        this.buffers.delete(name);
+        const success = this.buffers.delete(name);
+
+        if (!success) {
+            logger.warn(`Buffer named: "${name}" does not exist. Label: "${this.label}"`);
+        }
 
         return this;
     }

@@ -1,5 +1,6 @@
 {
     "name": "@forge-3d/core",
+    "version": "1.0.0",
     "type": "module",
     "scripts": {
         "build": "node ./build.js",

@@ -1,6 +1,7 @@
 import type { Radians } from '@/Types/Scalar';
 import type { DataArray } from '@/Types/Array';
 import type { Type } from '@/Types/Type';
+import { logger } from '@/Logger';
 
 import { equals } from './Utilities';
 
@@ -250,6 +251,12 @@ export class Quaternion implements Type, Iterable<number> {
                 this.y = cosx * siny * cosz + sinx * cosy * sinz;
                 this.z = cosx * cosy * sinz - sinx * siny * cosz;
                 this.w = cosx * cosy * cosz + sinx * siny * sinz;
+                break;
+
+            default:
+                logger.warn(
+                    `Invalid euler rotation order: "${order}". Label: "${this.label}"`,
+                );
                 break;
         }
 
