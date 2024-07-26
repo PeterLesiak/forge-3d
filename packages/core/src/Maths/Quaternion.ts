@@ -254,9 +254,11 @@ export class Quaternion implements Type, Iterable<number> {
                 break;
 
             default:
-                logger.warn(
-                    `Invalid euler rotation order: "${order}". Label: "${this.label}"`,
-                );
+                logger.warn({
+                    label: this.label,
+                    scope: 'Quaternion.fromEuler()',
+                    message: `Invalid euler rotation order: "${order}"`,
+                });
                 break;
         }
 

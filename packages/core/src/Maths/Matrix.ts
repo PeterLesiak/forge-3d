@@ -449,20 +449,22 @@ export class Matrix implements Type, Iterable<number> {
         this.n32 = 0.0;
 
         switch (coordinateSystem) {
-            case CoordinateSystem.WebGLCoordinateSystem:
+            case CoordinateSystem.WEBGL:
                 this.n33 = (far + near) * nf;
                 this.n34 = 2.0 * far * near * nf;
                 break;
 
-            case CoordinateSystem.WebGPUCoordinateSystem:
+            case CoordinateSystem.WEBGPU:
                 this.n33 = far * nf;
                 this.n34 = far * near * nf;
                 break;
 
             default:
-                logger.warn(
-                    `Invalid coordinate system: "${coordinateSystem}". Label: "${this.label}"`,
-                );
+                logger.warn({
+                    label: this.label,
+                    scope: 'Matrix.perspective()',
+                    message: `Invalid coordinate system: "${coordinateSystem}"`,
+                });
                 break;
         }
 

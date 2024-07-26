@@ -1,21 +1,25 @@
-import { BackendNotSupportedError, type Backend } from './Backend';
+import type { Nullable } from '@/Types/Utilities';
 
-export class WebGLBackendNotSupportedError extends BackendNotSupportedError {
-    public constructor() {
-        super('WebGLBackend');
-    }
-}
+import type { Backend } from './Backend';
 
 export class WebGLBackend implements Backend {
-    public readonly contextProvider: HTMLCanvasElement;
+    private internalContextProvider: Nullable<HTMLCanvasElement> = null;
 
-    public readonly renderingAPI: 'WebGL1' | 'WebGL2';
+    public get contextProvider(): Nullable<HTMLCanvasElement> {
+        return this.internalContextProvider;
+    }
 
-    /** @throws {WebGLBackendNotSupportedError} */
-    public constructor(contextProvider: HTMLCanvasElement) {
-        this.contextProvider = contextProvider;
+    private internalInitialized: boolean = false;
 
-        this.renderingAPI = 'WebGL2';
+    public get initialized(): boolean {
+        return this.internalInitialized;
+    }
+
+    public initialize(contextProvider: HTMLCanvasElement): boolean {
+        this.internalContextProvider = contextProvider;
+        this.internalInitialized = false;
+
+        return false;
     }
 
     public get objectClassName(): string {

@@ -7,7 +7,6 @@ import type { Float2Buffer } from '@/Buffers/Float2Buffer';
 import type { Float3Buffer } from '@/Buffers/Float3Buffer';
 
 export class Geometry implements Type {
-    /** @internal */
     private buffers = new Map<string, Buffer>();
 
     public copy(other: Geometry): this {
@@ -48,7 +47,11 @@ export class Geometry implements Type {
         const success = this.buffers.delete(name);
 
         if (!success) {
-            logger.warn(`Buffer named: "${name}" does not exist. Label: "${this.label}"`);
+            logger.warn({
+                label: this.label,
+                scope: 'Geometry.delete()',
+                message: `Buffer does not exist: "${name}"`,
+            });
         }
 
         return this;

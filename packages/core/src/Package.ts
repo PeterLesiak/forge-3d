@@ -1,5 +1,5 @@
 import metadata from '../package.json';
 
-export const name = metadata.name;
+export const packageName = metadata.name;
 
-export const version = metadata.version;
+export const packageVersion = metadata.version;

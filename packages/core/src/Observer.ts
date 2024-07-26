@@ -25,7 +25,6 @@ export class Observer<T extends ObserverFunction> implements Type {
 }
 
 export class Observable<T extends ObserverFunction> implements Type {
-    /** @internal */
     private readonly observers: Observer<T>[] = [];
 
     public add(callback: T): Observer<T> {
@@ -50,9 +49,11 @@ export class Observable<T extends ObserverFunction> implements Type {
         if (index >= 0) {
             this.observers.splice(index, 1);
         } else {
-            logger.warn(
-                `Can not remove an observer thats bound to different observable. Label: "${this.label}"`,
-            );
+            logger.warn({
+                label: this.label,
+                scope: 'Observable.remove()',
+                message: 'Observer is not attached to current observable',
+            });
         }
 
         return this;

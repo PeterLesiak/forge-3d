@@ -2,7 +2,7 @@ export { UIDGenerator, type UID } from './UIDGenerator';
 
 export { CoordinateSystem } from './CoordinateSystem';
 
-export { equals, EPSILON } from './Utilities';
+export { equals, last, EPSILON } from './Utilities';
 
 export { Viewport, type ViewportArray } from './Viewport';
 

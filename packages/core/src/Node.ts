@@ -54,7 +54,6 @@ export class Node extends Transform implements Iterable<Node> {
         requestAnimationFrame(update);
     }
 
-    /** @internal */
     private internalRoot: Node = this;
 
     public get root(): Node {
@@ -94,14 +93,20 @@ export class Node extends Transform implements Iterable<Node> {
             if (!node) continue;
 
             if (node == this) {
-                logger.warn(`Can not add a node to itself. Label: "${this.label}"`);
+                logger.warn({
+                    label: this.label,
+                    scope: 'Node.add()',
+                    message: 'Can not attach a node to itself',
+                });
                 continue;
             }
 
             if (node.has(this)) {
-                logger.warn(
-                    `Attempting to add node in a recursive hierarchy. Label: "${this.label}"`,
-                );
+                logger.warn({
+                    label: this.label,
+                    scope: 'Node.add()',
+                    message: 'Can not attach a node in a recursive hierarchy',
+                });
                 continue;
             }
 

@@ -1,21 +1,25 @@
-import { BackendNotSupportedError, type Backend } from './Backend';
+import type { Nullable } from '@/Types/Utilities';
 
-export class WebGPUBackendNotSupportedError extends BackendNotSupportedError {
-    public constructor() {
-        super('WebGPUBackend');
-    }
-}
+import type { Backend } from './Backend';
 
 export class WebGPUBackend implements Backend {
-    public readonly contextProvider: HTMLCanvasElement;
+    private internalContextProvider: Nullable<HTMLCanvasElement> = null;
 
-    public readonly renderingAPI: 'WebGPU';
+    public get contextProvider(): Nullable<HTMLCanvasElement> {
+        return this.internalContextProvider;
+    }
 
-    /** @throws {WebGPUBackendNotSupportedError} */
-    public constructor(contextProvider: HTMLCanvasElement) {
-        this.contextProvider = contextProvider;
+    private internalInitialized: boolean = false;
 
-        this.renderingAPI = 'WebGPU';
+    public get initialized(): boolean {
+        return this.internalInitialized;
+    }
+
+    public initialize(contextProvider: HTMLCanvasElement): boolean {
+        this.internalContextProvider = contextProvider;
+        this.internalInitialized = false;
+
+        return false;
     }
 
     public get objectClassName(): string {

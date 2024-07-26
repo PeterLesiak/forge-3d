@@ -1,13 +1,10 @@
 import type { Type } from '@/Types/Type';
-
-export class BackendNotSupportedError extends Error {
-    public constructor(backendName: string) {
-        super(`@forge-3d/core | ${backendName} is not supported`);
-    }
-}
+import type { Nullable } from '@/Types/Utilities';
 
 export interface Backend extends Type {
-    readonly contextProvider: HTMLCanvasElement;
+    get contextProvider(): Nullable<HTMLCanvasElement>;
 
-    readonly renderingAPI: string;
+    get initialized(): boolean;
+
+    initialize(contextProvider: HTMLCanvasElement): boolean;
 }

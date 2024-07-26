@@ -3,20 +3,16 @@ import type { Type } from '@/Types/Type';
 const now = (): number => performance.now() / 1000.0;
 
 export class Timer implements Type {
-    /** @internal */
     private internalIsRunning: boolean = false;
 
     public get isRunning(): boolean {
         return this.internalIsRunning;
     }
 
-    /** @internal */
     private timestamp: number = 0.0;
 
-    /** @internal */
     private previousElapsedTime: number = 0.0;
 
-    /** @internal */
     private previousDeltaTime: number = 0.0;
 
     public start(): this {

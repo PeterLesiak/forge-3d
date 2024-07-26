@@ -1,8 +1,9 @@
-import { name, version } from '@/Package';
 import type { Type } from '@/Types/Type';
+import { packageName, packageVersion } from '@/Package';
 import { logger } from '@/Logger';
 import type { Node } from '@/Node';
 import type { Backend } from '@/Backends/Backend';
+import { EmptyBackend } from '@/Backends/EmptyBackend';
 import { backendFallback } from '@/Backends/Fallback';
 
 export interface EngineProperties {
@@ -17,16 +18,40 @@ export class Engine implements EngineProperties, Type {
     public readonly domElement: HTMLCanvasElement;
 
     public constructor(properties: Partial<EngineProperties> = {}) {
-        const contextProvider = properties.domElement ?? document.createElement('canvas');
+        this.domElement = properties.domElement ?? document.createElement('canvas');
 
-        this.backend = properties.backend ?? backendFallback(contextProvider);
+        const backend = properties.backend;
 
-        this.domElement = this.backend.contextProvider;
+        if (backend && backend.initialize(this.domElement)) {
+            this.backend = properties.backend;
+        } else {
+            this.backend = backendFallback(this.domElement);
 
-        logger.special(`Using ${name} v${version} with ${this.backend.renderingAPI}`);
+            if (backend) {
+                logger.warn({
+                    label: this.label,
+                    scope: 'Engine',
+                    message: `Failed to initialize ${backend.objectClassName}. Using a fallback backend`,
+                });
+            }
+
+            if (this.backend instanceof EmptyBackend) {
+                logger.warn({
+                    label: this.label,
+                    scope: 'Engine',
+                    message: 'No backends supported. Using an empty backend',
+                });
+            }
+        }
+
+        logger.special({
+            label: `${packageName} v${packageVersion}`,
+            scope: 'Engine',
+            message: `Using ${this.backend.objectClassName}`,
+        });
     }
 
-    public render(node: Node): this {
+    public render<T extends Node>(node: T): this {
         return this;
     }
 

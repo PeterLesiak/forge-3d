@@ -1,5 +1,5 @@
-export * from '@/Package';
 export * from '@/Types';
+export * from '@/Package';
 export * from '@/Logger';
 export * from '@/Observer';
 export * from '@/Maths';
