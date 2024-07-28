@@ -14,17 +14,17 @@ export enum LogLevel {
     NONE,
 }
 
-export interface LoggerMessage {
+export type LoggerMessage = {
     label?: string;
     scope?: string;
     message: string;
-}
+};
 
 export class Logger implements Type {
     public logLevel: LogLevel = LogLevel.WARN;
 
     public constructor(logLevel?: LogLevel) {
-        if (logLevel) {
+        if (logLevel !== undefined) {
             this.logLevel = logLevel;
         }
     }
@@ -50,6 +50,8 @@ export class Logger implements Type {
         scope?: string;
         message: string;
     }): this {
+        if (!this.console) return this;
+
         const name = properties.name ?? 'LOG';
         const theme = properties.theme ?? 'dodgerblue';
         const label = properties.label;
@@ -63,17 +65,15 @@ export class Logger implements Type {
 
         if (label) {
             log.push(
-                'color: palegreen; font-weight: 600; margin-top: 1.5px; display: inline-flex;',
+                'color: palegreen; font-weight: 600; margin-top: 2px; display: inline-flex;',
             );
         }
 
         if (scope) {
-            log.push(
-                'color: cyan; font-weight: 600; margin-top: 1.5px; display: inline-flex;',
-            );
+            log.push('color: cyan; font-weight: 600; margin-top: 2px; display: inline-flex;');
         }
 
-        console.log(...log, 'font-weight: 600; margin-top: 1.5px; display: inline-flex;');
+        console.log(...log, 'font-weight: 600; margin-top: 2px; display: inline-flex;');
 
         return this;
     }
@@ -83,7 +83,7 @@ export class Logger implements Type {
 
         const count = this.store.debug.get(message) ?? 0;
 
-        if (!count && this.console) {
+        if (!count) {
             this.format({ name: '⚙ DEBUG', theme: '#d192e7', label, scope, message });
         }
 
@@ -97,7 +97,7 @@ export class Logger implements Type {
 
         const count = this.store.info.get(message) ?? 0;
 
-        if (!count && this.console) {
+        if (!count) {
             this.format({ name: 'i INFO', theme: '#42a7f0', label, scope, message });
         }
 
@@ -111,7 +111,7 @@ export class Logger implements Type {
 
         const count = this.store.warn.get(message) ?? 0;
 
-        if (!count && this.console) {
+        if (!count) {
             this.format({ name: '⚠ WARN', theme: '#ffd500', label, scope, message });
         }
 
@@ -125,7 +125,7 @@ export class Logger implements Type {
 
         const count = this.store.error.get(message) ?? 0;
 
-        if (!count && this.console) {
+        if (!count) {
             this.format({ name: '✖ ERROR', theme: '#ef5350', label, scope, message });
         }
 
@@ -139,7 +139,7 @@ export class Logger implements Type {
 
         const count = this.store.special.get(message) ?? 0;
 
-        if (!count && this.console) {
+        if (!count) {
             this.format({
                 name: 'Ξ FORGE3D',
                 theme: 'linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%)',

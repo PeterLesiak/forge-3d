@@ -5,6 +5,12 @@ import { Matrix } from '@/Maths/Matrix';
 import { Transform } from '@/Maths/Transform';
 import { Timer } from '@/Animations/Timer';
 
+export type OnTick<T extends Node = Node> = ObserverFunction<{
+    dispatcher: T;
+    deltaTime: number;
+    elapsedTime: number;
+}>;
+
 export type OnChildAdded<T extends Node = Node> = ObserverFunction<{
     dispatcher: T;
     node: Node;
@@ -14,12 +20,6 @@ export type OnChildRemoved<T extends Node = Node> = ObserverFunction<{
     dispatcher: T;
     child: Node;
     parent: Node;
-}>;
-
-export type OnTick<T extends Node = Node> = ObserverFunction<{
-    dispatcher: T;
-    deltaTime: number;
-    elapsedTime: number;
 }>;
 
 export type OnBeforeRender<T extends Node = Node> = ObserverFunction<T>;

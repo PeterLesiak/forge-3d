@@ -9,9 +9,9 @@ import { Geometry } from '../Geometry';
 import { Mesh } from '../Mesh';
 
 export interface CubeProperties {
-    material?: Material;
+    material: Material;
 
-    parent?: Nullable<Node>;
+    parent: Nullable<Node>;
 }
 
 export class Cube extends Mesh implements CubeProperties {
@@ -21,7 +21,7 @@ export class Cube extends Mesh implements CubeProperties {
 
     public constructor();
 
-    public constructor(properties: CubeProperties | Nullable<Node> = {}) {
+    public constructor(properties: Partial<CubeProperties> | Nullable<Node> = {}) {
         // prettier-ignore
         const indexBuffer = new UIntegerBuffer([
             // front
