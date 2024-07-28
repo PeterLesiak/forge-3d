@@ -65,11 +65,6 @@
 > ```bash
 > bun add @forge-3d/core
 > ```
->
-> <!-- prettier-ignore -->
-> ```html
-> <script src="https://esm.run/@forge-3d/core" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-> ```
 
 #### ✨ Example - Spinning Cube & Camera and Lighting
 
