@@ -242,6 +242,8 @@ const isPragmaDirective = (source: string, index: number): boolean => {
     return matchString('#pragma', source, index);
 };
 
+type UnaryOperator = Keys<typeof UnaryOperator>;
+
 const UnaryOperator = {
     PLUS: 'PLUS',
 
@@ -251,6 +253,8 @@ const UnaryOperator = {
 
     NEGATE: 'NEGATE',
 } as const;
+
+type BinaryOperator = Keys<typeof BinaryOperator>;
 
 const BinaryOperator = {
     MULTIPLY: 'MULTIPLY',
@@ -285,6 +289,8 @@ const BinaryOperator = {
 
     OR: 'OR',
 } as const;
+
+type TokenType = Keys<typeof TokenType>;
 
 const TokenType = {
     ...UnaryOperator,
@@ -335,7 +341,7 @@ const TokenType = {
 };
 
 type Token = {
-    type: Keys<typeof TokenType>;
+    type: TokenType;
     value: string;
 };
 
@@ -344,9 +350,9 @@ type Expression = BinaryExpression | UnaryExpression | number;
 class UnaryExpression {
     public value: Expression;
 
-    public operator: Keys<typeof UnaryOperator>;
+    public operator: UnaryOperator;
 
-    public constructor(value: Expression, operator: Keys<typeof UnaryOperator>) {
+    public constructor(value: Expression, operator: UnaryOperator) {
         this.value = value;
         this.operator = operator;
     }
@@ -355,15 +361,11 @@ class UnaryExpression {
 class BinaryExpression {
     public left: Expression;
 
-    public operator: Keys<typeof BinaryOperator>;
+    public operator: BinaryOperator;
 
     public right: Expression;
 
-    public constructor(
-        left: Expression,
-        operator: Keys<typeof BinaryOperator>,
-        right: Expression,
-    ) {
+    public constructor(left: Expression, operator: BinaryOperator, right: Expression) {
         this.left = left;
         this.operator = operator;
         this.right = right;
@@ -372,15 +374,13 @@ class BinaryExpression {
 
 export type Define = string | true;
 
-export interface PreprocessorProperties {
-    defines: Record<string, Define>;
-}
-
-export class Preprocessor implements PreprocessorProperties, Type {
+export class Preprocessor implements Type {
     public defines: Record<string, Define> = {};
 
-    public constructor(properties: Partial<PreprocessorProperties> = {}) {
-        this.defines = properties.defines ?? this.defines;
+    public constructor(defines?: Record<string, Define>) {
+        if (defines) {
+            this.defines = defines;
+        }
     }
 
     private source: string = '';
@@ -426,7 +426,7 @@ export class Preprocessor implements PreprocessorProperties, Type {
 
     private tokens: Token[] = [];
 
-    private addToken(type: Keys<typeof TokenType>, value: string = ''): this {
+    private addToken(type: TokenType, value: string = ''): this {
         this.tokens.push({ type, value });
 
         return this;
@@ -996,8 +996,6 @@ export class Preprocessor implements PreprocessorProperties, Type {
     }
 
     private parseExpression(): Expression {
-        while (this.current.type != TokenType.NEWLINE) {}
-
         return 0;
     }
 

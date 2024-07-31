@@ -2,22 +2,15 @@ import type { Type } from '@/Types/Type';
 
 import { Preprocessor, type Define } from './Preprocessor';
 
-export type ShaderConfiguration = {
-    defines?: Record<string, Define>;
-};
-
 export class Shader implements Type {
     public readonly source: string;
 
-    public readonly preprocessor: Preprocessor = new Preprocessor();
+    public readonly preprocessor = new Preprocessor();
 
-    public constructor(source: string, configuration: ShaderConfiguration = {}) {
+    public constructor(source: string, defines: Record<string, Define> = {}) {
         this.source = source;
 
-        if (configuration.defines) {
-            this.preprocessor.defines = configuration.defines;
-        }
-
+        this.preprocessor.defines = defines;
         this.preprocessor.process(this.source);
     }
 

@@ -1,3 +1,5 @@
+import type { Seconds } from '@/Types/Scalar';
+
 import { Timer } from './Timer';
 
 export class FixedTimer extends Timer {
@@ -11,7 +13,7 @@ export class FixedTimer extends Timer {
         }
     }
 
-    public override get deltaTime(): number {
+    public override get deltaTime(): Seconds {
         if (!this.isRunning) {
             return 0.0;
         }

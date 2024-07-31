@@ -1,3 +1,3 @@
-export { Preprocessor, type PreprocessorProperties } from './Preprocessor';
+export { Preprocessor, type PreprocessorProperties, type Define } from './Preprocessor';
 
-export { Shader, type ShaderConfiguration } from './Shader';
+export { Shader } from './Shader';

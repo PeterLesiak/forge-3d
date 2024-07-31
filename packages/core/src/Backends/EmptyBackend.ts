@@ -15,7 +15,7 @@ export class EmptyBackend implements Backend {
         return this.internalInitialized;
     }
 
-    public initialize(contextProvider: HTMLCanvasElement): boolean {
+    public initialize(contextProvider: HTMLCanvasElement): true {
         this.internalContextProvider = contextProvider;
         this.internalInitialized = true;
 

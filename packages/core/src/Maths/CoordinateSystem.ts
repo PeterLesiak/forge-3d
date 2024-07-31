@@ -1,5 +1,9 @@
-export enum CoordinateSystem {
-    WEBGL = 'WEBGL',
+import type { Keys } from '@/Types/Utilities';
 
-    WEBGPU = 'WEBGPU',
-}
+export type CoordinateSystem = Keys<typeof CoordinateSystem>;
+
+export const CoordinateSystem = {
+    WEBGL: 'WEBGL',
+
+    WEBGPU: 'WEBGPU',
+} as const;

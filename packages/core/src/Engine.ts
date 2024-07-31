@@ -51,7 +51,7 @@ export class Engine implements EngineProperties, Type {
         });
     }
 
-    public render<T extends Node>(node: T): this {
+    public render(node: Node): this {
         return this;
     }
 

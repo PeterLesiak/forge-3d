@@ -1,4 +1,4 @@
-export type { Radians, Degrees } from './Scalar';
+export type { Radians, Degrees, Seconds } from './Scalar';
 
 export type { DataArray, TypedArray, FloatArray, UIntegerArray, IntegerArray } from './Array';
 

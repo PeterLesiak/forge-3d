@@ -4,7 +4,7 @@ import { logger } from '@/Logger';
 export type ObserverFunction<T = any> = (event: T) => void;
 
 export class Observer<T extends ObserverFunction> implements Type {
-    public observable: Observable<T>;
+    private observable: Observable<T>;
 
     public callback: T;
 
@@ -25,7 +25,7 @@ export class Observer<T extends ObserverFunction> implements Type {
 }
 
 export class Observable<T extends ObserverFunction> implements Type {
-    private readonly observers: Observer<T>[] = [];
+    private observers: Observer<T>[] = [];
 
     public add(callback: T): Observer<T> {
         const observer = new Observer(this, callback);
@@ -60,7 +60,7 @@ export class Observable<T extends ObserverFunction> implements Type {
     }
 
     public clear(): this {
-        this.observers.length = 0;
+        this.observers = [];
 
         return this;
     }

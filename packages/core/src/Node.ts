@@ -264,9 +264,6 @@ export class Node extends Transform implements Iterable<Node> {
         const search = function* (root: Node): Generator<Node, void> {
             for (const node of root.children) {
                 yield node;
-            }
-
-            for (const node of root.children) {
                 yield* search(node);
             }
         };

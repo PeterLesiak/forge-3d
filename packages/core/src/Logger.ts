@@ -1,18 +1,21 @@
 import type { Type } from '@/Types/Type';
+import type { Keys } from '@/Types/Utilities';
 
-export enum LogLevel {
-    VERBOSE = 'VERBOSE',
+export type LogLevel = Keys<typeof LogLevel>;
 
-    DEBUG = 'DEBUG',
+export const LogLevel = {
+    VERBOSE: 'VERBOSE',
 
-    INFO = 'INFO',
+    DEBUG: 'DEBUG',
 
-    WARN = 'WARN',
+    INFO: 'INFO',
 
-    ERROR = 'ERROR',
+    WARN: 'WARN',
 
-    NONE = 'NONE',
-}
+    ERROR: 'ERROR',
+
+    NONE: 'NONE',
+} as const;
 
 const LogValue = {
     VERBOSE: 0,

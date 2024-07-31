@@ -1,6 +1,7 @@
+import type { Seconds } from '@/Types/Scalar';
 import type { Type } from '@/Types/Type';
 
-const now = (): number => performance.now() / 1000.0;
+const now = (): Seconds => performance.now() / 1000.0;
 
 export class Timer implements Type {
     private internalIsRunning: boolean = false;
@@ -9,11 +10,11 @@ export class Timer implements Type {
         return this.internalIsRunning;
     }
 
-    private timestamp: number = 0.0;
+    private timestamp: Seconds = 0.0;
 
-    private previousElapsedTime: number = 0.0;
+    private previousElapsedTime: Seconds = 0.0;
 
-    private previousDeltaTime: number = 0.0;
+    private previousDeltaTime: Seconds = 0.0;
 
     public start(): this {
         this.internalIsRunning = true;
@@ -30,7 +31,7 @@ export class Timer implements Type {
         return this;
     }
 
-    public get elapsedTime(): number {
+    public get elapsedTime(): Seconds {
         if (!this.isRunning) {
             return this.previousElapsedTime;
         }
@@ -42,7 +43,7 @@ export class Timer implements Type {
         return elapsedTime;
     }
 
-    public get deltaTime(): number {
+    public get deltaTime(): Seconds {
         if (!this.isRunning) {
             return 0.0;
         }
