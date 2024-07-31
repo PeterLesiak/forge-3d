@@ -4,4 +4,4 @@ export type { DataArray, TypedArray, FloatArray, UIntegerArray, IntegerArray } f
 
 export type { Type } from './Type';
 
-export type { Nullable } from './Utilities';
+export type { Keys, Nullable } from './Utilities';

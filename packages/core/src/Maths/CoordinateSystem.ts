@@ -1,5 +1,5 @@
 export enum CoordinateSystem {
-    WEBGL,
+    WEBGL = 'WEBGL',
 
-    WEBGPU,
+    WEBGPU = 'WEBGPU',
 }

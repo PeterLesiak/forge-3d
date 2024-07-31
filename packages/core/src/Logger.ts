@@ -1,18 +1,32 @@
 import type { Type } from '@/Types/Type';
 
 export enum LogLevel {
-    VERBOSE,
+    VERBOSE = 'VERBOSE',
 
-    DEBUG,
+    DEBUG = 'DEBUG',
 
-    INFO,
+    INFO = 'INFO',
 
-    WARN,
+    WARN = 'WARN',
 
-    ERROR,
+    ERROR = 'ERROR',
 
-    NONE,
+    NONE = 'NONE',
 }
+
+const LogValue = {
+    VERBOSE: 0,
+
+    DEBUG: 1,
+
+    INFO: 2,
+
+    WARN: 3,
+
+    ERROR: 4,
+
+    NONE: 5,
+} as const;
 
 export type LoggerMessage = {
     label?: string;
@@ -24,7 +38,7 @@ export class Logger implements Type {
     public logLevel: LogLevel = LogLevel.WARN;
 
     public constructor(logLevel?: LogLevel) {
-        if (logLevel !== undefined) {
+        if (logLevel) {
             this.logLevel = logLevel;
         }
     }
@@ -79,7 +93,7 @@ export class Logger implements Type {
     }
 
     public debug({ label, scope, message }: LoggerMessage): this {
-        if (this.logLevel > LogLevel.DEBUG) return this;
+        if (LogValue[this.logLevel] > LogValue[LogLevel.DEBUG]) return this;
 
         const count = this.store.debug.get(message) ?? 0;
 
@@ -93,7 +107,7 @@ export class Logger implements Type {
     }
 
     public info({ label, scope, message }: LoggerMessage): this {
-        if (this.logLevel > LogLevel.INFO) return this;
+        if (LogValue[this.logLevel] > LogValue[LogLevel.INFO]) return this;
 
         const count = this.store.info.get(message) ?? 0;
 
@@ -107,7 +121,7 @@ export class Logger implements Type {
     }
 
     public warn({ label, scope, message }: LoggerMessage): this {
-        if (this.logLevel > LogLevel.WARN) return this;
+        if (LogValue[this.logLevel] > LogValue[LogLevel.WARN]) return this;
 
         const count = this.store.warn.get(message) ?? 0;
 
@@ -121,7 +135,7 @@ export class Logger implements Type {
     }
 
     public error({ label, scope, message }: LoggerMessage): this {
-        if (this.logLevel > LogLevel.ERROR) return this;
+        if (LogValue[this.logLevel] > LogValue[LogLevel.ERROR]) return this;
 
         const count = this.store.error.get(message) ?? 0;
 
@@ -135,7 +149,7 @@ export class Logger implements Type {
     }
 
     public special({ label, scope, message }: LoggerMessage): this {
-        if (this.logLevel == LogLevel.NONE) return this;
+        if (LogValue[this.logLevel] == LogValue[LogLevel.NONE]) return this;
 
         const count = this.store.special.get(message) ?? 0;
 
