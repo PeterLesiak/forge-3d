@@ -1,0 +1,11 @@
+{
+    "extends": "@forge-3d/internal/tsconfig.json",
+
+    "compilerOptions": {
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+
+    "include": ["./src", "./Herebyfile.js"]
+}

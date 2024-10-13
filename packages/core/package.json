@@ -1,0 +1,11 @@
+{
+    "name": "@forge-3d/core",
+    "type": "module",
+    "scripts": {
+        "build": "hereby build",
+        "lint": "tsc --project ./tsconfig.json"
+    },
+    "devDependencies": {
+        "@forge-3d/internal": "workspace:^"
+    }
+}

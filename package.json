@@ -1,0 +1,15 @@
+{
+    "name": "@forge-3d/root",
+    "type": "module",
+    "scripts": {
+        "core:build": "pnpm --filter @forge-3d/core build",
+        "core:lint": "pnpm --filter @forge-3d/core lint",
+        "format": "prettier . --write"
+    },
+    "devDependencies": {
+        "@types/node": "^22.7.5",
+        "hereby": "^1.10.0",
+        "prettier": "^3.3.3",
+        "typescript": "^5.6.3"
+    }
+}
