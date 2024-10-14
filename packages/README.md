@@ -2,4 +2,4 @@
 
 -   @forge-3d/core
 -   @forge-3d/create
--   _@forge-3d/internal_
+-   @forge-3d/internal **[private package]**
