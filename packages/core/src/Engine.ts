@@ -1,5 +1,5 @@
 import type { Backend } from '@/Backends/Backend';
-import { defaultBackend } from '@/Backends/DefaultBackend';
+import { defaultBackend } from '@/Backends/defaultBackend';
 
 export interface EngineProperties {
     readonly domElement: HTMLCanvasElement | OffscreenCanvas;

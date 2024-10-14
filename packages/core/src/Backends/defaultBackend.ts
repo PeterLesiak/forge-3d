@@ -1,6 +1,6 @@
 import type { Backend } from './Backend';
-import { WebGPUBackend } from './WebGPUBackend';
 import { WebGL2Backend } from './WebGL2Backend';
+import { WebGPUBackend } from './WebGPUBackend';
 
 export const defaultBackend = async (
     canvas: HTMLCanvasElement | OffscreenCanvas,
