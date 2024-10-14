@@ -2,9 +2,13 @@
     "extends": "@forge-3d/internal/tsconfig.json",
 
     "compilerOptions": {
+        "lib": ["ES2020", "DOM", "DOM.Iterable"],
+
         "paths": {
             "@/*": ["./src/*"]
-        }
+        },
+
+        "types": ["@webgpu/types"]
     },
 
     "include": ["./src", "./Herebyfile.js"]

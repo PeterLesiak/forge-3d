@@ -42,7 +42,7 @@ export const build = async source => {
     await tsup(configuration);
 
     console.log();
-    console.log(`[🗂️  FILES]: ${totalFiles}`);
+    console.log(`[📦️ FILES]: ${totalFiles}`);
     console.log(`[💾  SIZE]: ${formatMegaBytes(totalSize)}`);
     console.log();
 };

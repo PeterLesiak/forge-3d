@@ -26,6 +26,9 @@ importers:
       '@forge-3d/internal':
         specifier: workspace:^
         version: link:../internal
+      '@webgpu/types':
+        specifier: ^0.1.48
+        version: 0.1.48
 
   packages/internal:
     dependencies:
@@ -290,6 +293,9 @@ packages:
 
   '@types/node@22.7.5':
     resolution: {integrity: sha512-jML7s2NAzMWc//QSJ1a3prpk78cOPchGvXJsC3C6R6PSMoooztvRVQEz89gmBTBY1SPMaqo5teB4uNHPdetShQ==}
+
+  '@webgpu/types@0.1.48':
+    resolution: {integrity: sha512-e3zmDEPih4Rle+JrP5cT8nCCtDizoUpEaN72OuD1clbhXGERtn0wwuMdxOrBymu3kMLWKDd8hd+ERhSheLuLTg==}
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -924,6 +930,8 @@ snapshots:
   '@types/node@22.7.5':
     dependencies:
       undici-types: 6.19.8
+
+  '@webgpu/types@0.1.48': {}
 
   ansi-regex@5.0.1: {}
 

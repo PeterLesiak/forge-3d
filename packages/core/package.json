@@ -6,6 +6,7 @@
         "lint": "tsc --project ./tsconfig.json"
     },
     "devDependencies": {
-        "@forge-3d/internal": "workspace:^"
+        "@forge-3d/internal": "workspace:^",
+        "@webgpu/types": "^0.1.48"
     }
 }

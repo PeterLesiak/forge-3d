@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
         "lib": ["ES2020"],
-        "module": "ES2020",
+        "module": "ESNext",
+        "target": "ESNext",
 
         "moduleDetection": "force",
         "moduleResolution": "Bundler",
