@@ -5,6 +5,12 @@
         "build": "hereby build",
         "lint": "tsc --project ./tsconfig.json"
     },
+    "exports": {
+        ".": "./build/index.js",
+        "./*": "./build/*.js",
+        "./*.js": "./build/*.js",
+        "./Backends": "./build/Backends/index.js"
+    },
     "devDependencies": {
         "@forge-3d/internal": "workspace:^",
         "@webgpu/types": "^0.1.48"

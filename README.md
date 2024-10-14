@@ -9,7 +9,7 @@ import { PointLight } from '@forge-3d/core/Lights/PointLight';
 import { Texture } from '@forge-3d/core/Texture';
 import { Scene } from '@forge-3d/core/Scene';
 
-const engine = await Engine.Default();
+const engine = await Engine.default();
 document.body.append(engine.domElement);
 
 const scene = new Scene();

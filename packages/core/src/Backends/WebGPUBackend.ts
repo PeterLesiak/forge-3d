@@ -1,5 +1,3 @@
-import type { Nullable } from '@/Types/Utilities';
-
 import type { Backend } from './Backend';
 
 export class WebGPUBackend implements Backend {
@@ -19,9 +17,9 @@ export class WebGPUBackend implements Backend {
         this.canvas = context.canvas;
     }
 
-    public static async From(
-        contextProvider: HTMLCanvasElement | OffscreenCanvas,
-    ): Promise<Nullable<WebGPUBackend>> {
+    public static async from(
+        canvas: HTMLCanvasElement | OffscreenCanvas,
+    ): Promise<WebGPUBackend | null> {
         if (!navigator.gpu) {
             return null;
         }
@@ -34,7 +32,7 @@ export class WebGPUBackend implements Backend {
 
         const device = await adapter.requestDevice();
 
-        const context = contextProvider.getContext('webgpu');
+        const context = canvas.getContext('webgpu');
 
         if (!context) {
             return null;

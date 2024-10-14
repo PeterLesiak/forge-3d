@@ -1,19 +1,17 @@
-import type { Nullable } from '@/Types/Utilities';
-
 import type { Backend } from './Backend';
 import { WebGPUBackend } from './WebGPUBackend';
-import { WebGL2Backend } from './WebGL2Bakckend';
+import { WebGL2Backend } from './WebGL2Backend';
 
 export const defaultBackend = async (
-    contextProvider: HTMLCanvasElement | OffscreenCanvas,
-): Promise<Nullable<Backend>> => {
-    const webgpuBackend = await WebGPUBackend.From(contextProvider);
+    canvas: HTMLCanvasElement | OffscreenCanvas,
+): Promise<Backend | null> => {
+    const webgpuBackend = await WebGPUBackend.from(canvas);
 
     if (webgpuBackend) {
         return webgpuBackend;
     }
 
-    const webgl2Backend = WebGL2Backend.From(contextProvider);
+    const webgl2Backend = WebGL2Backend.from(canvas);
 
     if (webgl2Backend) {
         return webgl2Backend;

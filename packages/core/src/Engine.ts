@@ -1,5 +1,3 @@
-import type { Nullable } from '@/Types/Utilities';
-
 import type { Backend } from '@/Backends/Backend';
 import { defaultBackend } from '@/Backends/DefaultBackend';
 
@@ -17,9 +15,9 @@ export class Engine implements EngineProperties {
         this.domElement = this.backend.canvas;
     }
 
-    public static async Default(
+    public static async default(
         configuration: Partial<EngineProperties> = {},
-    ): Promise<Nullable<Engine>> {
+    ): Promise<Engine | null> {
         const domElement = configuration.domElement ?? document.createElement('canvas');
         const backend = await defaultBackend(domElement);
 

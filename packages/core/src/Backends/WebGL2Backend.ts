@@ -1,5 +1,3 @@
-import type { Nullable } from '@/Types/Utilities';
-
 import type { Backend } from './Backend';
 
 export class WebGL2Backend implements Backend {
@@ -13,10 +11,8 @@ export class WebGL2Backend implements Backend {
         this.canvas = this.context.canvas;
     }
 
-    public static From(
-        contextProvider: HTMLCanvasElement | OffscreenCanvas,
-    ): Nullable<WebGL2Backend> {
-        const context = contextProvider.getContext('webgl2');
+    public static from(canvas: HTMLCanvasElement | OffscreenCanvas): WebGL2Backend | null {
+        const context = canvas.getContext('webgl2');
 
         if (!context) {
             return null;
