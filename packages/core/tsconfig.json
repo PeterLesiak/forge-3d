@@ -11,5 +11,5 @@
         "types": ["@webgpu/types"]
     },
 
-    "include": ["./src", "./Herebyfile.js"]
+    "include": ["./src", "./Herebyfile.js", "./global.d.ts"]
 }
