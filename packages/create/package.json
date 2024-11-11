@@ -9,6 +9,7 @@
         "@forge-3d/core": "workspace:^"
     },
     "devDependencies": {
+        "@forge-3d/internal": "workspace:^",
         "vite": "^5.4.8"
     }
 }

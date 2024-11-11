@@ -1,22 +1,17 @@
 import { build as tsup } from 'tsup';
 
-const MEGA_BYTES = 1024 * 1024;
+import { getTsFiles, formatMegaBytes } from './utils.js';
 
-/** @param {number} bytes */
-const formatMegaBytes = (bytes, decimals = 3) => {
-    const mb = bytes / MEGA_BYTES;
-
-    return `${mb.toFixed(decimals)} MB`;
-};
-
-/** @param {string} source */
-export const build = async source => {
+/** @param {string} directory */
+export const build = async directory => {
     let totalSize = 0;
     let totalFiles = 0;
 
+    const entry = await getTsFiles(directory);
+
     /** @type {import('tsup').Options} */
     const configuration = {
-        entry: [`${source}/**/*.ts`],
+        entry,
 
         dts: true,
         format: 'esm',

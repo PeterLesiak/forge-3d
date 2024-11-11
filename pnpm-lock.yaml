@@ -36,6 +36,9 @@ importers:
         specifier: workspace:^
         version: link:../core
     devDependencies:
+      '@forge-3d/internal':
+        specifier: workspace:^
+        version: link:../internal
       vite:
         specifier: ^5.4.8
         version: 5.4.11(@types/node@22.9.0)
