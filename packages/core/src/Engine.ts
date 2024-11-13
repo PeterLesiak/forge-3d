@@ -7,7 +7,7 @@ export class Engine {
 
     public readonly canvas: HTMLCanvasElement | OffscreenCanvas;
 
-    private constructor(backend: Backend) {
+    public constructor(backend: Backend) {
         this.backend = backend;
         this.canvas = this.backend.canvas;
     }
