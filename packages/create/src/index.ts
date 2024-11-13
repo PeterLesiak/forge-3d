@@ -6,4 +6,4 @@ if (!engine) {
     throw 'up';
 }
 
-document.body.appendChild(engine.canvas as HTMLCanvasElement);
+document.body.append(engine.canvas as HTMLCanvasElement);

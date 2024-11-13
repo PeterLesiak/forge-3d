@@ -11,7 +11,7 @@ import { Texture } from '@forge-3d/core/Texture';
 import { PointLight } from '@forge-3d/core/Lights/PointLight';
 
 const engine = await Engine.default();
-document.body.appendChild(engine.canvas);
+document.body.append(engine.canvas);
 
 const scene = new Scene();
 
@@ -43,7 +43,7 @@ import { Texture } from '@forge-3d/core/Texture';
 import { PointLight } from '@forge-3d/core/Lights/PointLight';
 
 const engine = await Engine.default();
-document.body.appendChild(engine.canvas);
+document.body.append(engine.canvas);
 
 const cube = createRef<Cube>();
 
