@@ -12,15 +12,23 @@ export class WebGLBackend implements Backend {
     }
 
     public static from(canvas: HTMLCanvasElement | OffscreenCanvas): WebGLBackend | null {
-        const context =
-            canvas.getContext('webgl2') ??
+        try {
+            const context = canvas.getContext('webgl2');
+
+            if (context) {
+                return new WebGLBackend(context);
+            }
+        } catch {}
+
+        try {
             // see "./experimental-webgl2.d.ts" for more details
-            canvas.getContext('experimental-webgl2');
+            const context = canvas.getContext('experimental-webgl2');
 
-        if (!context) {
-            return null;
-        }
+            if (context) {
+                return new WebGLBackend(context);
+            }
+        } catch {}
 
-        return new WebGLBackend(context);
+        return null;
     }
 }

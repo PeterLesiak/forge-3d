@@ -21,6 +21,7 @@ export const build = async directory => {
 
         clean: true,
         outDir: './build',
+        sourcemap: true,
 
         plugins: [
             {

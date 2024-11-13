@@ -20,16 +20,6 @@ export class WebGPUBackend implements Backend {
     public static async from(
         canvas: HTMLCanvasElement | OffscreenCanvas,
     ): Promise<WebGPUBackend | null> {
-        const context = canvas.getContext('webgpu');
-
-        if (!context) {
-            return null;
-        }
-
-        return WebGPUBackend.fromContext(context);
-    }
-
-    public static async fromContext(context: GPUCanvasContext): Promise<WebGPUBackend | null> {
         if (!navigator.gpu) {
             return null;
         }
@@ -42,6 +32,14 @@ export class WebGPUBackend implements Backend {
 
         const device = await adapter.requestDevice();
 
-        return new WebGPUBackend(adapter, device, context);
+        try {
+            const context = canvas.getContext('webgpu');
+
+            if (context) {
+                return new WebGPUBackend(adapter, device, context);
+            }
+        } catch {}
+
+        return null;
     }
 }
