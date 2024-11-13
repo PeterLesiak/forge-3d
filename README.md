@@ -6,7 +6,7 @@
 import { Engine } from '@forge-3d/core/Engine';
 import { Scene } from '@forge-3d/core/Scene';
 import { Camera } from '@forge-3d/core/Cameras/Camera';
-import { Cube } from '@forge-3d/core/Mesh/MeshBuilder';
+import { Cube } from '@forge-3d/core/Meshes/MeshBuilder';
 import { Texture } from '@forge-3d/core/Texture';
 import { PointLight } from '@forge-3d/core/Lights/PointLight';
 
@@ -38,7 +38,7 @@ scene.onTick(deltaTime => {
 import { Engine } from '@forge-3d/core/Engine';
 import { Scene } from '@forge-3d/core/Scene';
 import { Camera } from '@forge-3d/core/Cameras/Camera';
-import { Cube } from '@forge-3d/core/Mesh/MeshBuilder';
+import { Cube } from '@forge-3d/core/Meshes/MeshBuilder';
 import { Texture } from '@forge-3d/core/Texture';
 import { PointLight } from '@forge-3d/core/Lights/PointLight';
 
