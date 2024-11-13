@@ -1,6 +1,11 @@
+import { PowerPreference } from './PowerPreference';
 import type { Backend } from './Backend';
 
-export class WebGPUBackend implements Backend {
+export interface WebGPUBackendOptions {
+    readonly powerPreference: PowerPreference;
+}
+
+export class WebGPUBackend implements Backend, WebGPUBackendOptions {
     public readonly adapter: GPUAdapter;
 
     public readonly device: GPUDevice;
@@ -9,16 +14,27 @@ export class WebGPUBackend implements Backend {
 
     public readonly canvas: HTMLCanvasElement | OffscreenCanvas;
 
-    public constructor(adapter: GPUAdapter, device: GPUDevice, context: GPUCanvasContext) {
+    public readonly powerPreference: PowerPreference = 'default';
+
+    public constructor(
+        adapter: GPUAdapter,
+        device: GPUDevice,
+        context: GPUCanvasContext,
+        options: Partial<WebGPUBackendOptions> = {},
+    ) {
         this.adapter = adapter;
         this.device = device;
         this.context = context;
+        this.canvas = this.context.canvas;
 
-        this.canvas = context.canvas;
+        if (options.powerPreference) {
+            this.powerPreference = options.powerPreference;
+        }
     }
 
     public static async from(
         canvas: HTMLCanvasElement | OffscreenCanvas,
+        options: Partial<WebGPUBackendOptions> = {},
     ): Promise<WebGPUBackend | null> {
         if (!navigator.gpu) {
             return null;
@@ -36,7 +52,7 @@ export class WebGPUBackend implements Backend {
             const context = canvas.getContext('webgpu');
 
             if (context) {
-                return new WebGPUBackend(adapter, device, context);
+                return new WebGPUBackend(adapter, device, context, options);
             }
         } catch {}
 

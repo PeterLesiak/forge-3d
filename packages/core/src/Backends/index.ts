@@ -1,6 +1,8 @@
+export type { PowerPreference } from './PowerPreference';
+
 export type { Backend } from './Backend';
 
-export { WebGLBackend } from './WebGLBackend';
-export { WebGPUBackend } from './WebGPUBackend';
+export { WebGLBackend, type WebGLBackendOptions } from './WebGLBackend';
+export { WebGPUBackend, type WebGPUBackendOptions } from './WebGPUBackend';
 
-export { defaultBackend } from './defaultBackend';
+export { defaultBackend, type SharedBackendOptions } from './defaultBackend';
