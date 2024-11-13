@@ -1,4 +1,4 @@
-import type { SharedProperties } from '@/Types/utils';
+import type { SharedProperties } from '@/types/utils';
 
 import type { Backend } from './Backend';
 import { WebGLBackend, type WebGLBackendOptions } from './WebGLBackend';

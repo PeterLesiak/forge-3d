@@ -1,6 +1,6 @@
-import { PowerPreference } from '@/Backends/PowerPreference';
-import type { Backend } from '@/Backends/Backend';
-import { defaultBackend, type SharedBackendOptions } from '@/Backends/defaultBackend';
+import { PowerPreference } from '@/backends/PowerPreference';
+import type { Backend } from '@/backends/Backend';
+import { defaultBackend, type SharedBackendOptions } from '@/backends/defaultBackend';
 
 export interface EngineOptions extends SharedBackendOptions {}
 

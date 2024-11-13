@@ -5,10 +5,10 @@
 ```ts
 import { Engine } from '@forge-3d/core/Engine';
 import { Scene } from '@forge-3d/core/Scene';
-import { Camera } from '@forge-3d/core/Cameras/Camera';
-import { Cube } from '@forge-3d/core/Meshes/MeshBuilder';
+import { Camera } from '@forge-3d/core/cameras/Camera';
+import { Cube } from '@forge-3d/core/meshes/MeshBuilder';
 import { Texture } from '@forge-3d/core/Texture';
-import { PointLight } from '@forge-3d/core/Lights/PointLight';
+import { PointLight } from '@forge-3d/core/lights/PointLight';
 
 const engine = await Engine.default();
 document.body.append(engine.canvas);
@@ -37,10 +37,10 @@ scene.onTick(deltaTime => {
 ```tsx
 import { Engine } from '@forge-3d/core/Engine';
 import { Scene } from '@forge-3d/core/Scene';
-import { Camera } from '@forge-3d/core/Cameras/Camera';
-import { Cube } from '@forge-3d/core/Meshes/MeshBuilder';
+import { Camera } from '@forge-3d/core/cameras/Camera';
+import { Cube } from '@forge-3d/core/meshes/MeshBuilder';
 import { Texture } from '@forge-3d/core/Texture';
-import { PointLight } from '@forge-3d/core/Lights/PointLight';
+import { PointLight } from '@forge-3d/core/lights/PointLight';
 
 const engine = await Engine.default();
 document.body.append(engine.canvas);
