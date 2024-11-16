@@ -9,7 +9,6 @@
         ".": "./build/index.js",
         "./*": "./build/*.js",
         "./*.js": "./build/*.js",
-        "./types": "./build/types/index.js",
         "./math": "./build/math/index.js",
         "./backends": "./build/backends/index.js"
     },

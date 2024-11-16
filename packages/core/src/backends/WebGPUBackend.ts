@@ -5,7 +5,7 @@ export interface WebGPUBackendOptions {
     readonly powerPreference: PowerPreference;
 }
 
-export class WebGPUBackend implements Backend, WebGPUBackendOptions {
+export class WebGPUBackend implements /* Backend, */ WebGPUBackendOptions {
     public readonly adapter: GPUAdapter;
 
     public readonly device: GPUDevice;

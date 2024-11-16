@@ -9,7 +9,6 @@
         "noEmit": true,
         "resolveJsonModule": true,
 
-        "checkJs": true,
         "isolatedModules": true,
         "skipLibCheck": true,
         "strict": true,

@@ -10,6 +10,8 @@ export class WebGLBackend implements Backend, WebGLBackendOptions {
 
     public readonly canvas: HTMLCanvasElement | OffscreenCanvas;
 
+    public readonly buffer: WebGLBuffer;
+
     public readonly powerPreference: PowerPreference = 'default';
 
     public constructor(
@@ -18,6 +20,7 @@ export class WebGLBackend implements Backend, WebGLBackendOptions {
     ) {
         this.context = context;
         this.canvas = this.context.canvas;
+        this.buffer = this.context.createBuffer()!;
 
         if (options.powerPreference) {
             this.powerPreference = options.powerPreference;
@@ -59,5 +62,12 @@ export class WebGLBackend implements Backend, WebGLBackendOptions {
         } catch {}
 
         return null;
+    }
+
+    public clear(r: number, g: number, b: number, a: number): this {
+        this.context.clearColor(r, g, b, a);
+        this.context.clear(this.context.COLOR_BUFFER_BIT | this.context.DEPTH_BUFFER_BIT);
+
+        return this;
     }
 }

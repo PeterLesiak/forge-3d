@@ -1,9 +1,9 @@
 export const PowerPreference = {
     default: 'default',
 
-    lowPower: 'lowPower',
+    lowPower: 'low-power',
 
-    highPerformance: 'highPerformance',
+    highPerformance: 'high-performance',
 } as const;
 
 export type PowerPreference = keyof typeof PowerPreference;
