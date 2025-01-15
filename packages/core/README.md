@@ -1,1 +1,1 @@
-# @forge-3d/core
+# forge-3d/core

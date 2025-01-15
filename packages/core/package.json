@@ -2,18 +2,10 @@
     "name": "@forge-3d/core",
     "type": "module",
     "scripts": {
-        "build": "hereby build",
+        "build": "node ./scripts/build.js",
         "lint": "tsc --project ./tsconfig.json"
     },
-    "exports": {
-        ".": "./build/index.js",
-        "./*": "./build/*.js",
-        "./*.js": "./build/*.js",
-        "./math": "./build/math/index.js",
-        "./backends": "./build/backends/index.js"
-    },
     "devDependencies": {
-        "@forge-3d/internal": "workspace:^",
-        "@webgpu/types": "^0.1.48"
+        "@forge-3d/internal": "workspace:^"
     }
 }

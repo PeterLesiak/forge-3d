@@ -2,6 +2,6 @@
     "name": "@forge-3d/internal",
     "type": "module",
     "dependencies": {
-        "tsup": "^8.3.0"
+        "glob": "^11.0.1"
     }
 }

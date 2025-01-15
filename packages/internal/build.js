@@ -1,44 +1,33 @@
-import { build as tsup } from 'tsup';
+import { build } from 'tsup';
 
-import { getTsFiles, formatMegaBytes } from './utils.js';
+import { readFilePaths } from './utils.js';
 
-/** @param {string} directory */
-export const build = async directory => {
-    let totalSize = 0;
-    let totalFiles = 0;
+/**
+ * @typedef {object} ProjectOptions
+ * @property {string} [inDir]
+ * @property {string} [outDir]
+ */
 
-    const entry = await getTsFiles(directory);
+/**
+ * Builds the project
+ * @param {ProjectOptions} options
+ */
+export async function buildProject(options = {}) {
+    const inDir = options.inDir ?? './src';
+    const outDir = options.outDir ?? './build';
 
-    /** @type {import('tsup').Options} */
-    const configuration = {
-        entry,
+    const filePaths = await readFilePaths(inDir);
+
+    await build({
+        entry: filePaths,
+        clean: true,
+        sourcemap: true,
+        outDir,
 
         dts: true,
         format: 'esm',
         minify: true,
         platform: 'browser',
         target: 'es2015',
-
-        clean: true,
-        outDir: './build',
-        sourcemap: true,
-
-        plugins: [
-            {
-                name: 'build-analyzer',
-                buildEnd({ writtenFiles }) {
-                    totalSize += writtenFiles.reduce((acc, val) => acc + val.size, 0);
-
-                    totalFiles += writtenFiles.length;
-                },
-            },
-        ],
-    };
-
-    await tsup(configuration);
-
-    console.log();
-    console.log(`[📦️ FILES]: ${totalFiles}`);
-    console.log(`[💾  SIZE]: ${formatMegaBytes(totalSize)}`);
-    console.log();
-};
+    });
+}

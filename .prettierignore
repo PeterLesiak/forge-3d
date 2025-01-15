@@ -1,6 +1,6 @@
-# Packages
+# dependencies
 **/node_modules
-**/pnpm-lock.yaml
+pnpm-lock.yaml
 
-# Build
+# production
 **/build

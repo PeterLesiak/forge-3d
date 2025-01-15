@@ -1,21 +1,12 @@
-import { readdir } from 'node:fs/promises';
+import { glob } from 'glob';
 
-const MEGA_BYTES = 1024 * 1024;
+/**
+ * Finds file paths recursively in a specified directory
+ * @param {string} dir relative path to directory
+ * @returns {Promise<string[]>} Array of file paths, relative to `dir`
+ */
+export async function readFilePaths(dir) {
+    const contents = await glob(`${dir}/**`, { nodir: true });
 
-/** @param {number} bytes */
-export const formatMegaBytes = (bytes, decimals = 3) => {
-    const mb = bytes / MEGA_BYTES;
-
-    return `${mb.toFixed(decimals)} MB`;
-};
-
-/** @param {string} directory */
-export const getTsFiles = async directory => {
-    const filesAndDirs = await readdir(directory, { recursive: true });
-
-    const tsAndDts = filesAndDirs.filter(path => /.?(\.ts)$/.test(path));
-
-    const tsFiles = tsAndDts.filter(path => !/.?(\.d\.ts)$/.test(path));
-
-    return tsFiles.map(file => `${directory}/${file}`);
-};
+    return contents.map(path => `./${path}`);
+}
