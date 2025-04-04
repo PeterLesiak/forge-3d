@@ -1,0 +1,10 @@
+{
+    "name": "@forge-3d/root",
+    "type": "module",
+    "scripts": {
+        "format": "prettier . --write"
+    },
+    "devDependencies": {
+        "prettier": "^3.5.3"
+    }
+}
