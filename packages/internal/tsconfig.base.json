@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "target": "ESNext",
+        "noEmit": true,
+        "esModuleInterop": true,
+
+        "checkJs": true,
+        "moduleResolution": "bundler",
+        "resolveJsonModule": true,
+        "verbatimModuleSyntax": true,
+
+        "strict": true,
+        "isolatedModules": true
+    }
+}

@@ -2,9 +2,14 @@
     "name": "@forge-3d/root",
     "type": "module",
     "scripts": {
+        "core:build": "pnpm --filter @forge-3d/core run build",
+        "core:clean": "pnpm --filter @forge-3d/core run clean",
+        "core:lint": "pnpm --filter @forge-3d/core run lint",
         "format": "prettier . --write"
     },
     "devDependencies": {
-        "prettier": "^3.5.3"
+        "hereby": "^1.10.0",
+        "prettier": "^3.5.3",
+        "typescript": "^5.8.3"
     }
 }
