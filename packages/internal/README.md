@@ -1,17 +1,10 @@
-# forge-3d/internal
-
-## [*private package*]
-
----
+# forge-3d/internal [*private package*]
 
 ## Exports
 
-<!-- prettier-ignore -->
-- [***@forge-3d/internal***](./index.js)
-- [***@forge-3d/internal/types***](./src/types.d.ts)
-- [***@forge-3d/internal/tsconfig***](./tsconfig.base.json)
-
----
+- [**@forge-3d/internal**](./index.js)
+- [**@forge-3d/internal/types**](./src/types.d.ts)
+- [**@forge-3d/internal/tsconfig**](./tsconfig.base.json)
 
 ## Documentation API
 

@@ -1,10 +1,7 @@
 # Packages
 
-<!-- prettier-ignore -->
-- [***@forge-3d/core***](./core/README.md)
-- [***@forge-3d/internal***](./internal/README.md) [*private package*]
-
----
+- [**@forge-3d/core**](./core/)
+- [**@forge-3d/internal**](./internal/) [*private package*]
 
 ## Managing dependencies
 
