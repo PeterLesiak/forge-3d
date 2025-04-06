@@ -6,6 +6,7 @@
     },
     "exports": {
         ".": "./index.js",
+        "./types": "./src/types.d.ts",
         "./tsconfig": "./tsconfig.base.json"
     },
     "dependencies": {
