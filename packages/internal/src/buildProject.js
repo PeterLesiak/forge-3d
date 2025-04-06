@@ -65,9 +65,9 @@ export async function buildProject(options) {
         compileProjectDuration +
         generateDeclarationsDuration;
 
-    const compilationRatio = compilationSize / projectSize;
+    const compilationRatio = compilationSize / projectSize || 0;
     const compilationPercent = `${(compilationRatio * 100).toFixed(2)}%`;
-    const declarationRatio = declarationSize / projectSize;
+    const declarationRatio = declarationSize / projectSize || 0;
     const declarationPercent = `${(declarationRatio * 100).toFixed(2)}%`;
 
     console.log();
