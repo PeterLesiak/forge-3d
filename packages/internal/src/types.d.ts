@@ -3,3 +3,8 @@ export declare type ProjectOptions = {
     outputDirectory: string;
     importPaths: Record<string, string[]>;
 };
+
+export declare type ProjectFile = {
+    code: string;
+    path: string;
+};

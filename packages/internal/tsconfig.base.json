@@ -6,9 +6,11 @@
         "esModuleInterop": true,
 
         "checkJs": true,
+        "skipLibCheck": true,
         "moduleResolution": "bundler",
         "resolveJsonModule": true,
         "verbatimModuleSyntax": true,
+        "composite": true,
 
         "strict": true,
         "isolatedModules": true

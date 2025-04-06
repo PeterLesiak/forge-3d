@@ -1,5 +1,7 @@
 import * as ts from 'typescript';
+import { writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
 
 const baseCompilerOptions = getConfigCompilerOptions('../tsconfig.base.json');
 /** @type {ts.CompilerOptions} */
@@ -15,10 +17,11 @@ const compilerPlugins = {
 };
 
 /**
- * @param {string[]} projectFilePaths
+ * @param {import('./types.d.ts').ProjectFile[]} projectFiles
  * @param {import('./types.d.ts').ProjectOptions} options
+ * @returns {Promise<string[]>}
  */
-export async function generateDeclarations(projectFilePaths, options) {
+export async function generateDeclarations(projectFiles, options) {
     /** @type {ts.CompilerOptions} */
     const compilerOptions = {
         ...baseCompilerOptions,
@@ -32,12 +35,26 @@ export async function generateDeclarations(projectFilePaths, options) {
 
     const host = ts.createCompilerHost(compilerOptions);
 
+    /** @type {import('./types.d.ts').ProjectFile[]} */
+    const declarationFiles = [];
+
+    host.writeFile = (fileName, text) => {
+        declarationFiles.push({ code: text, path: fileName });
+    };
+
     const program = ts.createProgram({
-        rootNames: projectFilePaths,
+        rootNames: projectFiles.map(file => file.path),
         options: compilerOptions,
         host,
     });
     program.emit();
+
+    for (const { code, path } of declarationFiles) {
+        await mkdir(dirname(path), { recursive: true });
+        await writeFile(path, code);
+    }
+
+    return declarationFiles.map(file => file.code);
 }
 
 /**
