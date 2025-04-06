@@ -1,4 +1,4 @@
-# forge-3d/internal [*private package*]
+# forge-3d/internal (_private package_)
 
 ## Exports
 

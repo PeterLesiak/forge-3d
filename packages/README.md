@@ -1,7 +1,7 @@
 # Packages
 
 - [**@forge-3d/core**](./core/)
-- [**@forge-3d/internal**](./internal/) [*private package*]
+- [**@forge-3d/internal**](./internal/) (**_private package_**)
 
 ## Managing dependencies
 
