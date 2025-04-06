@@ -18,5 +18,6 @@ export type ProjectOptions = {
 
 // @forge-3d/internal
 export async function buildProject(options: ProjectOptions): Promise<void>;
+
 export async function cleanProject(outputDirectory: string): Promise<void>;
 ```
